@@ -3889,4 +3889,17 @@ function renderPinnedCards(){
   copyBtn.textContent = "Скопировать китайский текст";
   copyBtn.addEventListener("click", ()=>copyText("重要提示:这个孩子对鱼类过敏,曾出现过过敏性休克(危及生命)。请确保菜品中不含任何鱼类成分,包括鱼露、鱼汤、鱼胶、鱼干等调味料。万分感谢您的理解与帮助!"));
   copyRow.appendChild(copyBtn);
-  sbody.app
+  sbody.appendChild(copyRow);
+  sosDiv.appendChild(sbody);
+  sosBox.appendChild(sosDiv);
+}
+
+refreshFilterOptions();
+renderCards();
+renderBoard();
+renderMetroResult();
+renderPinnedCards();
+renderToday();
+</script>
+</body>
+</html>
