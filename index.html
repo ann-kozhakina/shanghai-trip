@@ -3,14 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>Шанхай — план поездки</title>
+<title>Шанхай 26</title>
 <meta name="theme-color" content="#16241a">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Шанхай">
+<meta name="apple-mobile-web-app-title" content="Шанхай 26">
 <link rel="apple-touch-icon" id="appleTouchIcon" href="">
 <link rel="icon" id="favicon" href="">
 <link rel="manifest" id="manifestLink" href="">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@700;800;900&family=Golos+Text:wght@400;500;600;700;900&display=swap" rel="stylesheet">
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 <style>
@@ -28,14 +31,14 @@
   }
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
   html,body{overscroll-behavior-y:contain;}
-  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  body{margin:0;font-family:'Golos Text',-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
        background:linear-gradient(180deg,#eaf3e3 0%,#e6f0dd 260px,#eef3ea 260px);color:var(--ink);
        padding-bottom:var(--navh);}
   .app{max-width:560px;margin:0 auto;}
 
   .hero{padding:18px 18px 10px;}
-  .hero-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;gap:8px;flex-wrap:wrap;}
-  .greet{font-size:15px;font-weight:600;color:var(--dark);}
+  .hero-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;gap:8px;flex-wrap:wrap;}
+  .hero-name{font-family:'Unbounded',sans-serif;font-size:28px;line-height:1.15;font-weight:800;letter-spacing:-.01em;color:var(--dark);margin:0;}
   .weather{background:var(--cream);border-radius:999px;padding:7px 14px;font-size:13px;font-weight:600;box-shadow:var(--shadow);display:flex;align-items:center;gap:6px;white-space:nowrap;}
   .weather small{font-weight:400;color:var(--muted);}
   .sync-badge{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;padding:5px 10px;border-radius:999px;margin-bottom:8px;}
@@ -103,7 +106,9 @@
   .tag.paid{background:#f5ecdd;color:var(--paid);}
   .tag.skip{background:#f0efe9;color:var(--skip);}
   .tag.custom{background:#f7edd6;color:#8a6d2f;}
-  .tag.metro{background:#e7eefa;color:var(--blue);}
+  .tag.metro{background:#e7eefa;color:var(--blue);display:inline-flex;align-items:center;}
+  .line-badge{display:inline-block;vertical-align:middle;color:#fff;font-weight:800;font-size:9px;line-height:14px;width:14px;height:14px;text-align:center;border-radius:4px;margin-right:3px;flex:0 0 auto;}
+  .line-badges-row{display:flex;gap:4px;margin-bottom:10px;flex-wrap:wrap;align-items:center;}
   .tag.hopen{background:#e3f0e7;color:var(--free);}
   .tag.hsoon{background:#fdf0d5;color:#a8763e;}
   .tag.hclosed{background:#f3e4e1;color:var(--red);}
@@ -133,7 +138,7 @@
   .day-col{background:var(--panel);border-radius:var(--r-xl);margin-bottom:18px;overflow:hidden;box-shadow:var(--shadow);}
   .day-banner{background:var(--dark);color:#fff;padding:14px 18px;}
   .day-banner-top{display:flex;justify-content:space-between;align-items:center;}
-  .day-label{font-weight:800;font-size:15px;}
+  .day-label{font-family:'Unbounded',sans-serif;font-weight:700;font-size:14px;}
   .day-emoji{font-size:18px;}
   .day-sub{font-size:12px;color:#cfe0d3;margin-top:2px;font-weight:600;}
 
@@ -143,6 +148,21 @@
   .chip .x{cursor:pointer;color:var(--muted);font-weight:800;padding:2px 7px;border-radius:50%;}
   .chip .x:hover{color:#fff;background:var(--dark);}
   .empty-hint{font-size:11.5px;color:#bdb9a8;font-style:italic;}
+
+  .slot-group-label{font-size:10.5px;color:var(--muted);font-weight:800;margin:2px 0 5px 2px;display:flex;align-items:center;gap:4px;text-transform:uppercase;letter-spacing:.02em;}
+  .chip-card{background:#f6f7f0;border-left:3px solid var(--free);border-radius:10px;margin-bottom:7px;overflow:hidden;}
+  .chip-header{display:flex;align-items:center;gap:8px;padding:9px 10px;cursor:pointer;}
+  .chip-ic{font-size:15px;flex:0 0 auto;}
+  .chip-name{flex:1;font-size:13px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0;}
+  .chip-arrow{font-size:11px;color:var(--muted);transition:transform .15s;flex:0 0 auto;}
+  .chip-card.open .chip-arrow{transform:rotate(180deg);}
+  .chip-x{cursor:pointer;color:var(--muted);font-weight:800;padding:2px 7px;border-radius:50%;flex:0 0 auto;}
+  .chip-x:hover{color:#fff;background:var(--dark);}
+  .chip-body{display:none;padding:0 10px 10px 33px;font-size:12px;color:#4b473d;line-height:1.5;}
+  .chip-card.open .chip-body{display:block;}
+  .chip-body .cn-row{margin:4px 0;}
+  .chip-body .amap-btn{margin-top:6px;display:inline-block;}
+  .tag.planned{background:#d7ecd0;color:#1f5c3a;font-weight:800;}
 
   .metro-result{margin-top:16px;}
   .metro-empty{font-size:13px;color:var(--muted);background:var(--panel);padding:16px;border-radius:var(--r-lg);text-align:center;box-shadow:var(--shadow);}
@@ -188,12 +208,10 @@
 <div class="app">
   <div class="hero">
     <div class="hero-top">
-      <div class="greet">Привет, Анна 👋</div>
+      <h1 class="hero-name">Шанхай 26</h1>
       <div class="weather">☀️ Шанхай <small>~32°C</small></div>
     </div>
     <span class="sync-badge off" id="syncBadge">🔴 сохраняется только на этом телефоне</span>
-    <span class="flag-tag">🇨🇳 ШАНХАЙ</span>
-    <h1 class="hero-title">Твой план <span class="accent">поездки</span></h1>
   </div>
 
   <!-- ===== SCREEN: TODAY ===== -->
@@ -309,7 +327,7 @@
     </div>
     <div class="form-actions">
       <button class="pill-btn outline" id="resetOverrideBtn" style="display:none;">↺ Вернуть оригинал</button>
-      <button class="del-btn" id="deleteCustomBtn" style="display:none;">🗑 Удалить это место</button>
+      <button class="del-btn" id="deleteCustomBtn" style="display:none;">🗑 Удалить</button>
     </div>
   </div>
 </div>
@@ -360,8 +378,8 @@ function fbRef(path){ return db.ref("trips/"+TRIP_ID+"/"+path); }
   document.getElementById("appleTouchIcon").setAttribute("href", icon180);
   document.getElementById("favicon").setAttribute("href", icon192);
   const manifest = {
-    name: "Шанхай — план поездки",
-    short_name: "Шанхай",
+    name: "Шанхай 26",
+    short_name: "Шанхай 26",
     start_url: ".",
     display: "standalone",
     background_color: "#eef3ea",
@@ -1161,7 +1179,7 @@ const BASE_PLACES = [
   "address": "—",
   "link": "https://www.instagram.com/p/DZaeTIniHKG/",
   "note": "Слайд 13",
-  "district": "Хуанпу (Народная площадь / Бунд / Юйюань)",
+  "district": "Пудун (Экспо-парк / China Art Museum)",
   "price": "Уточнить, возможно платно",
   "indoor": "В помещении (оранжерея)",
   "status": "актуально",
@@ -2022,7 +2040,7 @@ const BASE_PLACES = [
   "address": "—",
   "link": "https://www.instagram.com/p/DX9iqFqlgM1/",
   "note": "Доп. подтверждение места из гида yanchevskaya_anna",
-  "district": "Хуанпу (Народная площадь / Бунд / Юйюань)",
+  "district": "Пудун (Экспо-парк / China Art Museum)",
   "price": "Уточнить",
   "indoor": "В помещении",
   "status": "актуально",
@@ -2169,7 +2187,7 @@ const BASE_PLACES = [
   "address": "Shibo Culture Park (Expo Park)",
   "link": "https://www.instagram.com/p/DYSGUjBjEii/",
   "note": "Дополняет ранее собранную запись о Greenhouse Garden",
-  "district": "Хуанпу (Народная площадь / Бунд / Юйюань)",
+  "district": "Пудун (Экспо-парк / China Art Museum)",
   "price": "Уточнить",
   "indoor": "В помещении",
   "status": "актуально",
@@ -2295,7 +2313,7 @@ const BASE_PLACES = [
   "address": "Shibo Culture Park (Expo Park)",
   "link": "https://www.instagram.com/p/DYSWyIYCtzp/",
   "note": "То же место, что Shanghai Greenhouse Garden — архитектурные подробности",
-  "district": "Хуанпу (Народная площадь / Бунд / Юйюань)",
+  "district": "Пудун (Экспо-парк / China Art Museum)",
   "price": "Уточнить",
   "indoor": "В помещении",
   "status": "актуально",
@@ -2379,7 +2397,7 @@ const BASE_PLACES = [
   "address": "—",
   "link": "https://www.instagram.com/p/DYPLf-PNW16/",
   "note": "Дополняет запись о Greenhouse Garden",
-  "district": "Хуанпу (Народная площадь / Бунд / Юйюань)",
+  "district": "Пудун (Экспо-парк / China Art Museum)",
   "price": "Уточнить",
   "indoor": "В помещении",
   "status": "актуально",
@@ -3072,7 +3090,7 @@ const BASE_PLACES = [
   "address": "Expo Park (Shibo)",
   "link": "https://www.instagram.com/p/DYCQbe5Ev5O/",
   "note": "Возможно, связан с Greenhouse Garden (тот же парк) — уточнить, разные ли это объекты",
-  "district": "Хуанпу (Народная площадь / Бунд / Юйюань)",
+  "district": "Пудун (Экспо-парк / China Art Museum)",
   "price": "Уточнить",
   "indoor": "В помещении/улица",
   "status": "актуально",
@@ -3151,12 +3169,12 @@ const BASE_PLACES = [
 ];
 
 const DAYS = [
-  {key:"14.07", label:"14.07 (вт)", sub:"Прилёт", emoji:"✈️"},
-  {key:"15.07", label:"15.07 (ср)", sub:"День 2", emoji:"🗓️"},
-  {key:"16.07", label:"16.07 (чт)", sub:"День 3", emoji:"🗓️"},
-  {key:"17.07", label:"17.07 (пт)", sub:"День 4", emoji:"🗓️"},
-  {key:"18.07", label:"18.07 (сб)", sub:"День рождения Матвея", emoji:"🎂"},
-  {key:"19.07", label:"19.07 (вс)", sub:"Вылет", emoji:"🛫"},
+  {key:"14-07", label:"14.07 (вт)", sub:"Прилёт", emoji:"✈️"},
+  {key:"15-07", label:"15.07 (ср)", sub:"День 2", emoji:"🗓️"},
+  {key:"16-07", label:"16.07 (чт)", sub:"День 3", emoji:"🗓️"},
+  {key:"17-07", label:"17.07 (пт)", sub:"День 4", emoji:"🗓️"},
+  {key:"18-07", label:"18.07 (сб)", sub:"День рождения Матвея", emoji:"🎂"},
+  {key:"19-07", label:"19.07 (вс)", sub:"Вылет", emoji:"🛫"},
 ];
 const BLOCKS = ["Утро","День","Вечер"];
 const GRADIENTS = ["g0","g1","g2","g3","g4","g5"];
@@ -3174,6 +3192,22 @@ function saveJSON(key, val){ localStorage.setItem(key, JSON.stringify(val)); }
 
 let plan = loadJSON(STORAGE_KEY, null);
 if(!plan){ plan = {}; DAYS.forEach(d=>BLOCKS.forEach(b=>plan[d.key+"|"+b]=[])); }
+// Миграция: Firebase Realtime Database запрещает "." в ключах, а старые
+// ключи плана были вида "14.07|Утро" — из-за этого запись в Firebase
+// молча не проходила и локальные добавления откатывались после синка.
+(function migrateLegacyDotKeys(){
+  const migrated = {};
+  let changed = false;
+  for(const k in plan){
+    if(k.indexOf(".") !== -1){
+      migrated[k.replace(/\./g, "-")] = plan[k];
+      changed = true;
+    } else {
+      migrated[k] = plan[k];
+    }
+  }
+  if(changed) plan = migrated;
+})();
 DAYS.forEach(d=>BLOCKS.forEach(b=>{ const k=d.key+"|"+b; if(!plan[k]) plan[k]=[]; }));
 
 let favs = new Set(loadJSON(FAV_KEY, []));
@@ -3229,6 +3263,49 @@ function categoryIcon(cat){
 }
 function gradientFor(p){ return p.custom ? "gcustom" : GRADIENTS[Math.abs(hashId(p.id)) % GRADIENTS.length]; }
 function hashId(id){ if(typeof id === "number") return id; let h=0; const s=String(id); for(let i=0;i<s.length;i++){ h=(h*31+s.charCodeAt(i))|0; } return h; }
+
+const METRO_LINES = {
+  "上海科技馆 Shanghai Science and Technology Museum": [2],
+  "中华艺术宫 China Art Museum": [8],
+  "人民广场 People's Square": [1,2,8],
+  "南京东路 Nanjing East Rd": [2,10],
+  "南京西路 Nanjing West Rd": [2,12,13],
+  "徐家汇 Xujiahui": [1,9,11],
+  "打浦桥 Dapuqiao": [9],
+  "新天地 Xintiandi": [10,13],
+  "汉中路 Hanzhong Rd": [1,12,13],
+  "滴水湖 Dishui Lake": [16],
+  "自然博物馆 Natural History Museum": [13],
+  "豫园 Yuyuan Garden": [10,14],
+  "野生动物园 Wild Animal Park": [16],
+  "长寿路 Changshou Rd": [7,13],
+  "陕西南路 Shaanxi South Rd": [1,10,12],
+  "静安寺 Jing'an Temple": [2,7,14],
+  "龙阳路 Longyang Rd": [2,7,16,18],
+};
+const LINE_COLORS = {
+  1:"#e3002c", 2:"#8dc63f", 7:"#f58220", 8:"#009999", 9:"#5bc8f5",
+  10:"#c6a8d8", 11:"#8b4a3c", 12:"#2e8b57", 13:"#ff69b4", 14:"#c9a227",
+  16:"#3ec6c6", 18:"#b7c928"
+};
+function metroLinesFor(metroStr){ return METRO_LINES[metroStr] || []; }
+function lineColor(n){ return LINE_COLORS[n] || "#8a8a8a"; }
+function buildLineBadge(n){
+  const b = document.createElement("span");
+  b.className = "line-badge";
+  b.style.background = lineColor(n);
+  b.textContent = n;
+  return b;
+}
+function buildMetroTag(metroStr){
+  const span = document.createElement("span");
+  span.className = "tag metro";
+  metroLinesFor(metroStr).forEach(n=>{ span.appendChild(buildLineBadge(n)); });
+  const txt = document.createElement("span");
+  txt.textContent = "🚇 " + metroStr;
+  span.appendChild(txt);
+  return span;
+}
 
 function amapUrl(p){
   const kw = p.cn || p.cn_addr || p.name;
@@ -3320,7 +3397,10 @@ function refreshFilterOptions(){
   const curM = metroSelect.value;
   metroSelect.innerHTML = '<option value="">Выбери станцию метро...</option>';
   uniqueSorted(PLACES.map(p=>p.metro)).forEach(m=>{
-    const o = document.createElement("option"); o.value=m; o.textContent=m; metroSelect.appendChild(o);
+    const o = document.createElement("option"); o.value=m;
+    const lines = metroLinesFor(m);
+    o.textContent = (lines.length ? "Л"+lines.join(",")+" · " : "") + m;
+    metroSelect.appendChild(o);
   });
   metroSelect.value = curM;
 }
@@ -3406,9 +3486,10 @@ function buildCard(p, assigned){
   else if(isPaid(p)) tags.appendChild(makeTag("платно","paid"));
   if(isSkipped(p)) tags.appendChild(makeTag("не идём","skip"));
   if(p.custom) tags.appendChild(makeTag("моё место","custom"));
-  if(p.metro) tags.appendChild(makeTag("🚇 "+p.metro,"metro"));
+  if(p.metro) tags.appendChild(buildMetroTag(p.metro));
   const os = openStatus(p);
   if(os) tags.appendChild(makeTag(os.text, os.cls));
+  if(assigned.length) tags.appendChild(makeTag("✅ в плане","planned"));
   body.appendChild(tags);
 
   if(p.hours){
@@ -3522,6 +3603,92 @@ function escapeHtml(s){
   return (s||"").replace(/[&<>"]/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 }
 
+function buildChipCard(p, slotKey){
+  const wrap = document.createElement("div");
+  wrap.className = "chip-card";
+
+  const header = document.createElement("div");
+  header.className = "chip-header";
+
+  const ic = document.createElement("span");
+  ic.className = "chip-ic";
+  ic.textContent = categoryIcon(p.category);
+  header.appendChild(ic);
+
+  const nameSpan = document.createElement("span");
+  nameSpan.className = "chip-name";
+  nameSpan.textContent = p.name;
+  header.appendChild(nameSpan);
+
+  const arrow = document.createElement("span");
+  arrow.className = "chip-arrow";
+  arrow.textContent = "▾";
+  header.appendChild(arrow);
+
+  const xBtn = document.createElement("span");
+  xBtn.className = "chip-x";
+  xBtn.textContent = "✕";
+  xBtn.addEventListener("click", (e)=>{
+    e.stopPropagation();
+    plan[slotKey] = plan[slotKey].filter(i=>i!==p.id);
+    savePlan(); renderBoard(); renderCards(); renderMetroResult(); renderToday();
+  });
+  header.appendChild(xBtn);
+
+  header.addEventListener("click", ()=>{ wrap.classList.toggle("open"); });
+  wrap.appendChild(header);
+
+  const body = document.createElement("div");
+  body.className = "chip-body";
+
+  if(p.hours){
+    const h = document.createElement("div");
+    const os = openStatus(p);
+    h.textContent = "🕒 " + p.hours + (os ? " · "+os.text : "");
+    body.appendChild(h);
+  }
+  if(p.address && p.address !== "—"){
+    const a = document.createElement("div");
+    a.textContent = "📍 " + p.address;
+    body.appendChild(a);
+  }
+  if(p.details){
+    const d = document.createElement("div");
+    d.textContent = p.details;
+    body.appendChild(d);
+  }
+  if(p.cn){
+    const row = document.createElement("div");
+    row.className = "cn-row";
+    const chip = document.createElement("span");
+    chip.className = "cn-chip";
+    chip.textContent = "🇨🇳 " + p.cn;
+    chip.addEventListener("click", (e)=>{ e.stopPropagation(); copyText(p.cn); });
+    row.appendChild(chip);
+    body.appendChild(row);
+  }
+  if(p.cn_addr){
+    const row2 = document.createElement("div");
+    row2.className = "cn-row";
+    const chip2 = document.createElement("span");
+    chip2.className = "cn-chip";
+    chip2.textContent = "📍中文 " + p.cn_addr;
+    chip2.addEventListener("click", (e)=>{ e.stopPropagation(); copyText(p.cn_addr); });
+    row2.appendChild(chip2);
+    body.appendChild(row2);
+  }
+  const amapA = document.createElement("a");
+  amapA.className = "amap-btn";
+  amapA.href = amapUrl(p);
+  amapA.target = "_blank"; amapA.rel = "noopener";
+  amapA.textContent = "📍 Amap";
+  amapA.addEventListener("click", (e)=>{ e.stopPropagation(); });
+  body.appendChild(amapA);
+
+  wrap.appendChild(body);
+  return wrap;
+}
+
 function buildDayCol(d){
   const col = document.createElement("div");
   col.className = "day-col";
@@ -3548,23 +3715,27 @@ function buildDayCol(d){
       hint.textContent = "нажми «+ добавить» на карточке во вкладке «Места»";
       slot.appendChild(hint);
     } else {
-      ids.forEach(id=>{
-        const p = PLACES.find(x=>x.id===id);
-        if(!p) return;
-        const chip = document.createElement("div");
-        chip.className = "chip";
-        const span = document.createElement("span");
-        span.textContent = p.name;
-        chip.appendChild(span);
-        const x = document.createElement("span");
-        x.className = "x";
-        x.textContent = "✕";
-        x.addEventListener("click", ()=>{
-          plan[slotKey] = plan[slotKey].filter(i=>i!==id);
-          savePlan(); renderBoard(); renderCards(); renderToday();
+      const placesInSlot = ids.map(id=>PLACES.find(x=>x.id===id)).filter(Boolean);
+      const groups = [];
+      const groupIndex = {};
+      placesInSlot.forEach(p=>{
+        const gkey = p.district || "—";
+        if(!(gkey in groupIndex)){
+          groupIndex[gkey] = groups.length;
+          groups.push({district:gkey, items:[]});
+        }
+        groups[groupIndex[gkey]].items.push(p);
+      });
+      groups.forEach(g=>{
+        if(g.items.length >= 2){
+          const label = document.createElement("div");
+          label.className = "slot-group-label";
+          label.textContent = "📍 " + g.district;
+          slot.appendChild(label);
+        }
+        g.items.forEach(p=>{
+          slot.appendChild(buildChipCard(p, slotKey));
         });
-        chip.appendChild(x);
-        slot.appendChild(chip);
       });
     }
     col.appendChild(slot);
@@ -3592,7 +3763,7 @@ function renderToday(){
   const now = shanghaiNow();
   const mm = String(now.getMonth()+1).padStart(2,"0");
   const dd = String(now.getDate()).padStart(2,"0");
-  const key = dd+"."+mm;
+  const key = dd+"-"+mm;
   const day = DAYS.find(d=>d.key===key);
   const box = document.getElementById("todayPlanBox");
   box.innerHTML = "";
@@ -3629,8 +3800,24 @@ function renderMetroResult(){
     return;
   }
   const matches = PLACES.filter(p => p.metro === sel);
+  const lines = metroLinesFor(sel);
+  if(lines.length){
+    const row = document.createElement("div");
+    row.className = "line-badges-row";
+    lines.forEach(n=>{ row.appendChild(buildLineBadge(n)); });
+    const label = document.createElement("span");
+    label.style.fontSize = "12px";
+    label.style.color = "var(--muted)";
+    label.style.fontWeight = "600";
+    label.textContent = lines.length > 1 ? "станция пересадки" : "линия";
+    row.appendChild(label);
+    box.appendChild(row);
+  }
   if(matches.length === 0){
-    box.innerHTML = '<div class="metro-empty">Пока нет мест с этой станцией. Добавь метро карточке через ✏️.</div>';
+    const empty = document.createElement("div");
+    empty.className = "metro-empty";
+    empty.textContent = "Пока нет мест с этой станцией. Добавь метро карточке через ✏️.";
+    box.appendChild(empty);
     return;
   }
   const wrap = document.createElement("div");
@@ -3706,7 +3893,7 @@ function openEditModal(id){
   document.getElementById("editModalTitle").textContent = "Редактировать: " + p.name;
   fillForm(p);
   document.getElementById("resetOverrideBtn").style.display = (!p.custom && overrides[id]) ? "block" : "none";
-  document.getElementById("deleteCustomBtn").style.display = p.custom ? "block" : "none";
+  document.getElementById("deleteCustomBtn").style.display = "block";
   document.getElementById("editModalBg").classList.add("show");
 }
 
@@ -3784,9 +3971,15 @@ document.getElementById("resetOverrideBtn").addEventListener("click", ()=>{
 });
 
 document.getElementById("deleteCustomBtn").addEventListener("click", ()=>{
-  if(editingId && confirm("Удалить это место совсем?")){
-    customPlaces = customPlaces.filter(p=>p.id !== editingId);
-    saveCustom();
+  if(editingId && confirm("Удалить это место из планировщика?")){
+    const p = PLACES.find(x=>x.id===editingId);
+    if(p && p.custom){
+      customPlaces = customPlaces.filter(x=>x.id !== editingId);
+      saveCustom();
+    } else {
+      overrides[editingId] = Object.assign({}, overrides[editingId]||{}, {status:"исключить"});
+      saveOverrides();
+    }
     for(const k in plan){ plan[k] = plan[k].filter(i=>i!==editingId); }
     savePlan();
     rebuildPlaces();
@@ -3874,6 +4067,10 @@ function renderPinnedCards(){
     <div class="card-addr">📍 Verdant Plaza, No. 128 West Nanjing Road, Huangpu District, Shanghai, 200003 (вход со 2 этажа)</div>
     <div class="card-addr">☎️ +86 21 8299 8399</div>
   `;
+  const hotelTagsRow = document.createElement("div");
+  hotelTagsRow.className = "tags";
+  hotelTagsRow.appendChild(buildMetroTag("南京西路 Nanjing West Rd"));
+  hbody.appendChild(hotelTagsRow);
   const cnRow = document.createElement("div");
   cnRow.className = "cn-row";
   const cnChip = document.createElement("span");
