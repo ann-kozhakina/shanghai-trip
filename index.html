@@ -69,19 +69,20 @@
   .pill-btn.small{padding:9px 14px;font-size:12.5px;}
 
   .count{font-size:12px;color:var(--muted);margin-bottom:12px;font-weight:600;}
-  .cards{display:flex;flex-direction:column;gap:16px;}
+  .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;align-items:start;}
   .card{background:var(--panel);border-radius:var(--r-xl);box-shadow:var(--shadow);overflow:hidden;transition:transform .15s;}
   .card:hover{transform:translateY(-2px);}
   .card.skip{opacity:.55;}
   .card.iscustom{outline:2px dashed #b7c98f;outline-offset:-2px;}
 
-  .card-banner{position:relative;height:66px;display:flex;align-items:center;justify-content:flex-end;padding:0 16px;}
-  .card-banner .banner-tag{position:absolute;left:14px;top:12px;background:rgba(255,255,255,.85);color:var(--dark);font-size:10.5px;font-weight:700;padding:4px 10px;border-radius:999px;max-width:56%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-  .card-banner .banner-icon{font-size:26px;filter:drop-shadow(0 2px 3px rgba(0,0,0,.15));}
-  .fav-star,.edit-btn{background:rgba(255,255,255,.9);border:none;border-radius:50%;width:32px;height:32px;font-size:14px;cursor:pointer;position:absolute;top:12px;display:flex;align-items:center;justify-content:center;}
+  .card-banner{position:relative;height:76px;padding:0 16px;}
+  .card-banner .banner-tag{position:absolute;left:14px;top:12px;background:rgba(255,255,255,.85);color:var(--dark);font-size:10.5px;font-weight:700;padding:4px 10px;border-radius:999px;max-width:44%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .card-banner .banner-icon{position:absolute;top:12px;right:88px;font-size:15px;width:32px;height:32px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.9);border-radius:50%;}
+  .fav-star,.edit-btn{background:rgba(255,255,255,.9);border:none;border-radius:50%;width:32px;height:32px;font-size:14px;cursor:pointer;position:absolute;top:12px;display:flex;align-items:center;justify-content:center;z-index:2;}
   .fav-star{right:12px;}
   .edit-btn{right:50px;}
   .fav-star.active{background:var(--yellow);}
+  .more-link{color:var(--free);font-weight:700;cursor:pointer;text-decoration:underline;font-size:11.5px;white-space:nowrap;}
 
   .g0{background:linear-gradient(120deg,#2f6f4e,#7fae7a);}
   .g1{background:linear-gradient(120deg,#3c5a3f,#8fa87e);}
@@ -166,6 +167,20 @@
   .nav-btn{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;background:none;border:none;cursor:pointer;color:var(--muted);font-size:10px;font-weight:700;}
   .nav-btn .ic{font-size:20px;}
   .nav-btn.active{color:var(--dark);}
+
+  /* ---------- Desktop / wide screens: automatically switch layout ---------- */
+  @media (min-width: 880px){
+    body{padding-bottom:0;padding-top:var(--navh);}
+    .app{max-width:1200px;padding:0 12px;}
+    .hero{padding:22px 24px 14px;}
+    .screen{padding:0 24px 32px;}
+    .bottom-nav{top:0;bottom:auto;left:0;right:0;box-shadow:0 6px 20px rgba(22,36,26,.08);padding-bottom:0;max-width:1200px;margin:0 auto;border-radius:0 0 var(--r-lg) var(--r-lg);}
+    .nav-btn{flex-direction:row;gap:8px;font-size:13px;}
+    .nav-btn .ic{font-size:18px;}
+    .toast{bottom:24px;}
+    #boardContainer{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px;align-items:start;}
+    .day-col{margin-bottom:0;}
+  }
 </style>
 </head>
 <body>
@@ -3412,7 +3427,28 @@ function buildCard(p, assigned){
   if(p.details){
     const det = document.createElement("div");
     det.className = "card-details";
-    det.textContent = p.details.length > 220 ? p.details.slice(0,220)+"…" : p.details;
+    const full = p.details;
+    const LIMIT = 200;
+    if(full.length > LIMIT){
+      let cut = full.lastIndexOf(" ", LIMIT);
+      if(cut < 50) cut = LIMIT;
+      const short = full.slice(0, cut);
+      const textSpan = document.createElement("span");
+      textSpan.textContent = short + "… ";
+      det.appendChild(textSpan);
+      const moreBtn = document.createElement("span");
+      moreBtn.className = "more-link";
+      moreBtn.textContent = "показать полностью";
+      let expanded = false;
+      moreBtn.addEventListener("click", ()=>{
+        expanded = !expanded;
+        textSpan.textContent = expanded ? full + " " : short + "… ";
+        moreBtn.textContent = expanded ? "свернуть" : "показать полностью";
+      });
+      det.appendChild(moreBtn);
+    } else {
+      det.textContent = full;
+    }
     body.appendChild(det);
   }
   if(p.cn){
