@@ -393,7 +393,7 @@ function fbRef(path){ return db.ref("trips/"+TRIP_ID+"/"+path); }
   document.getElementById("manifestLink").setAttribute("href", URL.createObjectURL(blob));
 })();
 
-const BASE_PLACES = __PLACES_JSON__;
+const BASE_PLACES = [{"id":1,"name":"Шанхайский маглев (Shanghai Maglev Train)","category":"Транспорт","details":"Скоростной поезд; по комментариям изначально разгонялся до 430 км/ч, сейчас снижено до ~300 км/ч","address":"—","link":"https://www.instagram.com/p/DYBLWOCh47L/","note":"Место не названо прямо в подписи, определено по контексту комментариев; подтверждается гидом yanchevskaya_anna (слайд Wow-места)","district":"Аэропорт ↔ город (маглев)","price":"Платно (билет)","indoor":"Наземный поезд","status":"актуально","note2":"Разовая поездка из/в аэропорт, ~8 мин","en":"Shanghai Maglev Train","cn":"上海磁悬浮列车","cn_addr":"龙阳路站 / 浦东国际机场站","en_addr":"","metro":"龙阳路 Longyang Rd","hours":"","closed_day":""},{"id":2,"name":"Sunday Park (星期天公园) — кластер заведений","category":"Кафе / книжный / арт-пространство","details":"Kainos (спешелти-кофе, эстетика Парижа/Нью-Йорка); 星期天的电球引换所 (тайваньское бистро); Little Forest Bookstore (независимый книжный); POLLY Boli Coffee (арт-кафе с винтажным пианино, кинопоказы по средам); Barque Bakou (европейское бистро с террасой)","address":"Yan'an West Road No. 1221 (Pan Pacific Plaza), Shanghai","link":"https://www.instagram.com/p/DZXNW0lp2wf/","note":"—","district":"Цзинъань (Наньцзин Си Лу)/Чанин (Yan'an West Rd)","price":"Платно (в заведениях)","indoor":"В помещении","status":"актуально","note2":"Кластер кафе/книжного/арт-пространства","en":"","cn":"","cn_addr":"","en_addr":"","metro":"","hours":"","closed_day":""}];
 
 const DAYS = [
   {key:"14-07", label:"14.07 (вт)", sub:"Прилёт", emoji:"✈️"},
@@ -1331,35 +1331,4 @@ function renderPinnedCards(){
   const sosDiv = document.createElement("div");
   sosDiv.className = "card sos-card";
   const sb = document.createElement("div");
-  sb.className = "card-banner gsos";
-  sb.innerHTML = '<span class="banner-tag">Важно — аллергия у Матвея</span><span class="banner-icon">⚠️</span>';
-  sosDiv.appendChild(sb);
-  const sbody = document.createElement("div");
-  sbody.className = "card-body";
-  sbody.innerHTML = `
-    <div class="card-name">Тяжёлая аллергия на рыбу (анафилаксия)</div>
-    <div class="card-details">Полностью исключить рыбу и любые рыбные продукты — включая рыбный соус, бульон, желатин, сушёную рыбу как приправу. Показывай текст ниже официанту в любом заведении.</div>
-    <div class="sos-cn">重要提示:这个孩子对鱼类过敏,曾出现过过敏性休克(危及生命)。请确保菜品中不含任何鱼类成分,包括鱼露、鱼汤、鱼胶、鱼干等调味料。万分感谢您的理解与帮助!</div>
-    <div class="sos-en">IMPORTANT: This child has a severe fish allergy (anaphylaxis — life-threatening). Please make sure the dish contains NO fish or fish products at all, including fish sauce, fish stock, fish gelatin or dried fish seasoning. Thank you very much!</div>
-  `;
-  const copyRow = document.createElement("div");
-  copyRow.className = "card-actions";
-  const copyBtn = document.createElement("button");
-  copyBtn.className = "add-btn";
-  copyBtn.textContent = "Скопировать китайский текст";
-  copyBtn.addEventListener("click", ()=>copyText("重要提示:这个孩子对鱼类过敏,曾出现过过敏性休克(危及生命)。请确保菜品中不含任何鱼类成分,包括鱼露、鱼汤、鱼胶、鱼干等调味料。万分感谢您的理解与帮助!"));
-  copyRow.appendChild(copyBtn);
-  sbody.appendChild(copyRow);
-  sosDiv.appendChild(sbody);
-  sosBox.appendChild(sosDiv);
-}
-
-refreshFilterOptions();
-renderCards();
-renderBoard();
-renderMetroResult();
-renderPinnedCards();
-renderToday();
-</script>
-</body>
-</html>
+  sb.
