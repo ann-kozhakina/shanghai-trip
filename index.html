@@ -74,13 +74,13 @@
 
   .count{font-size:12px;color:var(--muted);margin-bottom:12px;font-weight:600;}
   .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;align-items:start;}
-  .card{background:var(--panel);border-radius:var(--r-xl);box-shadow:var(--shadow);overflow:hidden;transition:transform .15s;border-left:5px solid var(--cat-color,#5b7fbd);}
+  .card{background:var(--panel);border-radius:var(--r-xl);box-shadow:var(--shadow);overflow:hidden;transition:transform .15s;border-left:5px solid var(--catcolor);}
   .card:hover{transform:translateY(-2px);}
   .card.skip{opacity:.55;}
   .card.iscustom{outline:2px dashed var(--line);outline-offset:-2px;}
 
   .card-banner{position:relative;height:92px;padding:0;background:#fafafa;}
-  .card-banner .banner-tag{position:absolute;left:14px;bottom:10px;background:var(--cat-soft,#eaf0f9);color:var(--cat-color,#5b7fbd);font-size:10.5px;font-weight:700;padding:4px 10px;border-radius:999px;max-width:60%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .card-banner .banner-tag{position:absolute;left:14px;bottom:10px;background:var(--catsoft,#eaf0f9);color:var(--catcolor,#5b7fbd);font-size:10.5px;font-weight:700;padding:4px 10px;border-radius:999px;max-width:60%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
   .card-banner .banner-icon{position:absolute;top:14px;left:14px;font-size:22px;width:40px;height:40px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.22);border-radius:50%;}
   .fav-star,.edit-btn{background:rgba(255,255,255,.9);border:none;border-radius:50%;width:32px;height:32px;font-size:14px;cursor:pointer;position:absolute;top:12px;display:flex;align-items:center;justify-content:center;z-index:2;}
   .fav-star{right:12px;}
@@ -3272,25 +3272,25 @@ function gradientFor(p){ return p.custom ? "gcustom" : GRADIENTS[Math.abs(hashId
 function hashId(id){ if(typeof id === "number") return id; let h=0; const s=String(id); for(let i=0;i<s.length;i++){ h=(h*31+s.charCodeAt(i))|0; } return h; }
 
 const CATEGORY_STYLES = [
-  {test:/кафе|кофе|чай|десерт/, bg:"#c1852f"},
-  {test:/музе/, bg:"#7a4fe0"},
-  {test:/шопинг|магазин|бренд|сувенир/, bg:"#e04f8a"},
-  {test:/парк|сад|природ|озеро|за городом/, bg:"#2f9e6e"},
-  {test:/транспорт/, bg:"#2f6fe0"},
-  {test:/книж|библиотек/, bg:"#8a6d2f"},
-  {test:/храм|религ/, bg:"#a0522d"},
-  {test:/арт|искусств|галере/, bg:"#9e2fbd"},
-  {test:/еда|ресторан|ужин/, bg:"#e0602f"},
-  {test:/животн|зоопарк/, bg:"#2f9e8e"},
-  {test:/спа|отдых/, bg:"#c15fa0"},
-  {test:/отел/, bg:"#1c3e6e"},
-  {test:/ночн/, bg:"#4a2fbd"},
+  {test:/кафе|кофе|чай|десерт/, bg:"#c99248", soft:"#f7eee0"},
+  {test:/музе/, bg:"#9678c9", soft:"#f1ecf9"},
+  {test:/шопинг|магазин|бренд|сувенир/, bg:"#d17a9c", soft:"#f9edf1"},
+  {test:/парк|сад|природ|озеро|за городом/, bg:"#6ba888", soft:"#eaf3ee"},
+  {test:/транспорт/, bg:"#5b7fbd", soft:"#eaf0f9"},
+  {test:/книж|библиотек/, bg:"#a89968", soft:"#f5f1e3"},
+  {test:/храм|религ/, bg:"#b8826f", soft:"#f3ebe6"},
+  {test:/арт|искусств|галере/, bg:"#a889b8", soft:"#f3ecf9"},
+  {test:/еда|ресторан|ужин/, bg:"#d68a5c", soft:"#f8eee3"},
+  {test:/животн|зоопарк/, bg:"#6fa891", soft:"#ecf2ed"},
+  {test:/спа|отдых/, bg:"#c894b0", soft:"#f7eef4"},
+  {test:/отел/, bg:"#7a91c9", soft:"#ecf0f9"},
+  {test:/ночн/, bg:"#8b7fb8", soft:"#f0ecf8"},
 ];
 function categoryColor(p){
-  if(p.custom) return "#8890a0";
+  if(p.custom) return {bg:"#8890a0", soft:"#d9dce2"};
   const c = (p.category||"").toLowerCase();
-  for(const s of CATEGORY_STYLES){ if(s.test.test(c)) return s.bg; }
-  return "#5a6072";
+  for(const s of CATEGORY_STYLES){ if(s.test.test(c)) return {bg:s.bg, soft:s.soft}; }
+  return {bg:"#5a6072", soft:"#e0e2e8"};
 }
 function darkenHex(hex, amount){
   const h = hex.replace("#","");
@@ -3301,9 +3301,10 @@ function darkenHex(hex, amount){
   return "#" + [r,g,b].map(v=>v.toString(16).padStart(2,"0")).join("");
 }
 function applyCatColor(el, p){
-  const c = categoryColor(p);
-  el.style.setProperty("--catcolor", c);
-  el.style.setProperty("--catcolor-dark", darkenHex(c, .45));
+  const colors = categoryColor(p);
+  el.style.setProperty("--catcolor", colors.bg);
+  el.style.setProperty("--catsoft", colors.soft);
+  el.style.setProperty("--catcolor-dark", darkenHex(colors.bg, .45));
 }
 const SLOT_COLORS = { "Утро":"#2f6fe0", "День":"#e08a2f", "Вечер":"#7a4fe0" };
 
@@ -3479,33 +3480,10 @@ function renderCards(){
   document.getElementById("cardCount").textContent = shown + " из " + PLACES.length + " мест";
 }
 
-const CATEGORY_COLORS = {
-  'Транспорт': {color: '#5b7fbd', soft: '#eaf0f9'},
-  'Кафе': {color: '#c99248', soft: '#f7eee0'},
-  'Кофе': {color: '#c99248', soft: '#f7eee0'},
-  'Музей': {color: '#9678c9', soft: '#f1ecf9'},
-  'Шопинг': {color: '#d17a9c', soft: '#f9edf1'},
-  'Парк': {color: '#6ba888', soft: '#eaf3ee'},
-  'Еда': {color: '#d68a5c', soft: '#f8eee3'},
-  'Ресторан': {color: '#d68a5c', soft: '#f8eee3'}
-};
-function getCategoryColors(cat){
-  cat = (cat||"").toLowerCase();
-  for(const key in CATEGORY_COLORS){
-    if(cat.includes(key.toLowerCase())){
-      return CATEGORY_COLORS[key];
-    }
-  }
-  return {color: '#5b7fbd', soft: '#eaf0f9'};
-}
-
 function buildCard(p, assigned){
   const div = document.createElement("div");
   div.className = "card" + (isSkipped(p) ? " skip" : "") + (p.custom ? " iscustom" : "");
   div.dataset.id = p.id;
-  const colors = getCategoryColors(p.category);
-  div.style.setProperty('--cat-color', colors.color);
-  div.style.setProperty('--cat-soft', colors.soft);
   applyCatColor(div, p);
 
   const banner = document.createElement("div");
@@ -4238,19 +4216,4 @@ function renderPinnedCards(){
   const copyBtn = document.createElement("button");
   copyBtn.className = "add-btn";
   copyBtn.textContent = "Скопировать китайский текст";
-  copyBtn.addEventListener("click", ()=>copyText("重要提示:这个孩子对鱼类过敏,曾出现过过敏性休克(危及生命)。请确保菜品中不含任何鱼类成分,包括鱼露、鱼汤、鱼胶、鱼干等调味料。万分感谢您的理解与帮助!"));
-  copyRow.appendChild(copyBtn);
-  sbody.appendChild(copyRow);
-  sosDiv.appendChild(sbody);
-  sosBox.appendChild(sosDiv);
-}
-
-refreshFilterOptions();
-renderCards();
-renderBoard();
-renderMetroResult();
-renderPinnedCards();
-renderToday();
-</script>
-</body>
-</html>
+  copyBtn.addEventListener("click", ()=>copyText("重要提示:这个孩子对鱼类过敏,曾出现过过敏性休克(危及生命)。请确保菜品中不含任何鱼类成分,包括鱼露、鱼汤、鱼胶、鱼干等�
