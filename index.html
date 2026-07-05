@@ -18,21 +18,21 @@
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 <style>
   :root{
-    --bg:#f4f6fb; --bg-deep:#dfebd6;
+    --bg:#e9f2e3; --bg-deep:#dfebd6;
     --cream:#f9f7ee; --panel:#ffffff;
     --dark:#16241a; --dark2:#20342a;
-    --ink:#1c2233; --muted:#8890a0;
-    --line:#e9ecf3;
-    --free:#6ba888; --paid:#d68a5c; --skip:#a9a495;
-    --yellow:#ffd23f; --red:#b23a2e; --blue:#5b7fbd;
+    --ink:#16241a; --muted:#76806e;
+    --line:#e1e8d6;
+    --free:#2f6f4e; --paid:#a8763e; --skip:#a9a495;
+    --yellow:#ffd23f; --red:#b23a2e; --blue:#2f5f9e;
     --r-xl:26px; --r-lg:18px; --r-md:14px; --r-sm:10px;
-    --shadow:0 10px 26px rgba(28,34,51,.09);
+    --shadow:0 10px 26px rgba(22,36,26,.09);
     --navh:80px;
   }
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
   html,body{overscroll-behavior-y:contain;}
   body{margin:0;font-family:'Golos Text',-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
-       background:linear-gradient(180deg,#f8fbf7 0%,#f5faf1 260px,#f9fcf6 260px);color:var(--ink);
+       background:linear-gradient(180deg,#eaf3e3 0%,#e6f0dd 260px,#eef3ea 260px);color:var(--ink);
        padding-bottom:var(--navh);}
   .app{max-width:560px;margin:0 auto;}
 
@@ -42,8 +42,8 @@
   .weather{background:var(--cream);border-radius:999px;padding:7px 14px;font-size:13px;font-weight:600;box-shadow:var(--shadow);display:flex;align-items:center;gap:6px;white-space:nowrap;}
   .weather small{font-weight:400;color:var(--muted);}
   .sync-badge{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;padding:5px 10px;border-radius:999px;margin-bottom:8px;}
-  .sync-badge.on{background:#e7f0ea;color:var(--free);}
-  .sync-badge.off{background:#f8ede0;color:var(--paid);}
+  .sync-badge.on{background:#e3f0e7;color:var(--free);}
+  .sync-badge.off{background:#f5ecdd;color:var(--paid);}
   .flag-tag{display:inline-flex;align-items:center;gap:6px;background:var(--dark);color:#fff;font-size:11.5px;font-weight:700;letter-spacing:.05em;padding:5px 12px;border-radius:999px;margin-bottom:8px;margin-left:6px;}
   .hero-title{font-size:26px;line-height:1.1;font-weight:800;margin:6px 0 12px;letter-spacing:-.01em;}
   .hero-title .accent{color:var(--free);}
@@ -58,7 +58,7 @@
   .icon-circle{width:46px;height:46px;border-radius:50%;background:var(--panel);border:none;box-shadow:var(--shadow);cursor:pointer;font-size:17px;flex:0 0 auto;}
 
   .pill-filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px;}
-  .pill-select{appearance:none;-webkit-appearance:none;border:none;border-radius:999px;padding:10px 30px 10px 14px;background:var(--panel) url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="10" height="6"><path d="M0 0l5 6 5-6z" fill="%238890a0"/></svg>') no-repeat right 12px center;font-size:13px;font-weight:600;color:var(--ink);box-shadow:var(--shadow);cursor:pointer;}
+  .pill-select{appearance:none;-webkit-appearance:none;border:none;border-radius:999px;padding:10px 30px 10px 14px;background:var(--panel) url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="10" height="6"><path d="M0 0l5 6 5-6z" fill="%2376806e"/></svg>') no-repeat right 12px center;font-size:13px;font-weight:600;color:var(--ink);box-shadow:var(--shadow);cursor:pointer;}
   .pill-toggle{display:flex;align-items:center;gap:6px;background:var(--panel);border-radius:999px;padding:10px 14px;font-size:12.5px;font-weight:600;color:var(--muted);box-shadow:var(--shadow);cursor:pointer;user-select:none;}
   .pill-toggle input{accent-color:var(--dark);width:16px;height:16px;}
   .pill-toggle.active{background:var(--dark);color:#fff;}
@@ -73,7 +73,7 @@
 
   .count{font-size:12px;color:var(--muted);margin-bottom:12px;font-weight:600;}
   .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;align-items:start;}
-  .card{background:var(--panel);border-radius:var(--r-xl);box-shadow:var(--shadow);overflow:hidden;transition:transform .15s;border-left:5px solid var(--catcolor,#8890a0);}
+  .card{background:var(--panel);border-radius:var(--r-xl);box-shadow:var(--shadow);overflow:hidden;transition:transform .15s;}
   .card:hover{transform:translateY(-2px);}
   .card.skip{opacity:.55;}
   .card.iscustom{outline:2px dashed #b7c98f;outline-offset:-2px;}
@@ -85,14 +85,14 @@
   .fav-star{right:12px;}
   .edit-btn{right:50px;}
   .fav-star.active{background:var(--yellow);}
-  .more-link{color:var(--blue);font-weight:700;cursor:pointer;text-decoration:underline;font-size:11.5px;white-space:nowrap;}
+  .more-link{color:var(--free);font-weight:700;cursor:pointer;text-decoration:underline;font-size:11.5px;white-space:nowrap;}
 
-  .g0{background:linear-gradient(120deg,#6ba888,#9fc9a8);}
-  .g1{background:linear-gradient(120deg,#5b7fbd,#8fa8d8);}
-  .g2{background:linear-gradient(120deg,#c99248,#e0b878);}
-  .g3{background:linear-gradient(120deg,#9678c9,#b9a5d8);}
-  .g4{background:linear-gradient(120deg,#d17a9c,#e0a0b8);}
-  .g5{background:linear-gradient(120deg,#d68a5c,#e0a878);}
+  .g0{background:linear-gradient(120deg,#2f6f4e,#7fae7a);}
+  .g1{background:linear-gradient(120deg,#3c5a3f,#8fa87e);}
+  .g2{background:linear-gradient(120deg,#5c7a52,#b7c98f);}
+  .g3{background:linear-gradient(120deg,#264d3b,#5b8a68);}
+  .g4{background:linear-gradient(120deg,#6f7a49,#c8cf94);}
+  .g5{background:linear-gradient(120deg,#3a6b5e,#9fc9a8);}
   .gcustom{background:linear-gradient(120deg,#8a6d2f,#d6b768);}
   .ghotel{background:linear-gradient(120deg,#1e3a5f,#4d7ab5);}
   .gsos{background:linear-gradient(120deg,#8a2e22,#c65b3f);}
@@ -101,24 +101,23 @@
   .card-name{font-weight:700;font-size:15px;line-height:1.3;}
   .card-name .en{display:block;font-weight:400;color:var(--muted);font-size:12px;margin-top:1px;}
   .tags{display:flex;flex-wrap:wrap;gap:5px;margin:8px 0 6px;}
-  .tag{font-size:10.5px;padding:3px 9px;border-radius:999px;background:#f4f7f2;color:var(--ink);white-space:nowrap;font-weight:600;}
-  .tag.free{background:rgba(107,168,136,.15);color:var(--free);}
-  .tag.paid{background:rgba(214,138,92,.15);color:var(--paid);}
+  .tag{font-size:10.5px;padding:3px 9px;border-radius:999px;background:#eef1e6;color:var(--ink);white-space:nowrap;font-weight:600;}
+  .tag.free{background:#e3f0e7;color:var(--free);}
+  .tag.paid{background:#f5ecdd;color:var(--paid);}
   .tag.skip{background:#f0efe9;color:var(--skip);}
   .tag.custom{background:#f7edd6;color:#8a6d2f;}
-  .tag.metro{background:#eaf0f9;color:var(--blue);display:inline-flex;align-items:center;}
+  .tag.metro{background:#e7eefa;color:var(--blue);display:inline-flex;align-items:center;}
   .line-badge{display:inline-block;vertical-align:middle;color:#fff;font-weight:800;font-size:9px;line-height:14px;width:14px;height:14px;text-align:center;border-radius:4px;margin-right:3px;flex:0 0 auto;}
   .line-badges-row{display:flex;gap:4px;margin-bottom:10px;flex-wrap:wrap;align-items:center;}
-  .tag.hopen{background:rgba(107,168,136,.15);color:var(--free);}
+  .tag.hopen{background:#e3f0e7;color:var(--free);}
   .tag.hsoon{background:#fdf0d5;color:#a8763e;}
   .tag.hclosed{background:#f3e4e1;color:var(--red);}
   .card-addr{font-size:12.5px;color:#4b473d;margin:5px 0;}
   .card-hours{font-size:12px;color:#4b473d;margin:5px 0;}
   .card-details{font-size:12px;color:var(--muted);margin:5px 0;line-height:1.45;}
   .cn-row{font-size:12px;margin:4px 0;display:flex;gap:6px;flex-wrap:wrap;align-items:center;}
-  .cn-chip{background:#f4f6fb;border:none;padding:8px 12px;border-radius:10px;cursor:pointer;font-size:11.5px;color:var(--ink);font-weight:600;}
-  .cn-chip:hover{background:#eef0f8;}
-  .cn-chip .copy-ic{margin-right:4px;color:var(--catcolor,#8890a0);}
+  .cn-chip{background:#fbf3e2;border:1px dashed #dcc79a;padding:3px 10px;border-radius:999px;cursor:pointer;font-size:11.5px;color:#7a5a2c;font-weight:600;}
+  .cn-chip:hover{background:#f5e8ce;}
   .card-actions{display:flex;justify-content:space-between;align-items:center;margin-top:10px;gap:8px;flex-wrap:wrap;}
   .add-btn{font-size:12.5px;padding:9px 14px;border-radius:999px;border:none;background:var(--dark);color:#fff;cursor:pointer;font-weight:700;}
   .add-btn:hover{background:var(--dark2);}
@@ -151,7 +150,7 @@
   .empty-hint{font-size:11.5px;color:#bdb9a8;font-style:italic;}
 
   .slot-group-label{font-size:10.5px;color:var(--muted);font-weight:800;margin:2px 0 5px 2px;display:flex;align-items:center;gap:4px;text-transform:uppercase;letter-spacing:.02em;}
-  .chip-card{background:#f6f7f0;border-left:5px solid var(--catcolor,#6ba888);border-radius:10px;margin-bottom:7px;overflow:hidden;}
+  .chip-card{background:#f6f7f0;border-left:3px solid var(--free);border-radius:10px;margin-bottom:7px;overflow:hidden;}
   .chip-header{display:flex;align-items:center;gap:8px;padding:9px 10px;cursor:pointer;}
   .chip-ic{font-size:15px;flex:0 0 auto;}
   .chip-name{flex:1;font-size:13px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0;}
@@ -174,7 +173,7 @@
   .modal h3{margin:0 0 12px;font-size:16px;font-weight:800;}
   .modal-slot-btn{display:block;width:100%;text-align:left;padding:12px 14px;border-radius:999px;border:1.5px solid var(--line);background:#fff;margin-bottom:7px;cursor:pointer;font-size:13.5px;font-weight:600;}
   .modal-slot-btn:hover{border-color:var(--dark);}
-  .modal-slot-btn.added{background:rgba(107,168,136,.15);border-color:var(--free);color:var(--free);}
+  .modal-slot-btn.added{background:#eaf3ec;border-color:var(--free);color:var(--free);}
   .modal-close{margin-top:8px;font-size:12px;color:var(--muted);cursor:pointer;text-align:right;font-weight:600;}
 
   .form-field{margin-bottom:11px;}
@@ -189,6 +188,7 @@
   .nav-btn .ic{font-size:20px;}
   .nav-btn.active{color:var(--dark);}
 
+  /* ---------- Desktop / wide screens: automatically switch layout ---------- */
   @media (min-width: 880px){
     body{padding-bottom:0;padding-top:var(--navh);}
     .app{max-width:1200px;padding:0 12px;}
@@ -214,12 +214,14 @@
     <span class="sync-badge off" id="syncBadge">🔴 сохраняется только на этом телефоне</span>
   </div>
 
+  <!-- ===== SCREEN: TODAY ===== -->
   <div class="screen active" id="screen-today">
     <div class="pinned" id="hotelCard"></div>
     <div class="pinned" id="allergyCard"></div>
     <div id="todayPlanBox"></div>
   </div>
 
+  <!-- ===== SCREEN: LIBRARY ===== -->
   <div class="screen" id="screen-library">
     <div class="search-row">
       <div class="search-pill">
@@ -247,6 +249,7 @@
     <div class="cards" id="cardsContainer"></div>
   </div>
 
+  <!-- ===== SCREEN: BOARD ===== -->
   <div class="screen" id="screen-board">
     <div class="hero-actions" style="margin-top:12px;">
       <button class="pill-btn dark" id="exportBtn">📋 Скопировать план</button>
@@ -255,6 +258,7 @@
     <div id="boardContainer" style="margin-top:14px;"></div>
   </div>
 
+  <!-- ===== SCREEN: METRO ===== -->
   <div class="screen" id="screen-metro">
     <div class="hero-caption" style="margin:12px 0;">Выбери станцию метро — покажутся все места рядом с ней, даже те, что не в плане. Станция известна не для всех 132 мест — остальные можно дополнить через ✏️ на карточке.</div>
     <select class="pill-select" id="metroSelect" style="width:100%;margin-bottom:14px;"><option value="">Выбери станцию метро...</option></select>
@@ -335,6 +339,11 @@
 <div class="toast" id="toast"></div>
 
 <script>
+/* =========================================================
+   FIREBASE (необязательно) — впиши свою конфигурацию, чтобы
+   план и карточки синхронизировались у всей семьи по ссылке.
+   Инструкция: см. README-deploy.md
+   ========================================================= */
 const firebaseConfig = {
   apiKey: "AIzaSyBdTybHcBEz-s4LwkY2ymbhFO0e8R67PDI",
   authDomain: "shanghai-trip-48215.firebaseapp.com",
@@ -358,111 +367,33 @@ try{
 
 function fbRef(path){ return db.ref("trips/"+TRIP_ID+"/"+path); }
 
+/* =========================================================
+   PWA: значок на главном экране (без сервис-воркера/офлайн-кэша)
+   ========================================================= */
 (function setupPWA(){
-  const ICONS = { "180": "", "192": "", "512": "" };
-  const icon180 = ICONS["180"] ? "data:image/png;base64," + ICONS["180"] : "";
-  const icon192 = ICONS["192"] ? "data:image/png;base64," + ICONS["192"] : "";
-  const icon512 = ICONS["512"] ? "data:image/png;base64," + ICONS["512"] : "";
-  if(icon180) document.getElementById("appleTouchIcon").setAttribute("href", icon180);
-  if(icon192) document.getElementById("favicon").setAttribute("href", icon192);
+  const ICONS = { "180": "__ICON_180__", "192": "__ICON_192__", "512": "__ICON_512__" };
+  const icon180 = "data:image/png;base64," + ICONS["180"];
+  const icon192 = "data:image/png;base64," + ICONS["192"];
+  const icon512 = "data:image/png;base64," + ICONS["512"];
+  document.getElementById("appleTouchIcon").setAttribute("href", icon180);
+  document.getElementById("favicon").setAttribute("href", icon192);
   const manifest = {
     name: "Шанхай 26",
     short_name: "Шанхай 26",
     start_url: ".",
     display: "standalone",
-    background_color: "#f9fcf6",
+    background_color: "#eef3ea",
     theme_color: "#16241a",
-    icons: []
+    icons: [
+      {src: icon192, sizes:"192x192", type:"image/png"},
+      {src: icon512, sizes:"512x512", type:"image/png"}
+    ]
   };
-  if(icon192) manifest.icons.push({src: icon192, sizes:"192x192", type:"image/png"});
-  if(icon512) manifest.icons.push({src: icon512, sizes:"512x512", type:"image/png"});
   const blob = new Blob([JSON.stringify(manifest)], {type:"application/manifest+json"});
   document.getElementById("manifestLink").setAttribute("href", URL.createObjectURL(blob));
 })();
 
-/* CSV парсинг и загрузка из гугл-таблицы */
-function parseCSVLine(line){
-  const result = [];
-  let current = "";
-  let inQuotes = false;
-  for(let i = 0; i < line.length; i++){
-    const ch = line[i];
-    const next = line[i+1];
-    if(ch === '"'){
-      if(inQuotes && next === '"'){
-        current += '"';
-        i++;
-      } else {
-        inQuotes = !inQuotes;
-      }
-    } else if(ch === ',' && !inQuotes){
-      result.push(current.trim());
-      current = "";
-    } else {
-      current += ch;
-    }
-  }
-  result.push(current.trim());
-  return result;
-}
-
-function normalizePlace(row){
-  // маппинг колонок из таблицы на внутренний формат
-  return {
-    id: row["№"] || row["id"] || "",
-    name: row["Место / локация"] || "",
-    en: "", // можно доб. позже
-    category: row["Категория"] || "",
-    details: row["Детали"] || "",
-    address: row["Адрес / ориентиры"] || "",
-    link: row["Ссылка на пост"] || "",
-    note: row["Примечание"] || "",
-    district: row["Район / кластер"] || "",
-    price: row["Платно / бесплатно"] || "",
-    indoor: row["Помещение / улица"] || "",
-    status: row["Статус для поездки"] || "",
-    note2: row["Доп. заметка"] || "",
-    metro: "", // заполнять вручную или через edit
-    cn: "",
-    cn_addr: "",
-    hours: "",
-    closed_day: "",
-    en_addr: "",
-    author: row["Автор поста"] || "",
-    custom: false
-  };
-}
-
-async function loadPlacesFromGoogleSheets(){
-  const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRN_PWK55vpAo-dSayPrIEzA365hcFCzUGSU6TXVadLY6xWcQlR4aQXLsVDHUsi7lBQHRjhWE7VgkdZ/pub?gid=985201296&single=true&output=csv";
-  try {
-    const response = await fetch(csvUrl);
-    const csv = await response.text();
-    const lines = csv.trim().split('\n');
-    if(lines.length < 2) return [];
-
-    const headers = parseCSVLine(lines[0]);
-    const places = [];
-
-    for(let i = 1; i < lines.length; i++){
-      const values = parseCSVLine(lines[i]);
-      const row = {};
-      headers.forEach((h, idx) => {
-        row[h] = values[idx] || "";
-      });
-      if(row["№"] || row["Место / локация"]){
-        const normalized = normalizePlace(row);
-        if(normalized.name || normalized.id) places.push(normalized);
-      }
-    }
-    return places;
-  } catch(e){
-    console.error("Failed to load from Google Sheets", e);
-    return [];
-  }
-}
-
-let BASE_PLACES = [];
+const BASE_PLACES = __PLACES_JSON__;
 
 const DAYS = [
   {key:"14-07", label:"14.07 (вт)", sub:"Прилёт", emoji:"✈️"},
@@ -474,35 +405,6 @@ const DAYS = [
 ];
 const BLOCKS = ["Утро","День","Вечер"];
 const GRADIENTS = ["g0","g1","g2","g3","g4","g5"];
-
-const CATEGORY_STYLES = [
-  {test:/транспорт/, color:"#5b7fbd"},
-  {test:/кафе|кофе|чай|десерт/, color:"#c99248"},
-  {test:/музе/, color:"#9678c9"},
-  {test:/шопинг|магазин|бренд|сувенир/, color:"#d17a9c"},
-  {test:/парк|сад|природ|озеро|за городом/, color:"#6ba888"},
-  {test:/еда|ресторан|ужин/, color:"#d68a5c"},
-  {test:/книж|библиотек/, color:"#4a6b8a"},
-  {test:/храм|религ/, color:"#8a7cc9"},
-  {test:/арт|искусств|галере/, color:"#9678c9"},
-  {test:/животн|зоопарк/, color:"#6ba888"},
-  {test:/спа|отдых/, color:"#d17a9c"},
-  {test:/отел/, color:"#5b7fbd"},
-  {test:/ночн/, color:"#8a7cc9"},
-];
-
-function categoryColor(p){
-  const cat = (p.category || "").toLowerCase();
-  for(const style of CATEGORY_STYLES){
-    if(style.test.test(cat)) return style.color;
-  }
-  return "#8890a0";
-}
-
-function applyCatColor(el, p){
-  const color = categoryColor(p);
-  el.style.setProperty("--catcolor", color);
-}
 
 const STORAGE_KEY = "shanghai_trip_plan_v1";
 const FAV_KEY = "shanghai_trip_favs_v1";
@@ -517,6 +419,9 @@ function saveJSON(key, val){ localStorage.setItem(key, JSON.stringify(val)); }
 
 let plan = loadJSON(STORAGE_KEY, null);
 if(!plan){ plan = {}; DAYS.forEach(d=>BLOCKS.forEach(b=>plan[d.key+"|"+b]=[])); }
+// Миграция: Firebase Realtime Database запрещает "." в ключах, а старые
+// ключи плана были вида "14.07|Утро" — из-за этого запись в Firebase
+// молча не проходила и локальные добавления откатывались после синка.
 (function migrateLegacyDotKeys(){
   const migrated = {};
   let changed = false;
@@ -563,6 +468,7 @@ function rebuildPlaces(){
   });
   PLACES = base.concat(customPlaces);
 }
+rebuildPlaces();
 
 function isFree(p){ return /бесплат/i.test(p.price||""); }
 function isPaid(p){ return /платно/i.test(p.price||"") && !/бесплат/i.test(p.price||""); }
@@ -633,6 +539,7 @@ function amapUrl(p){
   return "https://uri.amap.com/search?keyword=" + encodeURIComponent(kw) + "&city=" + encodeURIComponent("上海");
 }
 
+/* ---------- Shanghai time + open-now logic ---------- */
 function shanghaiNow(){
   return new Date(new Date().toLocaleString("en-US", {timeZone:"Asia/Shanghai"}));
 }
@@ -760,14 +667,17 @@ function buildCard(p, assigned){
   const div = document.createElement("div");
   div.className = "card" + (isSkipped(p) ? " skip" : "") + (p.custom ? " iscustom" : "");
   div.dataset.id = p.id;
-  applyCatColor(div, p);
 
   const banner = document.createElement("div");
   banner.className = "card-banner " + gradientFor(p);
   const tagSpan = document.createElement("span");
   tagSpan.className = "banner-tag";
-  tagSpan.textContent = p.category || p.district || "Шанхай";
+  tagSpan.textContent = p.district || p.category || "Шанхай";
   banner.appendChild(tagSpan);
+  const icon = document.createElement("span");
+  icon.className = "banner-icon";
+  icon.textContent = p.custom ? "🆕" : categoryIcon(p.category);
+  banner.appendChild(icon);
 
   const editBtn = document.createElement("button");
   editBtn.className = "edit-btn";
@@ -854,7 +764,7 @@ function buildCard(p, assigned){
     row.className = "cn-row";
     const chip = document.createElement("span");
     chip.className = "cn-chip";
-    chip.innerHTML = '<span class="copy-ic">📋</span>' + escapeHtml(p.cn);
+    chip.textContent = "🇨🇳 " + p.cn;
     chip.addEventListener("click", ()=>{ copyText(p.cn); });
     row.appendChild(chip);
     body.appendChild(row);
@@ -864,7 +774,7 @@ function buildCard(p, assigned){
     row2.className = "cn-row";
     const chip2 = document.createElement("span");
     chip2.className = "cn-chip";
-    chip2.innerHTML = '<span class="copy-ic">📍</span>' + escapeHtml(p.cn_addr);
+    chip2.textContent = "📍中文 " + p.cn_addr;
     chip2.addEventListener("click", ()=>{ copyText(p.cn_addr); });
     row2.appendChild(chip2);
     body.appendChild(row2);
@@ -923,7 +833,6 @@ function escapeHtml(s){
 function buildChipCard(p, slotKey){
   const wrap = document.createElement("div");
   wrap.className = "chip-card";
-  applyCatColor(wrap, p);
 
   const header = document.createElement("div");
   header.className = "chip-header";
@@ -980,7 +889,7 @@ function buildChipCard(p, slotKey){
     row.className = "cn-row";
     const chip = document.createElement("span");
     chip.className = "cn-chip";
-    chip.innerHTML = '<span class="copy-ic">📋</span>' + escapeHtml(p.cn);
+    chip.textContent = "🇨🇳 " + p.cn;
     chip.addEventListener("click", (e)=>{ e.stopPropagation(); copyText(p.cn); });
     row.appendChild(chip);
     body.appendChild(row);
@@ -990,7 +899,7 @@ function buildChipCard(p, slotKey){
     row2.className = "cn-row";
     const chip2 = document.createElement("span");
     chip2.className = "cn-chip";
-    chip2.innerHTML = '<span class="copy-ic">📍</span>' + escapeHtml(p.cn_addr);
+    chip2.textContent = "📍中文 " + p.cn_addr;
     chip2.addEventListener("click", (e)=>{ e.stopPropagation(); copyText(p.cn_addr); });
     row2.appendChild(chip2);
     body.appendChild(row2);
@@ -1183,6 +1092,7 @@ function closeModal(){ document.getElementById("modalBg").classList.remove("show
 document.getElementById("modalClose").addEventListener("click", closeModal);
 document.getElementById("modalBg").addEventListener("click", (e)=>{ if(e.target.id==="modalBg") closeModal(); });
 
+/* ---------- Edit / Create place ---------- */
 let editingId = null;
 let editingIsNew = false;
 
@@ -1309,6 +1219,7 @@ document.getElementById("deleteCustomBtn").addEventListener("click", ()=>{
 
 document.getElementById("addPlaceBtn").addEventListener("click", openCreateModal);
 
+/* ---------- Export / reset ---------- */
 document.getElementById("exportBtn").addEventListener("click", ()=>{
   let out = "МАРШРУТ ПО ШАНХАЮ (14-19 июля)\n\n";
   DAYS.forEach(d=>{
@@ -1346,6 +1257,7 @@ document.getElementById("onlyFavBtn").addEventListener("click", ()=>{
 
 document.getElementById("metroSelect").addEventListener("change", renderMetroResult);
 
+/* ---------- Bottom nav ---------- */
 document.querySelectorAll(".nav-btn").forEach(btn=>{
   btn.addEventListener("click", ()=>{
     document.querySelectorAll(".nav-btn").forEach(b=>b.classList.remove("active"));
@@ -1365,6 +1277,7 @@ document.querySelectorAll(".nav-btn").forEach(btn=>{
   });
 });
 
+/* ---------- Pinned Hotel + Allergy cards ---------- */
 function renderPinnedCards(){
   const hotelBox = document.getElementById("hotelCard");
   hotelBox.innerHTML = "";
@@ -1372,7 +1285,7 @@ function renderPinnedCards(){
   hotelDiv.className = "card";
   const hb = document.createElement("div");
   hb.className = "card-banner ghotel";
-  hb.innerHTML = '<span class="banner-tag">Отель, 14-19 июля</span>';
+  hb.innerHTML = '<span class="banner-tag">Отель, 14-19 июля</span><span class="banner-icon">🏨</span>';
   hotelDiv.appendChild(hb);
   const hbody = document.createElement("div");
   hbody.className = "card-body";
@@ -1389,7 +1302,7 @@ function renderPinnedCards(){
   cnRow.className = "cn-row";
   const cnChip = document.createElement("span");
   cnChip.className = "cn-chip";
-  cnChip.innerHTML = '<span class="copy-ic">📋</span>上海人民广场雅高瑞享酒店';
+  cnChip.textContent = "🇨🇳 上海人民广场雅高瑞享酒店";
   cnChip.addEventListener("click", ()=>copyText("上海人民广场雅高瑞享酒店"));
   cnRow.appendChild(cnChip);
   hbody.appendChild(cnRow);
@@ -1397,7 +1310,7 @@ function renderPinnedCards(){
   cnAddrRow.className = "cn-row";
   const cnAddrChip = document.createElement("span");
   cnAddrChip.className = "cn-chip";
-  cnAddrChip.innerHTML = '<span class="copy-ic">📍</span>上海市黄浦区南京西路128号（绿地广场）';
+  cnAddrChip.textContent = "📍中文 上海市黄浦区南京西路128号（绿地广场）";
   cnAddrChip.addEventListener("click", ()=>copyText("上海市黄浦区南京西路128号（绿地广场）"));
   cnAddrRow.appendChild(cnAddrChip);
   hbody.appendChild(cnAddrRow);
@@ -1419,7 +1332,7 @@ function renderPinnedCards(){
   sosDiv.className = "card sos-card";
   const sb = document.createElement("div");
   sb.className = "card-banner gsos";
-  sb.innerHTML = '<span class="banner-tag">Важно — аллергия у Матвея</span>';
+  sb.innerHTML = '<span class="banner-tag">Важно — аллергия у Матвея</span><span class="banner-icon">⚠️</span>';
   sosDiv.appendChild(sb);
   const sbody = document.createElement("div");
   sbody.className = "card-body";
@@ -1441,14 +1354,12 @@ function renderPinnedCards(){
   sosBox.appendChild(sosDiv);
 }
 
-async function initApp(){
-  BASE_PLACES = await loadPlacesFromGoogleSheets();
-  if(BASE_PLACES.length === 0){
-    console.warn("No places loaded from Google Sheets");
-  }
-  rebuildPlaces();
-  refreshFilterOptions();
-  renderCards();
-  renderBoard();
-  renderMetroResult();
-  renderPinne
+refreshFilterOptions();
+renderCards();
+renderBoard();
+renderMetroResult();
+renderPinnedCards();
+renderToday();
+</script>
+</body>
+</html>
