@@ -18,21 +18,21 @@
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 <style>
   :root{
-    --bg:#e9f2e3; --bg-deep:#dfebd6;
+    --bg:#f4f6fb; --bg-deep:#dfebd6;
     --cream:#f9f7ee; --panel:#ffffff;
     --dark:#16241a; --dark2:#20342a;
-    --ink:#16241a; --muted:#76806e;
-    --line:#e1e8d6;
-    --free:#2f6f4e; --paid:#a8763e; --skip:#a9a495;
-    --yellow:#ffd23f; --red:#b23a2e; --blue:#2f5f9e;
+    --ink:#1c2233; --muted:#8890a0;
+    --line:#e9ecf3;
+    --free:#6ba888; --paid:#d68a5c; --skip:#a9a495;
+    --yellow:#ffd23f; --red:#b23a2e; --blue:#5b7fbd;
     --r-xl:26px; --r-lg:18px; --r-md:14px; --r-sm:10px;
-    --shadow:0 10px 26px rgba(22,36,26,.09);
+    --shadow:0 10px 26px rgba(28,34,51,.09);
     --navh:80px;
   }
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
   html,body{overscroll-behavior-y:contain;}
   body{margin:0;font-family:'Golos Text',-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
-       background:linear-gradient(180deg,#eaf3e3 0%,#e6f0dd 260px,#eef3ea 260px);color:var(--ink);
+       background:linear-gradient(180deg,#f8fbf7 0%,#f5faf1 260px,#f9fcf6 260px);color:var(--ink);
        padding-bottom:var(--navh);}
   .app{max-width:560px;margin:0 auto;}
 
@@ -42,8 +42,8 @@
   .weather{background:var(--cream);border-radius:999px;padding:7px 14px;font-size:13px;font-weight:600;box-shadow:var(--shadow);display:flex;align-items:center;gap:6px;white-space:nowrap;}
   .weather small{font-weight:400;color:var(--muted);}
   .sync-badge{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;padding:5px 10px;border-radius:999px;margin-bottom:8px;}
-  .sync-badge.on{background:#e3f0e7;color:var(--free);}
-  .sync-badge.off{background:#f5ecdd;color:var(--paid);}
+  .sync-badge.on{background:#e7f0ea;color:var(--free);}
+  .sync-badge.off{background:#f8ede0;color:var(--paid);}
   .flag-tag{display:inline-flex;align-items:center;gap:6px;background:var(--dark);color:#fff;font-size:11.5px;font-weight:700;letter-spacing:.05em;padding:5px 12px;border-radius:999px;margin-bottom:8px;margin-left:6px;}
   .hero-title{font-size:26px;line-height:1.1;font-weight:800;margin:6px 0 12px;letter-spacing:-.01em;}
   .hero-title .accent{color:var(--free);}
@@ -58,7 +58,7 @@
   .icon-circle{width:46px;height:46px;border-radius:50%;background:var(--panel);border:none;box-shadow:var(--shadow);cursor:pointer;font-size:17px;flex:0 0 auto;}
 
   .pill-filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px;}
-  .pill-select{appearance:none;-webkit-appearance:none;border:none;border-radius:999px;padding:10px 30px 10px 14px;background:var(--panel) url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="10" height="6"><path d="M0 0l5 6 5-6z" fill="%2376806e"/></svg>') no-repeat right 12px center;font-size:13px;font-weight:600;color:var(--ink);box-shadow:var(--shadow);cursor:pointer;}
+  .pill-select{appearance:none;-webkit-appearance:none;border:none;border-radius:999px;padding:10px 30px 10px 14px;background:var(--panel) url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="10" height="6"><path d="M0 0l5 6 5-6z" fill="%238890a0"/></svg>') no-repeat right 12px center;font-size:13px;font-weight:600;color:var(--ink);box-shadow:var(--shadow);cursor:pointer;}
   .pill-toggle{display:flex;align-items:center;gap:6px;background:var(--panel);border-radius:999px;padding:10px 14px;font-size:12.5px;font-weight:600;color:var(--muted);box-shadow:var(--shadow);cursor:pointer;user-select:none;}
   .pill-toggle input{accent-color:var(--dark);width:16px;height:16px;}
   .pill-toggle.active{background:var(--dark);color:#fff;}
@@ -73,7 +73,7 @@
 
   .count{font-size:12px;color:var(--muted);margin-bottom:12px;font-weight:600;}
   .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;align-items:start;}
-  .card{background:var(--panel);border-radius:var(--r-xl);box-shadow:var(--shadow);overflow:hidden;transition:transform .15s;}
+  .card{background:var(--panel);border-radius:var(--r-xl);box-shadow:var(--shadow);overflow:hidden;transition:transform .15s;border-left:5px solid var(--catcolor,#8890a0);}
   .card:hover{transform:translateY(-2px);}
   .card.skip{opacity:.55;}
   .card.iscustom{outline:2px dashed #b7c98f;outline-offset:-2px;}
@@ -85,14 +85,14 @@
   .fav-star{right:12px;}
   .edit-btn{right:50px;}
   .fav-star.active{background:var(--yellow);}
-  .more-link{color:var(--free);font-weight:700;cursor:pointer;text-decoration:underline;font-size:11.5px;white-space:nowrap;}
+  .more-link{color:var(--blue);font-weight:700;cursor:pointer;text-decoration:underline;font-size:11.5px;white-space:nowrap;}
 
-  .g0{background:linear-gradient(120deg,#2f6f4e,#7fae7a);}
-  .g1{background:linear-gradient(120deg,#3c5a3f,#8fa87e);}
-  .g2{background:linear-gradient(120deg,#5c7a52,#b7c98f);}
-  .g3{background:linear-gradient(120deg,#264d3b,#5b8a68);}
-  .g4{background:linear-gradient(120deg,#6f7a49,#c8cf94);}
-  .g5{background:linear-gradient(120deg,#3a6b5e,#9fc9a8);}
+  .g0{background:linear-gradient(120deg,#6ba888,#9fc9a8);}
+  .g1{background:linear-gradient(120deg,#5b7fbd,#8fa8d8);}
+  .g2{background:linear-gradient(120deg,#c99248,#e0b878);}
+  .g3{background:linear-gradient(120deg,#9678c9,#b9a5d8);}
+  .g4{background:linear-gradient(120deg,#d17a9c,#e0a0b8);}
+  .g5{background:linear-gradient(120deg,#d68a5c,#e0a878);}
   .gcustom{background:linear-gradient(120deg,#8a6d2f,#d6b768);}
   .ghotel{background:linear-gradient(120deg,#1e3a5f,#4d7ab5);}
   .gsos{background:linear-gradient(120deg,#8a2e22,#c65b3f);}
@@ -101,23 +101,24 @@
   .card-name{font-weight:700;font-size:15px;line-height:1.3;}
   .card-name .en{display:block;font-weight:400;color:var(--muted);font-size:12px;margin-top:1px;}
   .tags{display:flex;flex-wrap:wrap;gap:5px;margin:8px 0 6px;}
-  .tag{font-size:10.5px;padding:3px 9px;border-radius:999px;background:#eef1e6;color:var(--ink);white-space:nowrap;font-weight:600;}
-  .tag.free{background:#e3f0e7;color:var(--free);}
-  .tag.paid{background:#f5ecdd;color:var(--paid);}
+  .tag{font-size:10.5px;padding:3px 9px;border-radius:999px;background:#f4f7f2;color:var(--ink);white-space:nowrap;font-weight:600;}
+  .tag.free{background:rgba(107,168,136,.15);color:var(--free);}
+  .tag.paid{background:rgba(214,138,92,.15);color:var(--paid);}
   .tag.skip{background:#f0efe9;color:var(--skip);}
   .tag.custom{background:#f7edd6;color:#8a6d2f;}
-  .tag.metro{background:#e7eefa;color:var(--blue);display:inline-flex;align-items:center;}
+  .tag.metro{background:#eaf0f9;color:var(--blue);display:inline-flex;align-items:center;}
   .line-badge{display:inline-block;vertical-align:middle;color:#fff;font-weight:800;font-size:9px;line-height:14px;width:14px;height:14px;text-align:center;border-radius:4px;margin-right:3px;flex:0 0 auto;}
   .line-badges-row{display:flex;gap:4px;margin-bottom:10px;flex-wrap:wrap;align-items:center;}
-  .tag.hopen{background:#e3f0e7;color:var(--free);}
+  .tag.hopen{background:rgba(107,168,136,.15);color:var(--free);}
   .tag.hsoon{background:#fdf0d5;color:#a8763e;}
   .tag.hclosed{background:#f3e4e1;color:var(--red);}
   .card-addr{font-size:12.5px;color:#4b473d;margin:5px 0;}
   .card-hours{font-size:12px;color:#4b473d;margin:5px 0;}
   .card-details{font-size:12px;color:var(--muted);margin:5px 0;line-height:1.45;}
   .cn-row{font-size:12px;margin:4px 0;display:flex;gap:6px;flex-wrap:wrap;align-items:center;}
-  .cn-chip{background:#fbf3e2;border:1px dashed #dcc79a;padding:3px 10px;border-radius:999px;cursor:pointer;font-size:11.5px;color:#7a5a2c;font-weight:600;}
-  .cn-chip:hover{background:#f5e8ce;}
+  .cn-chip{background:#f4f6fb;border:none;padding:8px 12px;border-radius:10px;cursor:pointer;font-size:11.5px;color:var(--ink);font-weight:600;}
+  .cn-chip:hover{background:#eef0f8;}
+  .cn-chip .copy-ic{margin-right:4px;color:var(--catcolor,#8890a0);}
   .card-actions{display:flex;justify-content:space-between;align-items:center;margin-top:10px;gap:8px;flex-wrap:wrap;}
   .add-btn{font-size:12.5px;padding:9px 14px;border-radius:999px;border:none;background:var(--dark);color:#fff;cursor:pointer;font-weight:700;}
   .add-btn:hover{background:var(--dark2);}
@@ -150,7 +151,7 @@
   .empty-hint{font-size:11.5px;color:#bdb9a8;font-style:italic;}
 
   .slot-group-label{font-size:10.5px;color:var(--muted);font-weight:800;margin:2px 0 5px 2px;display:flex;align-items:center;gap:4px;text-transform:uppercase;letter-spacing:.02em;}
-  .chip-card{background:#f6f7f0;border-left:3px solid var(--free);border-radius:10px;margin-bottom:7px;overflow:hidden;}
+  .chip-card{background:#f6f7f0;border-left:5px solid var(--catcolor,#6ba888);border-radius:10px;margin-bottom:7px;overflow:hidden;}
   .chip-header{display:flex;align-items:center;gap:8px;padding:9px 10px;cursor:pointer;}
   .chip-ic{font-size:15px;flex:0 0 auto;}
   .chip-name{flex:1;font-size:13px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0;}
@@ -173,7 +174,7 @@
   .modal h3{margin:0 0 12px;font-size:16px;font-weight:800;}
   .modal-slot-btn{display:block;width:100%;text-align:left;padding:12px 14px;border-radius:999px;border:1.5px solid var(--line);background:#fff;margin-bottom:7px;cursor:pointer;font-size:13.5px;font-weight:600;}
   .modal-slot-btn:hover{border-color:var(--dark);}
-  .modal-slot-btn.added{background:#eaf3ec;border-color:var(--free);color:var(--free);}
+  .modal-slot-btn.added{background:rgba(107,168,136,.15);border-color:var(--free);color:var(--free);}
   .modal-close{margin-top:8px;font-size:12px;color:var(--muted);cursor:pointer;text-align:right;font-weight:600;}
 
   .form-field{margin-bottom:11px;}
@@ -188,7 +189,6 @@
   .nav-btn .ic{font-size:20px;}
   .nav-btn.active{color:var(--dark);}
 
-  /* ---------- Desktop / wide screens: automatically switch layout ---------- */
   @media (min-width: 880px){
     body{padding-bottom:0;padding-top:var(--navh);}
     .app{max-width:1200px;padding:0 12px;}
@@ -214,14 +214,12 @@
     <span class="sync-badge off" id="syncBadge">🔴 сохраняется только на этом телефоне</span>
   </div>
 
-  <!-- ===== SCREEN: TODAY ===== -->
   <div class="screen active" id="screen-today">
     <div class="pinned" id="hotelCard"></div>
     <div class="pinned" id="allergyCard"></div>
     <div id="todayPlanBox"></div>
   </div>
 
-  <!-- ===== SCREEN: LIBRARY ===== -->
   <div class="screen" id="screen-library">
     <div class="search-row">
       <div class="search-pill">
@@ -249,7 +247,6 @@
     <div class="cards" id="cardsContainer"></div>
   </div>
 
-  <!-- ===== SCREEN: BOARD ===== -->
   <div class="screen" id="screen-board">
     <div class="hero-actions" style="margin-top:12px;">
       <button class="pill-btn dark" id="exportBtn">📋 Скопировать план</button>
@@ -258,7 +255,6 @@
     <div id="boardContainer" style="margin-top:14px;"></div>
   </div>
 
-  <!-- ===== SCREEN: METRO ===== -->
   <div class="screen" id="screen-metro">
     <div class="hero-caption" style="margin:12px 0;">Выбери станцию метро — покажутся все места рядом с ней, даже те, что не в плане. Станция известна не для всех 132 мест — остальные можно дополнить через ✏️ на карточке.</div>
     <select class="pill-select" id="metroSelect" style="width:100%;margin-bottom:14px;"><option value="">Выбери станцию метро...</option></select>
@@ -339,11 +335,6 @@
 <div class="toast" id="toast"></div>
 
 <script>
-/* =========================================================
-   FIREBASE (необязательно) — впиши свою конфигурацию, чтобы
-   план и карточки синхронизировались у всей семьи по ссылке.
-   Инструкция: см. README-deploy.md
-   ========================================================= */
 const firebaseConfig = {
   apiKey: "AIzaSyBdTybHcBEz-s4LwkY2ymbhFO0e8R67PDI",
   authDomain: "shanghai-trip-48215.firebaseapp.com",
@@ -367,2806 +358,111 @@ try{
 
 function fbRef(path){ return db.ref("trips/"+TRIP_ID+"/"+path); }
 
-/* =========================================================
-   PWA: значок на главном экране (без сервис-воркера/офлайн-кэша)
-   ========================================================= */
 (function setupPWA(){
-  const ICONS = { "180": "iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAYAAAA9zQYyAAAECElEQVR4nO3dPW4bVxiFYZLwGgwkQLqUdmdkE9lElpElZBlZT1q7VGdAhTaRFAEFmRqS83Nn7nyHz1Mb5Ih4dXwpUtTxsAMff/35397XwHIvT8/H3tfQ5QIE/Bh6BL7ZHYr4sW0V96p3ImKGrBn3KjcsZMZYI+xT6xsUM2Ot0Uqz7xAhs0SrtW6y0GJmqVYNLfquEDJrWLLWsxdazKxlSVuzghYza5vb2OSgxcxW5rQ2KWgxs7WpzY0OWsz0MqW9UUGLmd7GNng3aDGzF2NabP7SN/R0M2jrzN7ca/Jq0GJmr2616chBlMGgrTN7d63Rd0GLmSqGWnXkIMoPQVtnqrls1kITRdBEeQ3acYOq3rZroYkiaKKcDgfHDeo7N2yhiSJoogiaKEfnZ5JYaKIImiiCJoqgiSJoogiaKIImiqCJImiiCJoogiaKoIkiaKIImiiCJsqH3hdQ0fev3za5n18+f9rkfpJ4g/9EW8X8lrDHc+SYoEfMPe+3Igs90mVUW6xmj/uszkLPsFVYAp5O0EQRNFEETRRBE0XQRBE0UQRNFEETRdBEETRRBE2UuDcneWfadEnvGYkJWsjLJYRdPmght1c57NJnaDGvo/LjWjpouFQ26MorUkHVx7ds0DCkZNBV16Oaio9zyaDhGkETRdBEETRRBE0UQRNF0EQRNFEETRRBE0XQRBE0UQRNFEETRdBEETRRBE0UQRNF0EQRNFEe7m99//bnH6P+3T9//b3qdSyV8nW0ZqGJImiiCJoocWfoe5+c+dPvX5rcTm+tvo6KHyZzi4UmStxC31ucsT8d2PtypXwdrVloopT8BP9HW52e9v5c4pKFJoqgiSJoogiaKIImiqCJImiiCJoogiaKoIkiaKIImiiCJoqgiSJoogiaKIImiqCJImiiCJoogiaKoIlSMuhqv1pfVcXHuWTQcE3ZoCuuRyVVH9+yQcOQ0kFXXZG9q/y4lvxsuyE+7265yiGfxQR9JuzpEkI+iwuax1b6DA2XBE0UQRNF0EQRNFEETRRBE0XQRBE0UQRNFEETRdBEETRRBE0UQRPl9PL0fOx9EdDCy9Pz0UITRdBEETRRTofD/2eP3hcCS5wbttBEETRRXoN27KCqt+1aaKIImig/BO3YQTWXzVpoorwL2kpTxVCrgwstavbuWqOOHES5GrSVZq9utXlzoUXN3txr0pGDKHeDttLsxZgWRy20qOltbIOjjxyippcp7U06Q4uarU1tbvKTQlGzlTmtzfoph6hZ29zGZv/YTtSsZUlbTaL0xztpocVINnlhxVqzVKuGmodorZmi9Rg2f+nbWjPWGq2sGp+1Zsiao7fZmor7sW31P3eX44G4H0OP4+cuzrsCz7CH50//AXjpEtdQYH8BAAAAAElFTkSuQmCC", "192": "iVBORw0KGgoAAAANSUhEUgAAAMAAAADACAYAAABS3GwHAAAEfElEQVR4nO3dQW7bRhiGYcrIGQI0QHdZtruil+gleowcocfoebpNlt4V8MKXSBeFA8WRJVIccjj/9zzrQKSp/+WMZEU+TQfz/uOHr73Pge08Pz6dep/Dua4nY9iZpr5R7H5gQ881e8ew28EMPkvsFcLmBzH4rLF1CJs9uMGnpa1CaP6gBp8ttQ7hoeWDGX621nrGmtRk8OmhxWqwegUw/PTSYvZWBWD46W3tDN4dgOHnKNbM4l0BGH6O5t6ZXByA4eeo7pnNRQEYfo5u6YzODsDwM4olszorAMPPaObO7M0ADD+jmjO7TT8KAaO5GoC7P6O7NcNvBmD4qeLaLNsCEe1iAO7+VPPWTFsBiPZDAO7+VHVptq0ARPsuAHd/qns941YAon0LwN2fFOezbgUgmgCI9jBNtj/keZl5KwDRBEA0ARBNAEQ7eQFMMisA0QRANAEQTQBEEwDRBEA0ARBNAEQTANEEQDQBEE0ARBMA0QRANAEQ7V3vE6jk389fdjvWz7/+stuxKvMfYhrYc/BfE8I6tkAr9Rz+Ixx/dLZADe11Nzb07dgCrXA+iD22Ir2PX4EtENEEQDQBEE0ARBMA0QRANAEQTQBEEwDRBEA0ARBNAEQr/WE4n5psp+qH7UoGYPC3Uy2Eclsgw7+tate3VADVnpyjqnSdywRQ6UkZQZXrXSKAKk/GaCpc9xIBwL2GD6DCXWhko1//4QOANQRANAEQTQBEEwDRBEA0ARBNAEQTANEEQDQBEE0ARBMA0QRANAEQTQBEEwDRBEA0ARBNAEQTANEEQLR3vU+gt98//Tnr3/3z19+bnkdrVX+u1qwARBMA0QRAtNKvAeb8MYef/vit2WMdScufa/SvP7zGCkC00ivAnDvX3HdLRrsLVv25WrMCEE0ARBv+r0SmL+FHMNobBOesAEQTANEEQDQBEE0ARBMA0QRANAEQTQBEEwDRBEA0ARBNAEQTANEEQDQBEE0ARBMA0QRANAEQTQBEEwDRBEC04QMY+TtpKhj9+g8fAKxRIoDR70KjqnDdSwQwTTWejJFUud5lApimOk/K0VW6zqUCmKZaT84RVbu+w3879DW+ObqdaoP/onQAcEu5LRAsIQCiCYBoAiCaAIgmAKIJgGgCIJoAiCYAogmAaAIgmgCIJgCiCYBoAiDaw/Pj06n3SUAPz49PJysA0QRANAEQTQBEe5im/18M9D4R2NPLzFsBiCYAon0LwDaIFOezbgUg2ncBWAWo7vWMWwGI9kMAVgGqujTbVgCiXQzAKkA1b820FYBobwZgFaCKa7N8dQUQAaO7NcO2QES7GYBVgFHNmd1ZK4AIGM3cmZ29BRIBo1gyq4teA4iAo1s6o4tfBIuAo7pnNu96F0gEHM29M3n326Ai4CjWzOKq3wOIgN7WzuDqX4SJgF5azF7T4X3/8cPXlo8Hl7S86Tb9KITVgK21nrHNBtZqQEtb3Vw3v2MLgTW23lXstmURAkvstZ3efc8uBK7Z+3Vk1xetYmCa+r55crh3bURR29HeKfwPI5QoX1PniPYAAAAASUVORK5CYII=", "512": "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" };
-  const icon180 = "data:image/png;base64," + ICONS["180"];
-  const icon192 = "data:image/png;base64," + ICONS["192"];
-  const icon512 = "data:image/png;base64," + ICONS["512"];
-  document.getElementById("appleTouchIcon").setAttribute("href", icon180);
-  document.getElementById("favicon").setAttribute("href", icon192);
+  const ICONS = { "180": "", "192": "", "512": "" };
+  const icon180 = ICONS["180"] ? "data:image/png;base64," + ICONS["180"] : "";
+  const icon192 = ICONS["192"] ? "data:image/png;base64," + ICONS["192"] : "";
+  const icon512 = ICONS["512"] ? "data:image/png;base64," + ICONS["512"] : "";
+  if(icon180) document.getElementById("appleTouchIcon").setAttribute("href", icon180);
+  if(icon192) document.getElementById("favicon").setAttribute("href", icon192);
   const manifest = {
     name: "Шанхай 26",
     short_name: "Шанхай 26",
     start_url: ".",
     display: "standalone",
-    background_color: "#eef3ea",
+    background_color: "#f9fcf6",
     theme_color: "#16241a",
-    icons: [
-      {src: icon192, sizes:"192x192", type:"image/png"},
-      {src: icon512, sizes:"512x512", type:"image/png"}
-    ]
+    icons: []
   };
+  if(icon192) manifest.icons.push({src: icon192, sizes:"192x192", type:"image/png"});
+  if(icon512) manifest.icons.push({src: icon512, sizes:"512x512", type:"image/png"});
   const blob = new Blob([JSON.stringify(manifest)], {type:"application/manifest+json"});
   document.getElementById("manifestLink").setAttribute("href", URL.createObjectURL(blob));
 })();
 
-const BASE_PLACES = [
- {
-  "id": 1,
-  "name": "Шанхайский маглев (Shanghai Maglev Train)",
-  "category": "Транспорт",
-  "details": "Скоростной поезд; по комментариям изначально разгонялся до 430 км/ч, сейчас снижено до ~300 км/ч",
-  "address": "—",
-  "link": "https://www.instagram.com/p/DYBLWOCh47L/",
-  "note": "Место не названо прямо в подписи, определено по контексту комментариев; подтверждается гидом yanchevskaya_anna (слайд Wow-места)",
-  "district": "Аэропорт ↔ город (маглев)",
-  "price": "Платно (билет)",
-  "indoor": "Наземный поезд",
-  "status": "актуально",
-  "note2": "Разовая поездка из/в аэропорт, ~8 мин",
-  "en": "Shanghai Maglev Train",
-  "cn": "上海磁悬浮列车",
-  "cn_addr": "龙阳路站 / 浦东国际机场站",
-  "en_addr": "",
-  "metro": "龙阳路 Longyang Rd",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 2,
-  "name": "Sunday Park (星期天公园) — кластер заведений",
-  "category": "Кафе / книжный / арт-пространство",
-  "details": "Kainos (спешелти-кофе, эстетика Парижа/Нью-Йорка); 星期天的电球引换所 (тайваньское бистро); Little Forest Bookstore (независимый книжный); POLLY Boli Coffee (арт-кафе с винтажным пианино, кинопоказы по средам); Barque Bakou (европейское бистро с террасой)",
-  "address": "Yan'an West Road No. 1221 (Pan Pacific Plaza), Shanghai",
-  "link": "https://www.instagram.com/p/DZXNW0lp2wf/",
-  "note": "—",
-  "district": "Цзинъань (Наньцзин Си Лу)/Чанин (Yan'an West Rd)",
-  "price": "Платно (в заведениях)",
-  "indoor": "В помещении",
-  "status": "актуально",
-  "note2": "Кластер кафе/книжного/арт-пространства",
-  "en": "",
-  "cn": "",
-  "cn_addr": "",
-  "en_addr": "",
-  "metro": "",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 3,
-  "name": "Китайские бренды одежды (без привязки к месту)",
-  "category": "Шопинг / бренды",
-  "details": "Подборка брендов: EDITION, MAIA ACTIVE, DAZZLE, URBAN REVIVO, MO&CO.",
-  "address": "—",
-  "link": "https://www.instagram.com/p/DYrRqF3o2XT/",
-  "note": "Город не указан, не про конкретное место в Шанхае",
-  "district": "уточнить на месте",
-  "price": "уточнить на месте",
-  "indoor": "уточнить на месте",
-  "status": "исключить",
-  "note2": "Нет привязки к конкретному месту",
-  "en": "",
-  "cn": "",
-  "cn_addr": "",
-  "en_addr": "",
-  "metro": "",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 4,
-  "name": "Шанхайский зоопарк дикой природы (上海野生动物园)",
-  "category": "Развлечения / парк",
-  "details": "Расписание кормлений: красные панды 30 юаней (12:00-15:00); медведи бесплатно (несколько сеансов); капибары/слоны/зебры 30 юаней; кенгуру/жирафы 30 юаней",
-  "address": "—",
-  "link": "https://www.instagram.com/p/DaVVwhLsGcw/",
-  "note": "—",
-  "district": "Дальний Пудун (Диншуй/Наньхуэй)",
-  "price": "Платно (билет + доп. активности)",
-  "indoor": "Смешанно, много улицы",
-  "status": "актуально",
-  "note2": "ДЕНЬ РОЖДЕНИЯ 18 июля; ехать рано из-за жары",
-  "en": "Shanghai Wild Animal Park",
-  "cn": "上海野生动物园",
-  "cn_addr": "上海市浦东新区南六公路178号",
-  "en_addr": "",
-  "metro": "野生动物园 Wild Animal Park",
-  "hours": "09:00-21:30",
-  "closed_day": ""
- },
- {
-  "id": 5,
-  "name": "Miniso (Гуанчжоу)",
-  "category": "Шопинг",
-  "details": "Охлаждающие гелевые наклейки от жары",
-  "address": "—",
-  "link": "https://www.instagram.com/p/DaSL4fGBiDy/",
-  "note": "Это Гуанчжоу, не Шанхай",
-  "district": "уточнить на месте",
-  "price": "уточнить на месте",
-  "indoor": "уточнить на месте",
-  "status": "исключить",
-  "note2": "Это Гуанчжоу, не Шанхай",
-  "en": "",
-  "cn": "",
-  "cn_addr": "",
-  "en_addr": "",
-  "metro": "",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 6,
-  "name": "Не определено",
-  "category": "—",
-  "details": "Текст поста не извлечён; в комментариях вопрос про 'набережную' — возможно рядом с Бундом",
-  "address": "—",
-  "link": "https://www.instagram.com/p/DaQe2h-oZgv/",
-  "note": "Нужно открыть пост вручную (видео без подписи)",
-  "district": "уточнить на месте",
-  "price": "уточнить на месте",
-  "indoor": "уточнить на месте",
-  "status": "уточнить",
-  "note2": "Не удалось извлечь текст поста",
-  "en": "",
-  "cn": "",
-  "cn_addr": "",
-  "en_addr": "",
-  "metro": "",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 7,
-  "name": "CUBIC 3 (кофейня)",
-  "category": "Кафе",
-  "details": "Автор называет 'самым вкусным кофе за весь Шанхай'",
-  "address": "Xuhui District, Yongkang Road No.58, Shanghai (искать в Amap: CUBIC 3)",
-  "link": "https://www.instagram.com/p/DZ6fnwzospM/",
-  "note": "Также упомянута в гиде yanchevskaya_anna",
-  "district": "Французская концессия (Сюйхуэй/Хуанпу)",
-  "price": "Платно",
-  "indoor": "В помещении, кондиционер",
-  "status": "актуально",
-  "note2": "Yongkang Rd",
-  "en": "",
-  "cn": "",
-  "cn_addr": "",
-  "en_addr": "",
-  "metro": "",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 8,
-  "name": "Anfu road / Donghu road / Wukang road / Yongyang road / Xinle road / Changle road",
-  "category": "Гид: улицы для прогулок",
-  "details": "'Улицы для трендсеттинга и нового [Гулять и насматривать себя]'",
-  "address": "—",
-  "link": "https://www.instagram.com/p/DZaeTIniHKG/",
-  "note": "Слайд 2 карусели",
-  "district": "Французская концессия (Сюйхуэй/Хуанпу)",
-  "price": "Бесплатно (улицы)",
-  "indoor": "Улица",
-  "status": "актуально",
-  "note2": "Гулять рано утром/вечером из-за жары",
-  "en": "Wukang Road",
-  "cn": "武康路",
-  "cn_addr": "上海市徐汇区武康路",
-  "en_addr": "",
-  "metro": "",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 9,
-  "name": "Fotografiska",
-  "category": "Гид: искусство/арт-кластеры",
-  "details": "Кластер и музей фотографии на набережной реки Сучжоу",
-  "address": "Набережная реки Сучжоу",
-  "link": "https://www.instagram.com/p/DZaeTIniHKG/",
-  "note": "Слайд 3",
-  "district": "Сучжоу Крик / M50 (Путуо)",
-  "price": "Платно (билет на выставку)",
-  "indoor": "В помещении",
-  "status": "актуально",
-  "note2": "Fotografiska на набережной Сучжоу",
-  "en": "",
-  "cn": "",
-  "cn_addr": "",
-  "en_addr": "",
-  "metro": "",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 10,
-  "name": "WYSH",
-  "category": "Гид: искусство/арт-кластеры",
-  "details": "Арт-пространство в здании бывшей фабрики",
-  "address": "—",
-  "link": "https://www.instagram.com/p/DZaeTIniHKG/",
-  "note": "Слайд 3",
-  "district": "уточнить на месте",
-  "price": "Платно",
-  "indoor": "В помещении",
-  "status": "уточнить",
-  "note2": "Точный район не подтверждён",
-  "en": "",
-  "cn": "",
-  "cn_addr": "",
-  "en_addr": "",
-  "metro": "",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 11,
-  "name": "Park Mall на Yanping Rd",
-  "category": "Гид: искусство/арт-кластеры",
-  "details": "Креативное пространство с концепт-сторами и кофейнями во дворах",
-  "address": "Yanping Rd",
-  "link": "https://www.instagram.com/p/DZaeTIniHKG/",
-  "note": "Слайд 4",
-  "district": "Цзинъань (Наньцзин Си Лу)",
-  "price": "Бесплатно вход в ТЦ",
-  "indoor": "В помещении",
-  "status": "актуально",
-  "note2": "Yanping Rd",
-  "en": "",
-  "cn": "",
-  "cn_addr": "",
-  "en_addr": "",
-  "metro": "",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 12,
-  "name": "M50 Art District и 1000 Trees",
-  "category": "Гид: искусство/арт-кластеры",
-  "details": "Большая территория с маленькими галереями и концепт-сторами",
-  "address": "—",
-  "link": "https://www.instagram.com/p/DZaeTIniHKG/",
-  "note": "Слайд 4",
-  "district": "Сучжоу Крик / M50 (Путуо)",
-  "price": "Бесплатно (галереи платно)",
-  "indoor": "Смешанно",
-  "status": "актуально",
-  "note2": "M50 и 1000 Trees рядом друг с другом",
-  "en": "M50 Art District (Moganshan Road 50)",
-  "cn": "M50创意园",
-  "cn_addr": "上海市普陀区莫干山路50号",
-  "en_addr": "",
-  "metro": "长寿路 Changshou Rd",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 13,
-  "name": "Power Station of Art",
-  "category": "Гид: искусство/арт-кластеры",
-  "details": "Много современного искусства на бывшей электростанции",
-  "address": "—",
-  "link": "https://www.instagram.com/p/DZaeTIniHKG/",
-  "note": "Слайд 4",
-  "district": "Хуанпу (Народная площадь / Бунд / Юйюань)",
-  "price": "Бесплатно (обычно)",
-  "indoor": "В помещении",
-  "status": "актуально",
-  "note2": "Power Station of Art, южная часть набережной",
-  "en": "",
-  "cn": "",
-  "cn_addr": "",
-  "en_addr": "",
-  "metro": "",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 14,
-  "name": "West Bund Museum",
-  "category": "Гид: искусство/арт-кластеры",
-  "details": "Собрание фондов центра Помпиду на берегу Хуанпу",
-  "address": "Берег реки Хуанпу",
-  "link": "https://www.instagram.com/p/DZaeTIniHKG/",
-  "note": "Слайд 4",
-  "district": "Вест-Банд (набережная Сюйхуэй)",
-  "price": "Платно",
-  "indoor": "В помещении",
-  "status": "актуально",
-  "note2": "Фонд Помпиду",
-  "en": "",
-  "cn": "",
-  "cn_addr": "",
-  "en_addr": "",
-  "metro": "",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 15,
-  "name": "1933 Old Millfun",
-  "category": "Гид: искусство/арт-кластеры",
-  "details": "Бывшая скотобойня с арт-пространствами",
-  "address": "—",
-  "link": "https://www.instagram.com/p/DZaeTIniHKG/",
-  "note": "Слайд 5",
-  "district": "Норт-Банд (Хункоу)",
-  "price": "Бесплатно территория, платно музеи внутри",
-  "indoor": "Смешанно",
-  "status": "актуально",
-  "note2": "Хункоу, 1933 Laochangfang",
-  "en": "1933 Old Millfun (Laochangfang)",
-  "cn": "1933老场坊",
-  "cn_addr": "上海市虹口区沙泾路10号",
-  "en_addr": "",
-  "metro": "",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 16,
-  "name": "Fosun Foundation",
-  "category": "Гид: искусство/арт-кластеры",
-  "details": "Современное искусство, с крышей и лучшим видом на Pudong",
-  "address": "—",
-  "link": "https://www.instagram.com/p/DZaeTIniHKG/",
-  "note": "Слайд 5",
-  "district": "Хуанпу (Народная площадь / Бунд / Юйюань)",
-  "price": "Платно (выставки)",
-  "indoor": "В помещении",
-  "status": "актуально",
-  "note2": "На набережной Бунд",
-  "en": "",
-  "cn": "",
-  "cn_addr": "",
-  "en_addr": "",
-  "metro": "",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 17,
-  "name": "Young Fried Dumpling",
-  "category": "Гид: еда",
-  "details": "'Трушная' китайская еда для местных, как и вся улица",
-  "address": "—",
-  "link": "https://www.instagram.com/p/DZaeTIniHKG/",
-  "note": "Слайд 6",
-  "district": "Французская концессия (Сюйхуэй/Хуанпу)",
-  "price": "Платно, недорого",
-  "indoor": "В помещении",
-  "status": "актуально",
-  "note2": "Anfu Rd",
-  "en": "",
-  "cn": "",
-  "cn_addr": "",
-  "en_addr": "",
-  "metro": "",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 18,
-  "name": "Lai Lai Xiao Long",
-  "category": "Гид: еда",
-  "details": "Дамплинги и вонтоны от Мишлен",
-  "address": "—",
-  "link": "https://www.instagram.com/p/DZaeTIniHKG/",
-  "note": "Слайд 6",
-  "district": "Французская концессия (Сюйхуэй/Хуанпу)",
-  "price": "Платно",
-  "indoor": "В помещении",
-  "status": "актуально",
-  "note2": "Мишлен",
-  "en": "",
-  "cn": "",
-  "cn_addr": "",
-  "en_addr": "",
-  "metro": "",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 19,
-  "name": "Weixiangzhai",
-  "category": "Гид: еда",
-  "details": "Топ-лапшичная",
-  "address": "—",
-  "link": "https://www.instagram.com/p/DZaeTIniHKG/",
-  "note": "Слайд 6",
-  "district": "Французская концессия (Сюйхуэй/Хуанпу)",
-  "price": "Платно, недорого",
-  "indoor": "В помещении",
-  "status": "актуально",
-  "note2": "",
-  "en": "",
-  "cn": "",
-  "cn_addr": "",
-  "en_addr": "",
-  "metro": "",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 20,
-  "name": "Zhoupu Night Market (ночной рынок)",
-  "category": "Гид: еда",
-  "details": "Вся уличная еда в одном месте",
-  "address": "—",
-  "link": "https://www.instagram.com/p/DZaeTIniHKG/",
-  "note": "Слайд 7",
-  "district": "Дальний Пудун (Диншуй/Наньхуэй)",
-  "price": "Платно (еда на месте)",
-  "indoor": "Улица",
-  "status": "уточнить",
-  "note2": "Zhoupu — довольно далеко на юге Пудуна",
-  "en": "",
-  "cn": "",
-  "cn_addr": "",
-  "en_addr": "",
-  "metro": "",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 21,
-  "name": "Three (на Changle road)",
-  "category": "Гид: еда",
-  "details": "Вафли и большая тарелка лапши",
-  "address": "Changle road",
-  "link": "https://www.instagram.com/p/DZaeTIniHKG/",
-  "note": "Слайд 7",
-  "district": "Французская концессия (Сюйхуэй/Хуанпу)",
-  "price": "Платно, недорого",
-  "indoor": "Смешанно",
-  "status": "актуально",
-  "note2": "Changle Rd",
-  "en": "",
-  "cn": "",
-  "cn_addr": "",
-  "en_addr": "",
-  "metro": "",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 22,
-  "name": "Xiaotao Noodle Restaurant",
-  "category": "Гид: еда",
-  "details": "Лапшичная от Мишлен",
-  "address": "—",
-  "link": "https://www.instagram.com/p/DZaeTIniHKG/",
-  "note": "Слайд 8",
-  "district": "Французская концессия (Сюйхуэй/Хуанпу)",
-  "price": "Платно",
-  "indoor": "В помещении",
-  "status": "актуально",
-  "note2": "Мишлен",
-  "en": "",
-  "cn": "",
-  "cn_addr": "",
-  "en_addr": "",
-  "metro": "",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 23,
-  "name": "A Niang Mian Guan",
-  "category": "Гид: еда",
-  "details": "Лапшичная от Мишлен",
-  "address": "—",
-  "link": "https://www.instagram.com/p/DZaeTIniHKG/",
-  "note": "Слайд 8. По комментарию читательницы (1 нед. назад) — похоже, закрыта, не смогли найти",
-  "district": "Французская концессия (Сюйхуэй/Хуанпу)",
-  "price": "Платно",
-  "indoor": "В помещении",
-  "status": "под вопросом",
-  "note2": "По отзыву читательницы — возможно закрыта",
-  "en": "",
-  "cn": "",
-  "cn_addr": "",
-  "en_addr": "",
-  "metro": "",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 24,
-  "name": "Kaifine",
-  "category": "Гид: еда",
-  "details": "'Лучшие три котлетки в жизни (после бабушкиных)'",
-  "address": "—",
-  "link": "https://www.instagram.com/p/DZaeTIniHKG/",
-  "note": "Слайд 8",
-  "district": "Французская концессия (Сюйхуэй/Хуанпу)",
-  "price": "Платно",
-  "indoor": "В помещении",
-  "status": "актуально",
-  "note2": "",
-  "en": "",
-  "cn": "",
-  "cn_addr": "",
-  "en_addr": "",
-  "metro": "",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 25,
-  "name": "Палатки у Сада Радости (Yuyuan Garden)",
-  "category": "Гид: еда",
-  "details": "Пить через трубочку из больших дамплингов",
-  "address": "У Yuyuan Garden",
-  "link": "https://www.instagram.com/p/DZaeTIniHKG/",
-  "note": "Слайд 8",
-  "district": "Хуанпу (Народная площадь / Бунд / Юйюань)",
-  "price": "Платно, недорого",
-  "indoor": "Улица",
-  "status": "актуально",
-  "note2": "У Yuyuan Garden",
-  "en": "",
-  "cn": "",
-  "cn_addr": "",
-  "en_addr": "",
-  "metro": "",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 26,
-  "name": "Akal Cha",
-  "category": "Гид: кофе и чайные",
-  "details": "Чайная лаборатория / коктейли и чайный кофе",
-  "address": "—",
-  "link": "https://www.instagram.com/p/DZaeTIniHKG/",
-  "note": "Слайд 9",
-  "district": "уточнить на месте",
-  "price": "Платно",
-  "indoor": "В помещении",
-  "status": "уточнить",
-  "note2": "",
-  "en": "",
-  "cn": "",
-  "cn_addr": "",
-  "en_addr": "",
-  "metro": "",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 27,
-  "name": "Leaf Song",
-  "category": "Гид: кофе и чайные",
-  "details": "За чайным латте",
-  "address": "—",
-  "link": "https://www.instagram.com/p/DZaeTIniHKG/",
-  "note": "Слайд 9",
-  "district": "уточнить на месте",
-  "price": "Платно",
-  "indoor": "В помещении",
-  "status": "уточнить",
-  "note2": "",
-  "en": "",
-  "cn": "",
-  "cn_addr": "",
-  "en_addr": "",
-  "metro": "",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 28,
-  "name": "Heytea",
-  "category": "Гид: кофе и чайные",
-  "details": "Самый вкусный чай с тапиокой",
-  "address": "—",
-  "link": "https://www.instagram.com/p/DZaeTIniHKG/",
-  "note": "Слайд 9",
-  "district": "Французская концессия (Сюйхуэй/Хуанпу)",
-  "price": "Платно, недорого",
-  "indoor": "В помещении",
-  "status": "актуально",
-  "note2": "Сеть, есть в HAI550/Xintiandi",
-  "en": "",
-  "cn": "",
-  "cn_addr": "",
-  "en_addr": "",
-  "metro": "",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 29,
-  "name": "Matcha Wang",
-  "category": "Гид: кофе и чайные",
-  "details": "Матча с сырной пенкой 'и теми самыми овечками'",
-  "address": "—",
-  "link": "https://www.instagram.com/p/DZaeTIniHKG/",
-  "note": "Слайд 9",
-  "district": "Французская концессия (Сюйхуэй/Хуанпу)",
-  "price": "Платно",
-  "indoor": "В помещении",
-  "status": "актуально",
-  "note2": "HAI550, Huaihai Middle Rd",
-  "en": "",
-  "cn": "",
-  "cn_addr": "",
-  "en_addr": "",
-  "metro": "",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 30,
-  "name": "One Step Garden",
-  "category": "Гид: кофе и чайные",
-  "details": "Ритуальный кофе в историческом секретном месте",
-  "address": "—",
-  "link": "https://www.instagram.com/p/DZaeTIniHKG/",
-  "note": "Слайд 10",
-  "district": "уточнить на месте",
-  "price": "Платно",
-  "indoor": "В помещении",
-  "status": "уточнить",
-  "note2": "'Секретное место' — адрес не раскрыт",
-  "en": "",
-  "cn": "",
-  "cn_addr": "",
-  "en_addr": "",
-  "metro": "",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 31,
-  "name": "Manner Coffee (набережная North Bund)",
-  "category": "Гид: кофе и чайные",
-  "details": "Лучший вид на город с кофе",
-  "address": "Набережная North Bund",
-  "link": "https://www.instagram.com/p/DZaeTIniHKG/",
-  "note": "Слайд 10",
-  "district": "Норт-Банд (Хункоу)",
-  "price": "Платно, недорого",
-  "indoor": "В помещении",
-  "status": "актуально",
-  "note2": "North Bund",
-  "en": "",
-  "cn": "",
-  "cn_addr": "",
-  "en_addr": "",
-  "metro": "",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 32,
-  "name": "CUBIC 3",
-  "category": "Гид: кофе и чайные",
-  "details": "Dirty кофе в замороженных стаканах",
-  "address": "Xuhui, Yongkang Road No.58",
-  "link": "https://www.instagram.com/p/DZaeTIniHKG/",
-  "note": "Слайд 10. Совпадает с постом katrinansk",
-  "district": "Французская концессия (Сюйхуэй/Хуанпу)",
-  "price": "Платно",
-  "indoor": "В помещении",
-  "status": "актуально",
-  "note2": "Yongkang Rd (дубль записи 7)",
-  "en": "",
-  "cn": "",
-  "cn_addr": "",
-  "en_addr": "",
-  "metro": "",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 33,
-  "name": "Вайтань (The Bund)",
-  "category": "Гид: смотровые/наблюдения",
-  "details": "Главная набережная — приходить вечером и наблюдать разноцветную Восточную жемчужину",
-  "address": "—",
-  "link": "https://www.instagram.com/p/DZaeTIniHKG/",
-  "note": "Слайд 11",
-  "district": "Хуанпу (Народная площадь / Бунд / Юйюань)",
-  "price": "Бесплатно",
-  "indoor": "Улица",
-  "status": "актуально",
-  "note2": "Лучше вечером — прохладнее и красивее",
-  "en": "The Bund",
-  "cn": "外滩",
-  "cn_addr": "上海市黄浦区中山东一路",
-  "en_addr": "",
-  "metro": "南京东路 Nanjing East Rd",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 34,
-  "name": "Century Park",
-  "category": "Гид: смотровые/наблюдения",
-  "details": "Почти как Central Park, но в Шанхае — сидеть на траве и читать",
-  "address": "—",
-  "link": "https://www.instagram.com/p/DZaeTIniHKG/",
-  "note": "Слайд 11",
-  "district": "Пудун — Луцзяцзуй",
-  "price": "Бесплатно (обычно)",
-  "indoor": "Улица",
-  "status": "актуально",
-  "note2": "Большой парк, тени много",
-  "en": "",
-  "cn": "",
-  "cn_addr": "",
-  "en_addr": "",
-  "metro": "",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 35,
-  "name": "Tianzifang",
-  "category": "Гид: смотровые/наблюдения",
-  "details": "Колоритные улочки — гулять вечером меж фонариков и вывесок за сувенирами",
-  "address": "—",
-  "link": "https://www.instagram.com/p/DZaeTIniHKG/",
-  "note": "Слайд 12",
-  "district": "Хуанпу (Народная площадь / Бунд / Юйюань)",
-  "price": "Бесплатно (сувениры платно)",
-  "indoor": "Смешанно",
-  "status": "актуально",
-  "note2": "Tianzifang",
-  "en": "Tianzifang",
-  "cn": "田子坊",
-  "cn_addr": "上海市黄浦区泰康路210弄",
-  "en_addr": "",
-  "metro": "打浦桥 Dapuqiao",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 36,
-  "name": "Набережная West Bund",
-  "category": "Гид: смотровые/наблюдения",
-  "details": "Современная часть города, где нет толп и красивый индустриальный вид на канал",
-  "address": "—",
-  "link": "https://www.instagram.com/p/DZaeTIniHKG/",
-  "note": "Слайд 12",
-  "district": "Вест-Банд (набережная Сюйхуэй)",
-  "price": "Бесплатно",
-  "indoor": "Улица",
-  "status": "актуально",
-  "note2": "",
-  "en": "",
-  "cn": "",
-  "cn_addr": "",
-  "en_addr": "",
-  "metro": "",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 37,
-  "name": "Suzhou Creek",
-  "category": "Гид: смотровые/наблюдения",
-  "details": "Гулять вдоль канала на закате",
-  "address": "—",
-  "link": "https://www.instagram.com/p/DZaeTIniHKG/",
-  "note": "Слайд 13",
-  "district": "Сучжоу Крик / M50 (Путуо)",
-  "price": "Бесплатно",
-  "indoor": "Улица",
-  "status": "актуально",
-  "note2": "Лучше вечером на закате",
-  "en": "",
-  "cn": "",
-  "cn_addr": "",
-  "en_addr": "",
-  "metro": "",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 38,
-  "name": "Greenhouse Garden",
-  "category": "Гид: смотровые/наблюдения",
-  "details": "Огромная оранжерея — дышать и гулять",
-  "address": "—",
-  "link": "https://www.instagram.com/p/DZaeTIniHKG/",
-  "note": "Слайд 13",
-  "district": "Пудун (Экспо-парк / China Art Museum)",
-  "price": "Уточнить, возможно платно",
-  "indoor": "В помещении (оранжерея)",
-  "status": "актуально",
-  "note2": "Shibo/Expo Park, кондиционер, спасение от жары",
-  "en": "Shanghai Greenhouse Garden (Botanical Greenhouses, Expo Park)",
-  "cn": "上海温室花园",
-  "cn_addr": "上海市浦东新区申慱路1099号（世博公园内）",
-  "en_addr": "",
-  "metro": "中华艺术宫 China Art Museum",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 39,
-  "name": "Yuyuan Garden (Сад радости)",
-  "category": "Гид: смотровые/наблюдения",
-  "details": "От усталости и туристических забегов — сидеть и созерцать",
-  "address": "—",
-  "link": "https://www.instagram.com/p/DZaeTIniHKG/",
-  "note": "Слайд 13",
-  "district": "Хуанпу (Народная площадь / Бунд / Юйюань)",
-  "price": "Платно вход в сад",
-  "indoor": "Улица",
-  "status": "актуально",
-  "note2": "Внутри старого города",
-  "en": "",
-  "cn": "",
-  "cn_addr": "",
-  "en_addr": "",
-  "metro": "",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 40,
-  "name": "Jing'an Temple",
-  "category": "Гид: смотровые/наблюдения",
-  "details": "Храм, датированный 247 годом",
-  "address": "—",
-  "link": "https://www.instagram.com/p/DZaeTIniHKG/",
-  "note": "Слайд 13",
-  "district": "Цзинъань (Наньцзин Си Лу)",
-  "price": "Платно, недорого",
-  "indoor": "Смешанно",
-  "status": "актуально",
-  "note2": "",
-  "en": "Jing'an Temple",
-  "cn": "静安寺",
-  "cn_addr": "上海市静安区南京西路1686号",
-  "en_addr": "",
-  "metro": "静安寺 Jing'an Temple",
-  "hours": "07:30-17:00",
-  "closed_day": ""
- },
- {
-  "id": 41,
-  "name": "Французская концессия и Xintiandi",
-  "category": "Гид: шоппинг",
-  "details": "Главное шопинг-место с 'тяжелым люксом'",
-  "address": "—",
-  "link": "https://www.instagram.com/p/DZaeTIniHKG/",
-  "note": "Слайд 15",
-  "district": "Французская концессия (Сюйхуэй/Хуанпу)",
-  "price": "Бесплатно (покупки платно)",
-  "indoor": "Смешанно",
-  "status": "актуально",
-  "note2": "Xintiandi/Французская концессия",
-  "en": "Xintiandi",
-  "cn": "新天地",
-  "cn_addr": "上海市黄浦区太仓路181弄",
-  "en_addr": "",
-  "metro": "新天地 Xintiandi",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 42,
-  "name": "To Summer",
-  "category": "Гид: шоппинг",
-  "details": "Очень эстетский селективный китайский парфюмерный бренд",
-  "address": "—",
-  "link": "https://www.instagram.com/p/DZaeTIniHKG/",
-  "note": "Слайд 15",
-  "district": "Французская концессия (Сюйхуэй/Хуанпу)",
-  "price": "Платно",
-  "indoor": "В помещении",
-  "status": "актуально",
-  "note2": "",
-  "en": "",
-  "cn": "",
-  "cn_addr": "",
-  "en_addr": "",
-  "metro": "",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 43,
-  "name": "Pane",
-  "category": "Гид: шоппинг",
-  "details": "'Одни из самых удобных кроссовок на свете' — автор возвращалась 3 раза за новой парой",
-  "address": "—",
-  "link": "https://www.instagram.com/p/DZaeTIniHKG/",
-  "note": "Слайд 16",
-  "district": "Французская концессия (Сюйхуэй/Хуанпу)",
-  "price": "Платно",
-  "indoor": "В помещении",
-  "status": "актуально",
-  "note2": "",
-  "en": "",
-  "cn": "",
-  "cn_addr": "",
-  "en_addr": "",
-  "metro": "",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 44,
-  "name": "Harmay",
-  "category": "Гид: шоппинг",
-  "details": "Китайский аналог Sephora — 'готовьтесь к очередям'",
-  "address": "—",
-  "link": "https://www.instagram.com/p/DZaeTIniHKG/",
-  "note": "Слайд 17",
-  "district": "Французская концессия (Сюйхуэй/Хуанпу)",
-  "price": "Бесплатно вход",
-  "indoor": "В помещении",
-  "status": "актуально",
-  "note2": "Аналог Sephora, очереди",
-  "en": "",
-  "cn": "",
-  "cn_addr": "",
-  "en_addr": "",
-  "metro": "",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 45,
-  "name": "Hai 550 / Youth Mall (Huaihai road)",
-  "category": "Гид: шоппинг",
-  "details": "Локальные молодежные бренды и концепт-сторы",
-  "address": "Huaihai road",
-  "link": "https://www.instagram.com/p/DZaeTIniHKG/",
-  "note": "Слайд 17",
-  "district": "Французская концессия (Сюйхуэй/Хуанпу)",
-  "price": "Бесплатно вход",
-  "indoor": "В помещении",
-  "status": "актуально",
-  "note2": "Huaihai Rd",
-  "en": "",
-  "cn": "",
-  "cn_addr": "",
-  "en_addr": "",
-  "metro": "",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 46,
-  "name": "Yongkang road",
-  "category": "Гид: шоппинг",
-  "details": "Главная улица по архивным магазинам и винтажу",
-  "address": "Yongkang road",
-  "link": "https://www.instagram.com/p/DZaeTIniHKG/",
-  "note": "Слайд 17",
-  "district": "Французская концессия (Сюйхуэй/Хуанпу)",
-  "price": "Бесплатно (покупки платно)",
-  "indoor": "Улица",
-  "status": "актуально",
-  "note2": "",
-  "en": "",
-  "cn": "",
-  "cn_addr": "",
-  "en_addr": "",
-  "metro": "",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 47,
-  "name": "Savhe Hotel Shanghai World Expo",
-  "category": "Гид: отели",
-  "details": "Созерцательный отель в духе ваби-саби с саундхилингом и чайными церемониями",
-  "address": "—",
-  "link": "https://www.instagram.com/p/DZaeTIniHKG/",
-  "note": "Слайд 18",
-  "district": "Хуанпу (Народная площадь / Бунд / Юйюань)",
-  "price": "Платно (отель)",
-  "indoor": "В помещении",
-  "status": "справочно",
-  "note2": "Рядом с Expo/Greenhouse Garden",
-  "en": "",
-  "cn": "",
-  "cn_addr": "",
-  "en_addr": "",
-  "metro": "",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 48,
-  "name": "Donghu Collection Hotel",
-  "category": "Гид: отели",
-  "details": "Исторический особняк — бывшая вилла в самом сердце Французской концессии, в двух шагах от всего",
-  "address": "Французская концессия",
-  "link": "https://www.instagram.com/p/DZaeTIniHKG/",
-  "note": "Слайд 18",
-  "district": "Французская концессия (Сюйхуэй/Хуанпу)",
-  "price": "Платно (отель)",
-  "indoor": "В помещении",
-  "status": "справочно",
-  "note2": "",
-  "en": "",
-  "cn": "",
-  "cn_addr": "",
-  "en_addr": "",
-  "metro": "",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 49,
-  "name": "Prada Rong Zhai",
-  "category": "Гид: wow-места",
-  "details": "Штаб-квартира Prada на бывшей вилле — красиво пить кофе в кофейне",
-  "address": "—",
-  "link": "https://www.instagram.com/p/DZaeTIniHKG/",
-  "note": "Слайд 19",
-  "district": "Цзинъань (Наньцзин Си Лу)",
-  "price": "Бесплатно вход, платно кофе",
-  "indoor": "В помещении",
-  "status": "актуально",
-  "note2": "Nanjing West Rd",
-  "en": "Prada Rong Zhai",
-  "cn": "荣宅",
-  "cn_addr": "上海市静安区陕西北路186号",
-  "en_addr": "",
-  "metro": "南京西路 Nanjing West Rd",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 50,
-  "name": "The Louis (Louis Vuitton)",
-  "category": "Гид: wow-места",
-  "details": "30-метровое здание в форме корабля от Louis Vuitton",
-  "address": "—",
-  "link": "https://www.instagram.com/p/DZaeTIniHKG/",
-  "note": "Слайд 19",
-  "district": "Цзинъань (Наньцзин Си Лу)",
-  "price": "Бесплатно вход",
-  "indoor": "В помещении",
-  "status": "актуально",
-  "note2": "Рядом со Starbucks Reserve",
-  "en": "Fondation Louis Vuitton (The Louis / LV space)",
-  "cn": "路易威登之家",
-  "cn_addr": "上海市静安区南京西路",
-  "en_addr": "",
-  "metro": "南京西路 Nanjing West Rd",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 51,
-  "name": "Maglev train",
-  "category": "Гид: wow-места",
-  "details": "Самый быстрый поезд в мире до/из аэропорта — как аттракцион",
-  "address": "—",
-  "link": "https://www.instagram.com/p/DZaeTIniHKG/",
-  "note": "Слайд 19. Совпадает с постом polina__drake",
-  "district": "Транспорт",
-  "price": "Платно (билет)",
-  "indoor": "Наземный поезд",
-  "status": "актуально",
-  "note2": "Дубль записи 1",
-  "en": "",
-  "cn": "",
-  "cn_addr": "",
-  "en_addr": "",
-  "metro": "",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 52,
-  "name": "Shanghai Library East",
-  "category": "Гид: wow-места",
-  "details": "Одна из крупнейших новых библиотек в мире — 'просто вау'",
-  "address": "—",
-  "link": "https://www.instagram.com/p/DZaeTIniHKG/",
-  "note": "Слайд 20",
-  "district": "Пудун — Луцзяцзуй",
-  "price": "Бесплатно",
-  "indoor": "В помещении",
-  "status": "актуально",
-  "note2": "Рядом с Century Park",
-  "en": "",
-  "cn": "",
-  "cn_addr": "",
-  "en_addr": "",
-  "metro": "",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 53,
-  "name": "Флагманский Старбакс",
-  "category": "Гид: wow-места",
-  "details": "Самый большой Старбакс в мире",
-  "address": "—",
-  "link": "https://www.instagram.com/p/DZaeTIniHKG/",
-  "note": "Слайд 20",
-  "district": "Цзинъань (Наньцзин Си Лу)",
-  "price": "Бесплатно вход, платно напитки",
-  "indoor": "В помещении",
-  "status": "актуально",
-  "note2": "Starbucks Reserve Roastery, Nanjing West Rd",
-  "en": "",
-  "cn": "",
-  "cn_addr": "",
-  "en_addr": "",
-  "metro": "",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 54,
-  "name": "Двухэтажный M&M's",
-  "category": "Гид: wow-места",
-  "details": "Место, где можно собрать кастомный M&M's любого цвета со своей надписью",
-  "address": "—",
-  "link": "https://www.instagram.com/p/DZaeTIniHKG/",
-  "note": "Слайд 20",
-  "district": "Хуанпу (Народная площадь / Бунд / Юйюань)",
-  "price": "Бесплатно вход",
-  "indoor": "В помещении",
-  "status": "актуально",
-  "note2": "Nanjing East Rd",
-  "en": "",
-  "cn": "",
-  "cn_addr": "",
-  "en_addr": "",
-  "metro": "",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 55,
-  "name": "Не привязано к месту",
-  "category": "Сувениры (штампы)",
-  "details": "Про коллекционирование почтовых штампов Китая (China post stamps)",
-  "address": "—",
-  "link": "https://www.instagram.com/p/DZIFYzpOW2e/",
-  "note": "Общая тема по Китаю, город не назван",
-  "district": "уточнить на месте",
-  "price": "уточнить на месте",
-  "indoor": "уточнить на месте",
-  "status": "исключить",
-  "note2": "Общая тема, не место",
-  "en": "",
-  "cn": "",
-  "cn_addr": "",
-  "en_addr": "",
-  "metro": "",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 56,
-  "name": "BLACKHEAD (магазин очков, флагман + сеть)",
-  "category": "Шопинг",
-  "details": "Флагман с арт-объектом (гигантская металлическая змея); сеть точек: Xintiandi Plaza, Xintiandi Fashion, Yuyuan Road (рядом м. Jiangsu Road, выход 7), ЦУМ Raffles City (Nanjing Road)",
-  "address": "Флагман: Huangpu District, Huaihai Middle Road 523, Shanghai (+ 4 доп. адреса на китайском в описании поста)",
-  "link": "https://www.instagram.com/p/DZ4NQ-xMt6u/",
-  "note": "—",
-  "district": "Разные (Huaihai/Xintiandi/Yuyuan Rd/Nanjing Rd)",
-  "price": "Бесплатно вход",
-  "indoor": "В помещении",
-  "status": "актуально",
-  "note2": "Сеть, несколько точек",
-  "en": "Nanjing Road",
-  "cn": "南京路",
-  "cn_addr": "上海市黄浦区南京东路/南京西路",
-  "en_addr": "",
-  "metro": "南京东路 Nanjing East Rd",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 57,
-  "name": "Реклама экскурсий (без конкретного места)",
-  "category": "Услуги / гид",
-  "details": "Экскурсии по Шанхаю, Сучжоу и Ханчжоу",
-  "address": "—",
-  "link": "https://www.instagram.com/p/DaAtN7vDFJR/",
-  "note": "Рекламный пост турагента, не про конкретное место",
-  "district": "уточнить на месте",
-  "price": "уточнить на месте",
-  "indoor": "уточнить на месте",
-  "status": "исключить",
-  "note2": "Рекламный пост турагента",
-  "en": "",
-  "cn": "",
-  "cn_addr": "",
-  "en_addr": "",
-  "metro": "",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 58,
-  "name": "Шанхайский музей естественной истории (Shanghai Natural History Museum)",
-  "category": "Музей для детей",
-  "details": "Обязателен к посещению с маленькими палеонтологами и любителями животных. 3D-динозавры выглядят как живые, огромные скелеты китов и детализированные диорамы. Идеален для знакомства с природой в игровой форме. Время работы: 9:00-17:00 (вход до 16:00), понедельник — выходной (кроме праздников). Стоимость: взрослый — 30 юаней, студенческий — 12 юаней; дети до 1,3 м или до 6 лет — бесплатно",
-  "address": "静安区北京西路510号 (в парке скульптур Цзиньань); метро: станция 自然博物馆, линия 13",
-  "link": "https://www.instagram.com/p/DZ7fXKYDLNo/",
-  "note": "Пост из подборки 'ТОП-5 музеев Шанхая, где детям будет не скучно'",
-  "district": "Цзинъань (Наньцзин Си Лу)",
-  "price": "Платно: 30/12 юаней, дети до 1.3м бесплатно",
-  "indoor": "В помещении, кондиционер",
-  "status": "актуально",
-  "note2": "Похож на музей в Пекине — на ваше усмотрение",
-  "en": "Shanghai Natural History Museum",
-  "cn": "上海自然博物馆",
-  "cn_addr": "上海市静安区北京西路510号",
-  "en_addr": "",
-  "metro": "自然博物馆 Natural History Museum",
-  "hours": "09:00-17:00",
-  "closed_day": "вторник"
- },
- {
-  "id": 59,
-  "name": "Шанхайский музей науки и технологий (Shanghai Science and Technology Museum)",
-  "category": "Музей для детей",
-  "details": "Идеально для детей всех возрастов, особенно активных и любознательных. После реконструкции — новые интерактивные зоны: можно управлять роботами, испытать симулятор прыжка с парашютом, изучать космос, животных и физику на практике. Время работы: 9:00-17:00 (билеты до 16:00), понедельник — выходной",
-  "address": "浦东新区世纪大道2000号 (Century Ave 2000, Pudong); метро: станция 上海科技馆, линия 2",
-  "link": "https://www.instagram.com/p/DZ7fXKYDLNo/",
-  "note": "—",
-  "district": "Пудун — Луцзяцзуй",
-  "price": "Платно",
-  "indoor": "В помещении, кондиционер",
-  "status": "актуально",
-  "note2": "Интерактивный, для детей 9-11 лет отлично",
-  "en": "Shanghai Science and Technology Museum",
-  "cn": "上海科技馆",
-  "cn_addr": "上海市浦东新区世纪大道2000号",
-  "en_addr": "",
-  "metro": "上海科技馆 Shanghai Science and Technology Museum",
-  "hours": "09:00-17:00",
-  "closed_day": "понедельник"
- },
- {
-  "id": 60,
-  "name": "Шанхайский планетарий (Shanghai Planetarium)",
-  "category": "Музей для детей",
-  "details": "Самый большой планетарий в мире — идеален для детей младшего и среднего школьного возраста, увлекающихся космосом. Выставки с эффектом полного погружения. Есть зона 'Любопытная планета' (好奇星球) и квесты для юных исследователей космоса. Время работы: 9:30-16:00 (вход до 15:00), понедельник — выходной. Стоимость: взрослый — 30 юаней, студенческий — 15 юаней; дети до 6 лет — бесплатно",
-  "address": "浦东新区临港大道380号 (Lingang Ave 380, Pudong); метро: станция 滴水湖, линия 16",
-  "link": "https://www.instagram.com/p/DZ7fXKYDLNo/",
-  "note": "Заявлено 'ТОП-5', но в карусели раскрыты подробно только 3 музея из 5",
-  "district": "Дальний Пудун (Диншуй/Наньхуэй)",
-  "price": "Платно: 30/15 юаней, дети до 6 лет бесплатно",
-  "indoor": "В помещении, кондиционер",
-  "status": "актуально",
-  "note2": "Далеко (Диншуй), закладывать полдня",
-  "en": "",
-  "cn": "",
-  "cn_addr": "",
-  "en_addr": "",
-  "metro": "",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 61,
-  "name": "Заказы с Taobao (Пекин)",
-  "category": "Шопинг",
-  "details": "Личные заказы украшений/чая/одежды с Taobao",
-  "address": "—",
-  "link": "https://www.instagram.com/p/DZq9xhNiiil/",
-  "note": "Это Пекин, не Шанхай",
-  "district": "уточнить на месте",
-  "price": "уточнить на месте",
-  "indoor": "уточнить на месте",
-  "status": "исключить",
-  "note2": "Это Пекин, не Шанхай",
-  "en": "",
-  "cn": "",
-  "cn_addr": "",
-  "en_addr": "",
-  "metro": "",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 62,
-  "name": "Локация с европейской/'парижской' архитектурой",
-  "category": "Фотолокация",
-  "details": "Заявлена как достопримечательность Шанхая; в комментариях спорят — по отзывам вживую 'не так красиво', 'заброшено', 'это не Париж'",
-  "address": "Building 6, Lane 567, Puxing Highway, Minhang District, Shanghai; метро Luheng Road (линия 8), выход 2 или 5",
-  "link": "https://www.instagram.com/p/DZA_s4SuQof/",
-  "note": "Неоднозначные отзывы в комментариях о реальном состоянии места",
-  "district": "Миньхан (юго-запад)",
-  "price": "Платно",
-  "indoor": "Улица",
-  "status": "под вопросом",
-  "note2": "Смешанные отзывы, далеко от центра",
-  "en": "",
-  "cn": "",
-  "cn_addr": "",
-  "en_addr": "",
-  "metro": "",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 63,
-  "name": "Не указано конкретное место",
-  "category": "Шопинг (общее)",
-  "details": "Тизер подборки магазинов Шанхая для 'насмотренности'; полный список отдаётся через ТГ-канал за комментарий 'Магаз'",
-  "address": "—",
-  "link": "https://www.instagram.com/p/DUaSmjFjasK/",
-  "note": "Конкретных названий магазинов в самом посте нет",
-  "district": "уточнить на месте",
-  "price": "уточнить на месте",
-  "indoor": "уточнить на месте",
-  "status": "исключить",
-  "note2": "Общий тизер без мест",
-  "en": "",
-  "cn": "",
-  "cn_addr": "",
-  "en_addr": "",
-  "metro": "",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 64,
-  "name": "Shanghai Xuhui Library (Xujiahui College)",
-  "category": "Библиотека / архитектура",
-  "details": "Общедоступная библиотека с большим количеством книг и рабочих мест; соседствует с небоскрёбами и католическим храмом; есть терраса с видом",
-  "address": "Xuhui District, Shanghai",
-  "link": "https://www.instagram.com/p/DYbeoloBTGl/",
-  "note": "—",
-  "district": "Французская концессия (Сюйхуэй/Хуанпу)",
-  "price": "Бесплатно",
-  "indoor": "В помещении, кондиционер",
-  "status": "актуально",
-  "note2": "= Zikawei/Xujiahui Library",
-  "en": "",
-  "cn": "",
-  "cn_addr": "",
-  "en_addr": "",
-  "metro": "",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 65,
-  "name": "The Bund (Вайтань) — вечерняя съёмка",
-  "category": "Смотровые/наблюдения",
-  "details": "Ночной вид на набережную и небоскрёбы Пудуна",
-  "address": "—",
-  "link": "https://www.instagram.com/p/DY2dFqusHdk/",
-  "note": "Доп. подтверждение места 'Вайтань' из гида yanchevskaya_anna",
-  "district": "Хуанпу (Народная площадь / Бунд / Юйюань)",
-  "price": "Бесплатно",
-  "indoor": "Улица (вечер)",
-  "status": "актуально",
-  "note2": "Вечерняя съёмка",
-  "en": "The Bund",
-  "cn": "外滩",
-  "cn_addr": "上海市黄浦区中山东一路",
-  "en_addr": "",
-  "metro": "南京东路 Nanjing East Rd",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 66,
-  "name": "Shanghai Wild Animal Park — зона сафари",
-  "category": "Развлечения / парк",
-  "details": "Инструкция, как попасть в зону сафари парка (доп. билет/автобус)",
-  "address": "—",
-  "link": "https://www.instagram.com/p/DYki8WpONIy/",
-  "note": "Доп. инфо к записи о Shanghai Wild Animal Park",
-  "district": "Дальний Пудун (Диншуй/Наньхуэй)",
-  "price": "Платно доп. билет",
-  "indoor": "Улица",
-  "status": "актуально",
-  "note2": "Дубль записи 4",
-  "en": "Shanghai Wild Animal Park",
-  "cn": "上海野生动物园",
-  "cn_addr": "上海市浦东新区南六公路178号",
-  "en_addr": "",
-  "metro": "野生动物园 Wild Animal Park",
-  "hours": "09:00-21:30",
-  "closed_day": ""
- },
- {
-  "id": 67,
-  "name": "Shanghai Wild Animal Park (зоопарк)",
-  "category": "Развлечения / парк",
-  "details": "Видео с кормлением животных; в комментариях уточнения про автобус по территории, кормление красных панд, очереди в будни",
-  "address": "—",
-  "link": "https://www.instagram.com/p/DW3MlrRiLKH/",
-  "note": "Доп. инфо к записи о Shanghai Wild Animal Park",
-  "district": "Дальний Пудун (Диншуй/Наньхуэй)",
-  "price": "Платно",
-  "indoor": "Улица",
-  "status": "актуально",
-  "note2": "Дубль записи 4",
-  "en": "Shanghai Wild Animal Park",
-  "cn": "上海野生动物园",
-  "cn_addr": "上海市浦东新区南六公路178号",
-  "en_addr": "",
-  "metro": "野生动物园 Wild Animal Park",
-  "hours": "09:00-21:30",
-  "closed_day": ""
- },
- {
-  "id": 68,
-  "name": "Matcha Wang",
-  "category": "Кофе и чайные",
-  "details": "Матча-кафе, судя по комментариям — с очередями и высокими оценками вкуса",
-  "address": "Huangpu District, Huaihai Middle Road No.550 (ТЦ HAI550), Shanghai",
-  "link": "https://www.instagram.com/p/DWDHSYqpJWa/",
-  "note": "Точный адрес к месту 'Matcha Wang' из гида yanchevskaya_anna",
-  "district": "Французская концессия (Сюйхуэй/Хуанпу)",
-  "price": "Платно",
-  "indoor": "В помещении",
-  "status": "актуально",
-  "note2": "Дубль записи 29",
-  "en": "",
-  "cn": "",
-  "cn_addr": "",
-  "en_addr": "",
-  "metro": "",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 69,
-  "name": "Шанхайский музей астрономии (Shanghai Astronomy Museum / Планетарий)",
-  "category": "Музей / wow-место",
-  "details": "Крупнейший планетарий в мире, открыт в 2021 на берегу озера Дишуй. Спиральная архитектура символизирует движение небесных тел. Экспозиция из 3 частей: 'Дом' (Земля и Солнечная система), 'Вселенная' (чёрные дыры, гравитация), 'Путешествие' (история освоения космоса, миссии на Марс). Купольный кинотеатр, интерактивные экспонаты. Совет: ехать в субботу — вечером у озера Дишуй фейерверк (начало в 20:00), рядом парк с лодочками и детскими площадками",
-  "address": "Озеро Дишуй (Dishui Lake), Pudong",
-  "link": "https://www.instagram.com/p/DY37tHGhFaL/",
-  "note": "То же место, что 'Шанхайский планетарий' из подборки музеев mariakadyrova_shanghai",
-  "district": "Дальний Пудун (Диншуй/Наньхуэй)",
-  "price": "Платно",
-  "indoor": "В помещении",
-  "status": "актуально",
-  "note2": "Дубль записи 60",
-  "en": "Shanghai Astronomy Museum",
-  "cn": "上海天文馆",
-  "cn_addr": "上海市浦东新区南汇新城镇同碧路380号",
-  "en_addr": "",
-  "metro": "滴水湖 Dishui Lake",
-  "hours": "09:30-16:00",
-  "closed_day": "понедельник"
- },
- {
-  "id": 70,
-  "name": "Ralph's Coffee (Ralph Lauren)",
-  "category": "Кафе / шопинг",
-  "details": "Кофейня бренда Ralph Lauren с фирменным мерчем (кружки и т.д.)",
-  "address": "Jing'an Kerry Centre, Shanghai",
-  "link": "https://www.instagram.com/p/DYsHaesjV3Z/",
-  "note": "Слайд 2 карусели 'Места и еда Шанхай'",
-  "district": "Цзинъань (Наньцзин Си Лу)",
-  "price": "Платно",
-  "indoor": "В помещении, кондиционер",
-  "status": "актуально",
-  "note2": "Jing'an Kerry Centre",
-  "en": "",
-  "cn": "",
-  "cn_addr": "",
-  "en_addr": "",
-  "metro": "",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 71,
-  "name": "Maki Sushi",
-  "category": "Еда",
-  "details": "'Самые вкусные суши в нашей жизни'; 3 подноса + напитки ≈ 1200₽ на двоих",
-  "address": "—",
-  "link": "https://www.instagram.com/p/DYsHaesjV3Z/",
-  "note": "Слайд 3",
-  "district": "уточнить на месте",
-  "price": "Платно",
-  "indoor": "В помещении",
-  "status": "ОСТОРОЖНО — рыба/суши",
-  "note2": "Содержит сырую рыбу — риск при аллергии у Матвея",
-  "en": "",
-  "cn": "",
-  "cn_addr": "",
-  "en_addr": "",
-  "metro": "",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 72,
-  "name": "M&M Chocolate World Shanghai",
-  "category": "Шопинг / развлечения",
-  "details": "Магазин-аттракцион M&M's с 'Великой шоколадной стеной'",
-  "address": "—",
-  "link": "https://www.instagram.com/p/DYsHaesjV3Z/",
-  "note": "Слайд 4. Совпадает с 'двухэтажный M&M's' из гида yanchevskaya_anna",
-  "district": "Хуанпу (Народная площадь / Бунд / Юйюань)",
-  "price": "Бесплатно вход",
-  "indoor": "В помещении, кондиционер",
-  "status": "актуально",
-  "note2": "Nanjing East Rd",
-  "en": "",
-  "cn": "",
-  "cn_addr": "",
-  "en_addr": "",
-  "metro": "",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 73,
-  "name": "13de Marzo Café",
-  "category": "Кафе",
-  "details": "Известная кофейня с мишками-талисманами на улицах Французской концессии",
-  "address": "Французская концессия",
-  "link": "https://www.instagram.com/p/DYsHaesjV3Z/",
-  "note": "Слайд 5",
-  "district": "Французская концессия (Сюйхуэй/Хуанпу)",
-  "price": "Платно",
-  "indoor": "Смешанно",
-  "status": "актуально",
-  "note2": "",
-  "en": "",
-  "cn": "",
-  "cn_addr": "",
-  "en_addr": "",
-  "metro": "",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 74,
-  "name": "Dairy Queen (DQ)",
-  "category": "Еда",
-  "details": "Молочные коктейли (сеть); вкус шоколад/мята отмечен как лучший",
-  "address": "—",
-  "link": "https://www.instagram.com/p/DYsHaesjV3Z/",
-  "note": "Слайд 6. Сетевое заведение, конкретный адрес не указан",
-  "district": "уточнить на месте",
-  "price": "Платно, недорого",
-  "indoor": "В помещении",
-  "status": "актуально",
-  "note2": "Сетевое кафе, адрес не привязан",
-  "en": "",
-  "cn": "",
-  "cn_addr": "",
-  "en_addr": "",
-  "metro": "",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 75,
-  "name": "Disney Store Shanghai",
-  "category": "Шопинг",
-  "details": "Фирменный магазин Disney с игрушками",
-  "address": "—",
-  "link": "https://www.instagram.com/p/DYsHaesjV3Z/",
-  "note": "Слайд 7",
-  "district": "уточнить на месте",
-  "price": "Бесплатно вход",
-  "indoor": "В помещении, кондиционер",
-  "status": "актуально",
-  "note2": "Точный адрес уточнить",
-  "en": "",
-  "cn": "",
-  "cn_addr": "",
-  "en_addr": "",
-  "metro": "",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 76,
-  "name": "Xijiade (喜家德) / пельменная у телебашни",
-  "category": "Еда",
-  "details": "Вкусные китайские пельмешки, большая порция на двоих",
-  "address": "Рядом с телебашней (Oriental Pearl Tower)",
-  "link": "https://www.instagram.com/p/DYsHaesjV3Z/",
-  "note": "Слайд 8",
-  "district": "Пудун — Луцзяцзуй",
-  "price": "Платно, недорого",
-  "indoor": "В помещении",
-  "status": "актуально",
-  "note2": "Рядом с телебашней",
-  "en": "",
-  "cn": "",
-  "cn_addr": "",
-  "en_addr": "",
-  "metro": "",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 77,
-  "name": "Starbucks Reserve Roastery Shanghai",
-  "category": "Кафе",
-  "details": "Самый большой Starbucks с обжарочным цехом — целый кофейный завод площадью около 2,8 тыс. кв.м",
-  "address": "—",
-  "link": "https://www.instagram.com/p/DYsHaesjV3Z/",
-  "note": "Слайд 9. Совпадает с 'флагманским Старбаксом' из гида yanchevskaya_anna",
-  "district": "Цзинъань (Наньцзин Си Лу)",
-  "price": "Бесплатно вход, платно напитки",
-  "indoor": "В помещении, кондиционер",
-  "status": "актуально",
-  "note2": "Дубль записи 53",
-  "en": "Starbucks Reserve Roastery Shanghai",
-  "cn": "上海星巴克臻选烘焙工坊",
-  "cn_addr": "上海市静安区南京西路789号",
-  "en_addr": "",
-  "metro": "南京西路 Nanjing West Rd",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 78,
-  "name": "The Louis (Louis Vuitton)",
-  "category": "Шопинг / wow-место",
-  "details": "Музей-магазин LV в форме огромного корабля/короба, расположен прямо напротив Starbucks Reserve Roastery",
-  "address": "—",
-  "link": "https://www.instagram.com/p/DYsHaesjV3Z/",
-  "note": "Слайд 10. Совпадает с 'The Louis' из гида yanchevskaya_anna",
-  "district": "Цзинъань (Наньцзин Си Лу)",
-  "price": "Бесплатно вход",
-  "indoor": "В помещении",
-  "status": "актуально",
-  "note2": "Дубль записи 50",
-  "en": "Starbucks Reserve Roastery Shanghai",
-  "cn": "上海星巴克臻选烘焙工坊",
-  "cn_addr": "上海市静安区南京西路789号",
-  "en_addr": "",
-  "metro": "南京西路 Nanjing West Rd",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 79,
-  "name": "Greenhouse Garden",
-  "category": "Смотровые/наблюдения",
-  "details": "Рекомендация в комментариях к анонсу поездки в Шанхай",
-  "address": "—",
-  "link": "https://www.instagram.com/p/DX9iqFqlgM1/",
-  "note": "Доп. подтверждение места из гида yanchevskaya_anna",
-  "district": "Пудун (Экспо-парк / China Art Museum)",
-  "price": "Уточнить",
-  "indoor": "В помещении",
-  "status": "актуально",
-  "note2": "Дубль записи 38",
-  "en": "Shanghai Greenhouse Garden (Botanical Greenhouses, Expo Park)",
-  "cn": "上海温室花园",
-  "cn_addr": "上海市浦东新区申慱路1099号（世博公园内）",
-  "en_addr": "",
-  "metro": "中华艺术宫 China Art Museum",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 80,
-  "name": "1000 Trees",
-  "category": "Искусство/арт-кластеры",
-  "details": "В комментариях смешанные отзывы: 'скучная локация'",
-  "address": "—",
-  "link": "https://www.instagram.com/p/DX9iqFqlgM1/",
-  "note": "Доп. (менее восторженный) отзыв к месту из гида yanchevskaya_anna",
-  "district": "Сучжоу Крик / M50 (Путуо)",
-  "price": "Бесплатно (галереи платно)",
-  "indoor": "Смешанно",
-  "status": "актуально",
-  "note2": "Дубль записи 12",
-  "en": "",
-  "cn": "",
-  "cn_addr": "",
-  "en_addr": "",
-  "metro": "",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 81,
-  "name": "Shanghai Museum (основной)",
-  "category": "Музей",
-  "details": "По комментарию — был закрыт до июля (актуальность уточнять)",
-  "address": "—",
-  "link": "https://www.instagram.com/p/DX9iqFqlgM1/",
-  "note": "Не путать с Музеем естественной истории или Музеем науки и технологий",
-  "district": "Хуанпу (Народная площадь / Бунд / Юйюань)",
-  "price": "Бесплатно по брони (уточнить)",
-  "indoor": "В помещении, кондиционер",
-  "status": "уточнить актуальность",
-  "note2": "В отзыве был закрыт до июля — проверить статус! В 5 мин от отеля",
-  "en": "",
-  "cn": "",
-  "cn_addr": "",
-  "en_addr": "",
-  "metro": "",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 82,
-  "name": "Xintiandi",
-  "category": "Ночная жизнь",
-  "details": "Упомянут в комментарии как место 'выпить'",
-  "address": "—",
-  "link": "https://www.instagram.com/p/DX9iqFqlgM1/",
-  "note": "Доп. к месту 'Французская концессия и Xintiandi' из гида",
-  "district": "Французская концессия (Сюйхуэй/Хуанпу)",
-  "price": "Бесплатно вход",
-  "indoor": "Смешанно",
-  "status": "актуально",
-  "note2": "Ночная жизнь",
-  "en": "Xintiandi",
-  "cn": "新天地",
-  "cn_addr": "上海市黄浦区太仓路181弄",
-  "en_addr": "",
-  "metro": "新天地 Xintiandi",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 83,
-  "name": "Shanghai Wild Animal Park",
-  "category": "Развлечения / парк",
-  "details": "Подробный адрес и метро",
-  "address": "178 Nanliu Road, Pudong New Area, Shanghai, 201300; метро: Wild Animal Park Station (линия 16), выход 2",
-  "link": "https://www.instagram.com/p/DWdiyHdCNRu/",
-  "note": "Точный адрес к записи о Shanghai Wild Animal Park",
-  "district": "Дальний Пудун (Диншуй/Наньхуэй)",
-  "price": "Платно",
-  "indoor": "Улица",
-  "status": "актуально",
-  "note2": "Дубль записи 4",
-  "en": "Shanghai Wild Animal Park",
-  "cn": "上海野生动物园",
-  "cn_addr": "上海市浦东新区南六公路178号",
-  "en_addr": "",
-  "metro": "野生动物园 Wild Animal Park",
-  "hours": "09:00-21:30",
-  "closed_day": ""
- },
- {
-  "id": 84,
-  "name": "Young·Space Hot Spring Hall",
-  "category": "СПА / отдых",
-  "details": "24-часовой спа-комплекс: раздельные мужская/женская зоны, капсулы для сна, комнаты отдыха, безлимитные фрукты и напитки, завтрак утром. Стоимость входа: 3300₽ в будни, 4700₽ в выходные. В комментариях спорят — многое (еда, горячие напитки, бильярд, капсулы сна) может быть платным дополнительно",
-  "address": "Пудонг, недалеко от набережной",
-  "link": "https://www.instagram.com/p/DXj2V10jE8B/",
-  "note": "Отзывы в комментариях противоречивые — уточнять актуальные условия перед поездкой",
-  "district": "Пудун — Луцзяцзуй",
-  "price": "Платно: 3300-4700₽/24ч",
-  "indoor": "В помещении",
-  "status": "не идём (решение семьи)",
-  "note2": "Спа, доп. услуги часто платные — уточнять на месте",
-  "en": "",
-  "cn": "",
-  "cn_addr": "",
-  "en_addr": "",
-  "metro": "",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 85,
-  "name": "Шанхайский музей астрономии (Shanghai Astronomy Museum)",
-  "category": "Музей / wow-место",
-  "details": "Крупнейший музей такого профиля в мире, площадь более 35 000 кв.м. Архитектура без прямых линий — напоминает орбитальное движение небесных тел. Экспонаты: оригинальные издания трудов Ньютона и Галилея, одна из богатых коллекций метеоритов в Азии (фрагменты Луны и Марса), метровый солнечный телескоп для наблюдения за Солнцем в реальном времени",
-  "address": "Озеро Дишуй (Dishui Lake), Pudong",
-  "link": "https://www.instagram.com/p/DXboh7iCBWp/",
-  "note": "Дополняет запись my33dec о том же месте (= 'Шанхайский планетарий' из подборки музеев)",
-  "district": "Дальний Пудун (Диншуй/Наньхуэй)",
-  "price": "Платно",
-  "indoor": "В помещении",
-  "status": "актуально",
-  "note2": "Дубль записи 60",
-  "en": "Shanghai Astronomy Museum",
-  "cn": "上海天文馆",
-  "cn_addr": "上海市浦东新区南汇新城镇同碧路380号",
-  "en_addr": "",
-  "metro": "滴水湖 Dishui Lake",
-  "hours": "09:30-16:00",
-  "closed_day": "понедельник"
- },
- {
-  "id": 86,
-  "name": "Shanghai Greenhouse Garden",
-  "category": "Смотровые/наблюдения",
-  "details": "Доп. детали: тропический лес на территории парка Shibo Culture Park, одно из крупнейших стеклянных оранжерейных пространств в Азии, открыто в 2024. Три тематические зоны: 'Лес над облаками', 'Туманный каньон', 'Пустынный оазис'",
-  "address": "Shibo Culture Park (Expo Park)",
-  "link": "https://www.instagram.com/p/DYSGUjBjEii/",
-  "note": "Дополняет ранее собранную запись о Greenhouse Garden",
-  "district": "Пудун (Экспо-парк / China Art Museum)",
-  "price": "Уточнить",
-  "indoor": "В помещении",
-  "status": "актуально",
-  "note2": "Дубль записи 38",
-  "en": "Shanghai Greenhouse Garden (Botanical Greenhouses, Expo Park)",
-  "cn": "上海温室花园",
-  "cn_addr": "上海市浦东新区申慱路1099号（世博公园内）",
-  "en_addr": "",
-  "metro": "中华艺术宫 China Art Museum",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 87,
-  "name": "1933 Laoyangfang (= 1933 Old Millfun)",
-  "category": "Искусство/арт-кластеры",
-  "details": "Бывшая скотобойня 1933 года, архитектор Бэлфур (британец), стиль индустриальной готики и ар-деко. Сейчас арт-пространство с лабиринтом переходов, кафе, галереями и магазинами",
-  "address": "—",
-  "link": "https://www.instagram.com/p/DYSWyIYCtzp/",
-  "note": "То же место, что 1933 Old Millfun из гида yanchevskaya_anna",
-  "district": "Норт-Банд (Хункоу)",
-  "price": "Смешанно",
-  "indoor": "Смешанно",
-  "status": "актуально",
-  "note2": "Дубль записи 15",
-  "en": "1933 Old Millfun (Laochangfang)",
-  "cn": "1933老场坊",
-  "cn_addr": "上海市虹口区沙泾路10号",
-  "en_addr": "",
-  "metro": "",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 88,
-  "name": "Duoyun Bookstore",
-  "category": "Шопинг/архитектура",
-  "details": "Самый высокий книжный магазин в Китае, на 52 этаже, площадь около 2200 м². Видовая площадка доступна при покупке книги или чашки кофе",
-  "address": "—",
-  "link": "https://www.instagram.com/p/DYSWyIYCtzp/",
-  "note": "—",
-  "district": "Цзинъань (Наньцзин Си Лу)",
-  "price": "Бесплатно, платно за видовую площадку",
-  "indoor": "В помещении, кондиционер",
-  "status": "не идём (заменили на Sinan Books)",
-  "note2": "Shanghai Center, 52 этаж — вид на город",
-  "en": "",
-  "cn": "",
-  "cn_addr": "",
-  "en_addr": "",
-  "metro": "",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 89,
-  "name": "Zhujiajiao (Чжуцзяцзяо)",
-  "category": "Смотровые/наблюдения",
-  "details": "'Шанхайская Венеция' — древний водный город рядом с Шанхаем, каналы и историческая архитектура эпох Мин и Цин",
-  "address": "Пригород Шанхая",
-  "link": "https://www.instagram.com/p/DYSWyIYCtzp/",
-  "note": "Совпадает с 'Чжоучжоан' у других авторов по типу локации (разные водные города, не путать)",
-  "district": "Пригород (отдельная поездка)",
-  "price": "Бесплатно, платно доп.",
-  "indoor": "Улица",
-  "status": "опционально",
-  "note2": "Цзюйцзяцзяо, отдельная поездка ~1-1.5ч",
-  "en": "Zhujiajiao Water Town",
-  "cn": "朱家角古镇",
-  "cn_addr": "上海市青浦区朱家角镇",
-  "en_addr": "",
-  "metro": "",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 90,
-  "name": "Keigt Garden (в Zhujiajiao)",
-  "category": "Смотровые/наблюдения",
-  "details": "Сад с ландшафтным дизайном на территории Zhujiajiao; проходит иммерсивное театральное представление с гуцинем и танцем",
-  "address": "Zhujiajiao",
-  "link": "https://www.instagram.com/p/DYSWyIYCtzp/",
-  "note": "—",
-  "district": "Пригород (отдельная поездка)",
-  "price": "Платно",
-  "indoor": "Улица",
-  "status": "опционально",
-  "note2": "Внутри Zhujiajiao",
-  "en": "Zhujiajiao Water Town",
-  "cn": "朱家角古镇",
-  "cn_addr": "上海市青浦区朱家角镇",
-  "en_addr": "",
-  "metro": "",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 91,
-  "name": "THE ROOF",
-  "category": "Архитектура/wow-место",
-  "details": "Здание, спроектированное архитектором Жаном Нувелем (лауреат Притцкеровской премии)",
-  "address": "—",
-  "link": "https://www.instagram.com/p/DYSWyIYCtzp/",
-  "note": "—",
-  "district": "уточнить на месте",
-  "price": "Уточнить",
-  "indoor": "В помещении",
-  "status": "уточнить",
-  "note2": "Архитектор Жан Нувель, район не подтверждён",
-  "en": "",
-  "cn": "",
-  "cn_addr": "",
-  "en_addr": "",
-  "metro": "",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 92,
-  "name": "Expo Park Greenhouse Garden",
-  "category": "Смотровые/наблюдения",
-  "details": "Построен в 2024 на месте векового сталелитейного завода с сохранением стальных конструкций (условие архитектурного конкурса), дизайн — Delugan Meissl Associated Architects (DMAA), площадь 41 000 м²",
-  "address": "Shibo Culture Park (Expo Park)",
-  "link": "https://www.instagram.com/p/DYSWyIYCtzp/",
-  "note": "То же место, что Shanghai Greenhouse Garden — архитектурные подробности",
-  "district": "Пудун (Экспо-парк / China Art Museum)",
-  "price": "Уточнить",
-  "indoor": "В помещении",
-  "status": "актуально",
-  "note2": "Дубль записи 38/79/86",
-  "en": "Shanghai Greenhouse Garden (Botanical Greenhouses, Expo Park)",
-  "cn": "上海温室花园",
-  "cn_addr": "上海市浦东新区申慱路1099号（世博公园内）",
-  "en_addr": "",
-  "metro": "中华艺术宫 China Art Museum",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 93,
-  "name": "Shanghai Ocean Aquarium",
-  "category": "Развлечения (на случай дождя)",
-  "details": "Океанариум в районе Lujiazui, один из самых длинных подводных тоннелей, идеален на 2-3 часа, особенно с детьми",
-  "address": "Lujiazui",
-  "link": "https://www.instagram.com/p/DYPLf-PNW16/",
-  "note": "—",
-  "district": "Пудун — Луцзяцзуй",
-  "price": "Платно",
-  "indoor": "В помещении, кондиционер",
-  "status": "ОСТОРОЖНО — рыба",
-  "note2": "Есть аквариумы с рыбой (за стеклом) — на ваше усмотрение с учётом аллергии",
-  "en": "",
-  "cn": "",
-  "cn_addr": "",
-  "en_addr": "",
-  "metro": "",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 94,
-  "name": "Цирк (акробатическое шоу)",
-  "category": "Развлечения (на случай дождя)",
-  "details": "Смотреть афишу на день посещения",
-  "address": "—",
-  "link": "https://www.instagram.com/p/DYPLf-PNW16/",
-  "note": "—",
-  "district": "Чанин",
-  "price": "Платно",
-  "indoor": "В помещении, кондиционер",
-  "status": "актуально",
-  "note2": "Шанхайский цирк (акробатическое шоу)",
-  "en": "",
-  "cn": "",
-  "cn_addr": "",
-  "en_addr": "",
-  "metro": "",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 95,
-  "name": "Young·Space Hot Spring Life",
-  "category": "СПА / отдых",
-  "details": "В базовую стоимость входят горячие источники, бассейны, сауны, уходовые средства; массаж/спа-процедуры/буфет — за доп. плату",
-  "address": "—",
-  "link": "https://www.instagram.com/p/DYPLf-PNW16/",
-  "note": "Похожий бренд на Young·Space Hot Spring Hall из предыдущей подборки — уточнить, это та же сеть или разные точки",
-  "district": "уточнить на месте",
-  "price": "Платно",
-  "indoor": "В помещении",
-  "status": "не идём (решение семьи)",
-  "note2": "Возможно другая точка сети, чем запись 84",
-  "en": "",
-  "cn": "",
-  "cn_addr": "",
-  "en_addr": "",
-  "metro": "",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 96,
-  "name": "Greenhouse Garden — доп. детали",
-  "category": "Смотровые/наблюдения",
-  "details": "На цокольном этаже есть зона со световыми эффектами и океанариумом",
-  "address": "—",
-  "link": "https://www.instagram.com/p/DYPLf-PNW16/",
-  "note": "Дополняет запись о Greenhouse Garden",
-  "district": "Пудун (Экспо-парк / China Art Museum)",
-  "price": "Уточнить",
-  "indoor": "В помещении",
-  "status": "актуально",
-  "note2": "Дубль записи 38",
-  "en": "Shanghai Greenhouse Garden (Botanical Greenhouses, Expo Park)",
-  "cn": "上海温室花园",
-  "cn_addr": "上海市浦东新区申慱路1099号（世博公园内）",
-  "en_addr": "",
-  "metro": "中华艺术宫 China Art Museum",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 97,
-  "name": "AP Plaza",
-  "category": "Шопинг",
-  "details": "Рынок реплик/подделок под Музеем науки и технологий, атмосфера 90-х",
-  "address": "Под Shanghai Science & Technology Museum",
-  "link": "https://www.instagram.com/p/DYPLf-PNW16/",
-  "note": "—",
-  "district": "Пудун — Луцзяцзуй",
-  "price": "Бесплатно вход (торг на месте)",
-  "indoor": "В помещении",
-  "status": "актуально",
-  "note2": "Под музеем науки и техники",
-  "en": "Shanghai Science and Technology Museum",
-  "cn": "上海科技馆",
-  "cn_addr": "上海市浦东新区世纪大道2000号",
-  "en_addr": "",
-  "metro": "上海科技馆 Shanghai Science and Technology Museum",
-  "hours": "09:00-17:00",
-  "closed_day": "понедельник"
- },
- {
-  "id": 98,
-  "name": "IFC (Pudong)",
-  "category": "Шопинг",
-  "details": "Элитный торговый центр",
-  "address": "Pudong",
-  "link": "https://www.instagram.com/p/DYPLf-PNW16/",
-  "note": "—",
-  "district": "Пудун — Луцзяцзуй",
-  "price": "Бесплатно вход",
-  "indoor": "В помещении, кондиционер",
-  "status": "актуально",
-  "note2": "",
-  "en": "",
-  "cn": "",
-  "cn_addr": "",
-  "en_addr": "",
-  "metro": "",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 99,
-  "name": "Мастерские резных печатей на рынке Yu Garden",
-  "category": "Сувениры/мастер-классы",
-  "details": "Мастера вручную вырезают именные каменные печати-штампы; в комментариях предупреждают, что машинная резка стоит намного дешевле ручной работы — уточнять цену заранее",
-  "address": "Рынок Yu Garden (Yuyuan)",
-  "link": "https://www.instagram.com/p/DW8BlACkYZg/",
-  "note": "—",
-  "district": "Хуанпу (Народная площадь / Бунд / Юйюань)",
-  "price": "Платно за печать",
-  "indoor": "Смешанно",
-  "status": "актуально",
-  "note2": "Рынок Yu Garden",
-  "en": "Yuyuan Garden",
-  "cn": "豫园",
-  "cn_addr": "上海市黄浦区安仁街132号",
-  "en_addr": "",
-  "metro": "豫园 Yuyuan Garden",
-  "hours": "09:00-16:30",
-  "closed_day": "понедельник"
- },
- {
-  "id": 100,
-  "name": "North Bund Greenland",
-  "category": "Смотровые/наблюдения",
-  "details": "Парк на набережной с видом на деловой район; рядом кафе Manner Coffee и смотровая Stage",
-  "address": "North Bund",
-  "link": "https://www.instagram.com/p/DXWLmOiCBV9/",
-  "note": "Уточняет расположение Manner Coffee (North Bund) из гида",
-  "district": "Норт-Банд (Хункоу)",
-  "price": "Бесплатно",
-  "indoor": "Улица",
-  "status": "актуально",
-  "note2": "Парк на набережной",
-  "en": "",
-  "cn": "",
-  "cn_addr": "",
-  "en_addr": "",
-  "metro": "",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 101,
-  "name": "Zhouzhuang (Чжоучжоан)",
-  "category": "Смотровые/наблюдения",
-  "details": "Самый известный водный город Китая; ~2ч на метро или ~1.5ч на такси; рекомендуют ехать с ночёвкой — вечером атмосфера меняется",
-  "address": "Пригород Шанхая",
-  "link": "https://www.instagram.com/p/DXWLmOiCBV9/",
-  "note": "Не путать с Zhujiajiao — это разные водные города",
-  "district": "Пригород (отдельная поездка)",
-  "price": "Бесплатно, платно доп.",
-  "indoor": "Улица",
-  "status": "опционально",
-  "note2": "Чжоучжоан, далеко (~1.5-2ч), лучше с ночёвкой — вряд ли впишется",
-  "en": "Zhouzhuang Water Town",
-  "cn": "周庄古镇",
-  "cn_addr": "江苏省苏州市昆山市周庄镇",
-  "en_addr": "",
-  "metro": "",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 102,
-  "name": "Fairmont Peace Hotel",
-  "category": "Отели / бары",
-  "details": "Олд-мани отель; вечерний коктейль в баре с открытой террасой и видом; иногда играет джаз, атмосфера ар-деко",
-  "address": "The Bund",
-  "link": "https://www.instagram.com/p/DXWLmOiCBV9/",
-  "note": "—",
-  "district": "Хуанпу (Народная площадь / Бунд / Юйюань)",
-  "price": "Платно (напитки в баре)",
-  "indoor": "В помещении, кондиционер",
-  "status": "актуально",
-  "note2": "На Бунде, вечер",
-  "en": "",
-  "cn": "",
-  "cn_addr": "",
-  "en_addr": "",
-  "metro": "",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 103,
-  "name": "Музей почты (Shanghai Postal Museum)",
-  "category": "Музей",
-  "details": "Бесплатный, большой; с выхода — кинематографичный вид на деловой район",
-  "address": "—",
-  "link": "https://www.instagram.com/p/DXWLmOiCBV9/",
-  "note": "—",
-  "district": "Хуанпу (Народная площадь / Бунд / Юйюань)",
-  "price": "Бесплатно",
-  "indoor": "В помещении, кондиционер",
-  "status": "актуально",
-  "note2": "",
-  "en": "",
-  "cn": "",
-  "cn_addr": "",
-  "en_addr": "",
-  "metro": "",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 104,
-  "name": "Qibao (Чибао)",
-  "category": "Смотровые/наблюдения",
-  "details": "Уменьшенная и более близкая версия Zhouzhuang: каналы, мостики, сувенирные ряды, несколько храмов; около 30 мин на метро",
-  "address": "~30 мин от центра на метро",
-  "link": "https://www.instagram.com/p/DXWLmOiCBV9/",
-  "note": "Хороший вариант, если нет времени на Zhouzhuang/Zhujiajiao",
-  "district": "Пригород (отдельная поездка)",
-  "price": "Бесплатно, платно доп.",
-  "indoor": "Улица",
-  "status": "опционально",
-  "note2": "Цибао, ближе других водных городков (~30 мин)",
-  "en": "Zhouzhuang Water Town",
-  "cn": "周庄古镇",
-  "cn_addr": "江苏省苏州市昆山市周庄镇",
-  "en_addr": "",
-  "metro": "",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 105,
-  "name": "Кофейня с фисташковым мороженым",
-  "category": "Кафе",
-  "details": "Атмосферное место, кофе и десерты с фисташкой; название на английском в посте не указано",
-  "address": "湖南路街道东湖路56弄26号 (Hunan Road subdistrict, Donghu Road, Lane 56, No.26)",
-  "link": "https://www.instagram.com/p/DXtFsMeCFiv/",
-  "note": "Название заведения уточнить на месте по адресу",
-  "district": "Французская концессия (Сюйхуэй/Хуанпу)",
-  "price": "Платно",
-  "indoor": "В помещении, кондиционер",
-  "status": "актуально",
-  "note2": "Hunan Rd / Donghu Rd",
-  "en": "",
-  "cn": "",
-  "cn_addr": "",
-  "en_addr": "",
-  "metro": "",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 106,
-  "name": "Manner Coffee (North Bund)",
-  "category": "Кафе",
-  "details": "Подтверждение из подборки кофеен",
-  "address": "North Bund",
-  "link": "https://www.instagram.com/p/DX30LTAGvH-/",
-  "note": "Совпадает с записью из гида yanchevskaya_anna",
-  "district": "Норт-Банд (Хункоу)",
-  "price": "Платно, недорого",
-  "indoor": "В помещении",
-  "status": "актуально",
-  "note2": "Дубль записи 31",
-  "en": "",
-  "cn": "",
-  "cn_addr": "",
-  "en_addr": "",
-  "metro": "",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 107,
-  "name": "Metal Hands",
-  "category": "Кафе",
-  "details": "Кофейня рядом с Huaihai Road",
-  "address": "Рядом с Huaihai Rd",
-  "link": "https://www.instagram.com/p/DX30LTAGvH-/",
-  "note": "—",
-  "district": "Французская концессия (Сюйхуэй/Хуанпу)",
-  "price": "Платно, недорого",
-  "indoor": "В помещении",
-  "status": "актуально",
-  "note2": "Рядом с Huaihai Rd",
-  "en": "",
-  "cn": "",
-  "cn_addr": "",
-  "en_addr": "",
-  "metro": "",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 108,
-  "name": "Mahlkonig Dirty Coffee (Cubic 3)",
-  "category": "Кафе",
-  "details": "Кофейня, специализация — dirty coffee",
-  "address": "Cubic 3, Yongkang Rd, Shanghai",
-  "link": "https://www.instagram.com/p/DX30LTAGvH-/",
-  "note": "Совпадает с CUBIC 3 из гида и поста katrinansk",
-  "district": "Французская концессия (Сюйхуэй/Хуанпу)",
-  "price": "Платно, недорого",
-  "indoor": "В помещении",
-  "status": "актуально",
-  "note2": "Дубль записи 7/32",
-  "en": "",
-  "cn": "",
-  "cn_addr": "",
-  "en_addr": "",
-  "metro": "",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 109,
-  "name": "Dugout Coffee",
-  "category": "Кафе",
-  "details": "Кофейня, попробовали dirty latte",
-  "address": "The Bund",
-  "link": "https://www.instagram.com/p/DX30LTAGvH-/",
-  "note": "—",
-  "district": "Хуанпу (Народная площадь / Бунд / Юйюань)",
-  "price": "Платно, недорого",
-  "indoor": "В помещении",
-  "status": "актуально",
-  "note2": "На Бунде",
-  "en": "",
-  "cn": "",
-  "cn_addr": "",
-  "en_addr": "",
-  "metro": "",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 110,
-  "name": "Companion Coffee",
-  "category": "Кафе",
-  "details": "Кофейня с латте, большой выбор кофейных зёрен",
-  "address": "Zhujiajiao",
-  "link": "https://www.instagram.com/p/DX30LTAGvH-/",
-  "note": "—",
-  "district": "Пригород (отдельная поездка)",
-  "price": "Платно, недорого",
-  "indoor": "В помещении",
-  "status": "опционально",
-  "note2": "В Zhujiajiao",
-  "en": "",
-  "cn": "",
-  "cn_addr": "",
-  "en_addr": "",
-  "metro": "",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 111,
-  "name": "The Zikawei Library",
-  "category": "Библиотека/архитектура",
-  "details": "Общественное пространство-библиотека",
-  "address": "—",
-  "link": "https://www.instagram.com/p/DXwzZ_kjHO8/",
-  "note": "—",
-  "district": "Французская концессия (Сюйхуэй/Хуанпу)",
-  "price": "Бесплатно",
-  "indoor": "В помещении, кондиционер",
-  "status": "актуально",
-  "note2": "Историческое здание в Сюйцзяхуэй, рядом с Xuhui Library",
-  "en": "Xujiahui Library (Bibliotheca Zi-Ka-Wei)",
-  "cn": "徐家汇藏书楼",
-  "cn_addr": "上海市徐汇区漕溪北路80号",
-  "en_addr": "",
-  "metro": "徐家汇 Xujiahui",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 112,
-  "name": "Xuhui District",
-  "category": "Смотровые/наблюдения",
-  "details": "Район, рекомендованный для прогулок",
-  "address": "—",
-  "link": "https://www.instagram.com/p/DXwzZ_kjHO8/",
-  "note": "—",
-  "district": "Французская концессия (Сюйхуэй/Хуанпу)",
-  "price": "уточнить на месте",
-  "indoor": "Улица",
-  "status": "актуально",
-  "note2": "Общая рекомендация района",
-  "en": "",
-  "cn": "",
-  "cn_addr": "",
-  "en_addr": "",
-  "metro": "",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 113,
-  "name": "Jade Buddha Temple",
-  "category": "Храм",
-  "details": "Буддийский храм в центре города",
-  "address": "—",
-  "link": "https://www.instagram.com/p/DXwzZ_kjHO8/",
-  "note": "—",
-  "district": "Сучжоу Крик / M50 (Путуо)",
-  "price": "Платно, недорого (~20 юаней)",
-  "indoor": "Смешанно",
-  "status": "актуально",
-  "note2": "Путуо, рядом с Сучжоу Крик",
-  "en": "Jade Buddha Temple",
-  "cn": "玉佛禅寺",
-  "cn_addr": "上海市普陀区安远路170号",
-  "en_addr": "",
-  "metro": "汉中路 Hanzhong Rd",
-  "hours": "08:00-16:30",
-  "closed_day": ""
- },
- {
-  "id": 114,
-  "name": "1933 Old Millfun",
-  "category": "Искусство/арт-кластеры",
-  "details": "Бывшая скотобойня 1933 года, сейчас арт-пространство",
-  "address": "—",
-  "link": "https://www.instagram.com/p/DXwzZ_kjHO8/",
-  "note": "Ещё одно подтверждение места из гида; в комментариях альтернатива — Long Museum",
-  "district": "Норт-Банд (Хункоу)",
-  "price": "Смешанно",
-  "indoor": "Смешанно",
-  "status": "актуально",
-  "note2": "Дубль записи 15/87",
-  "en": "1933 Old Millfun (Laochangfang)",
-  "cn": "1933老场坊",
-  "cn_addr": "上海市虹口区沙泾路10号",
-  "en_addr": "",
-  "metro": "",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 115,
-  "name": "West Bund (Xuhui)",
-  "category": "Искусство/арт-кластеры",
-  "details": "Завод, переоборудованный в арт-пространство",
-  "address": "Xuhui",
-  "link": "https://www.instagram.com/p/DXwzZ_kjHO8/",
-  "note": "—",
-  "district": "Вест-Банд (набережная Сюйхуэй)",
-  "price": "Бесплатно/платно по объекту",
-  "indoor": "Смешанно",
-  "status": "актуально",
-  "note2": "Дубль записи 36",
-  "en": "",
-  "cn": "",
-  "cn_addr": "",
-  "en_addr": "",
-  "metro": "",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 116,
-  "name": "Yuyuan Old Street (вечер)",
-  "category": "Смотровые/наблюдения",
-  "details": "Китайская архитектура в вечерней подсветке",
-  "address": "—",
-  "link": "https://www.instagram.com/p/DXwzZ_kjHO8/",
-  "note": "—",
-  "district": "Хуанпу (Народная площадь / Бунд / Юйюань)",
-  "price": "Бесплатно",
-  "indoor": "Улица (вечер)",
-  "status": "актуально",
-  "note2": "",
-  "en": "",
-  "cn": "",
-  "cn_addr": "",
-  "en_addr": "",
-  "metro": "",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 117,
-  "name": "Urban Revivo",
-  "category": "Шопинг",
-  "details": "Китайский бренд одежды, сравнивают с ZARA",
-  "address": "—",
-  "link": "https://www.instagram.com/p/DXwzZ_kjHO8/",
-  "note": "Подтверждает бренд из подборки im.marziya",
-  "district": "уточнить на месте",
-  "price": "Платно",
-  "indoor": "В помещении, кондиционер",
-  "status": "актуально",
-  "note2": "Есть в нескольких ТЦ города",
-  "en": "",
-  "cn": "",
-  "cn_addr": "",
-  "en_addr": "",
-  "metro": "",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 118,
-  "name": "Nanjing East Road",
-  "category": "Шопинг",
-  "details": "Пешеходная улица с флагманскими магазинами (упоминаются Labubu, M&M's)",
-  "address": "—",
-  "link": "https://www.instagram.com/p/DXwzZ_kjHO8/",
-  "note": "—",
-  "district": "Хуанпу (Народная площадь / Бунд / Юйюань)",
-  "price": "Бесплатно (покупки платно)",
-  "indoor": "Улица",
-  "status": "актуально",
-  "note2": "",
-  "en": "Nanjing Road",
-  "cn": "南京路",
-  "cn_addr": "上海市黄浦区南京东路/南京西路",
-  "en_addr": "",
-  "metro": "南京东路 Nanjing East Rd",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 119,
-  "name": "Longjing Tea Village",
-  "category": "За городом",
-  "details": "Чайная плантация в часе езды от Шанхая",
-  "address": "~1 час от Шанхая",
-  "link": "https://www.instagram.com/p/DXwzZ_kjHO8/",
-  "note": "Загородная поездка, не в черте города",
-  "district": "Пригород (отдельная поездка)",
-  "price": "Платно",
-  "indoor": "Улица",
-  "status": "исключить из плана",
-  "note2": "Это скорее Ханчжоу (~1-1.5ч), не вписывается в 3 свободных дня",
-  "en": "Longjing Tea Village",
-  "cn": "龙井村",
-  "cn_addr": "浙江省杭州市西湖区龙井村",
-  "en_addr": "",
-  "metro": "",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 120,
-  "name": "M&M's (магазин)",
-  "category": "Шопинг",
-  "details": "Огромный магазин с разноцветным драже",
-  "address": "—",
-  "link": "https://www.instagram.com/p/DX2h0ffCIhx/",
-  "note": "Совпадает с M&M Chocolate World из других постов",
-  "district": "Хуанпу (Народная площадь / Бунд / Юйюань)",
-  "price": "Бесплатно вход",
-  "indoor": "В помещении, кондиционер",
-  "status": "актуально",
-  "note2": "Дубль записи 54/72",
-  "en": "",
-  "cn": "",
-  "cn_addr": "",
-  "en_addr": "",
-  "metro": "",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 121,
-  "name": "The Louis (Louis Vuitton)",
-  "category": "Шопинг/wow-место",
-  "details": "Корабль-музей LV посреди города",
-  "address": "—",
-  "link": "https://www.instagram.com/p/DX2h0ffCIhx/",
-  "note": "Совпадает с записью из гида",
-  "district": "Цзинъань (Наньцзин Си Лу)",
-  "price": "Бесплатно вход",
-  "indoor": "В помещении",
-  "status": "актуально",
-  "note2": "Дубль записи 50/78",
-  "en": "Fondation Louis Vuitton (The Louis / LV space)",
-  "cn": "路易威登之家",
-  "cn_addr": "上海市静安区南京西路",
-  "en_addr": "",
-  "metro": "南京西路 Nanjing West Rd",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 122,
-  "name": "Starbucks Reserve Roastery",
-  "category": "Кафе",
-  "details": "Самый большой филиал Starbucks в мире (рядом с The Louis)",
-  "address": "—",
-  "link": "https://www.instagram.com/p/DX2h0ffCIhx/",
-  "note": "В комментариях к этому же посту кто-то оспаривает: 'Старбакс — НЕ самый большой в мире' — стоит перепроверить перед поездкой",
-  "district": "Цзинъань (Наньцзин Си Лу)",
-  "price": "Бесплатно вход, платно напитки",
-  "indoor": "В помещении, кондиционер",
-  "status": "актуально",
-  "note2": "Дубль записи 53/77",
-  "en": "Starbucks Reserve Roastery Shanghai",
-  "cn": "上海星巴克臻选烘焙工坊",
-  "cn_addr": "上海市静安区南京西路789号",
-  "en_addr": "",
-  "metro": "南京西路 Nanjing West Rd",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 123,
-  "name": "13DE MARZO Café",
-  "category": "Кафе",
-  "details": "Инстаграмные напитки с мишками",
-  "address": "—",
-  "link": "https://www.instagram.com/p/DX2h0ffCIhx/",
-  "note": "Совпадает с 13de Marzo Café из подборки krugovaya_nastya",
-  "district": "Французская концессия (Сюйхуэй/Хуанпу)",
-  "price": "Платно",
-  "indoor": "Смешанно",
-  "status": "актуально",
-  "note2": "Дубль записи 73",
-  "en": "",
-  "cn": "",
-  "cn_addr": "",
-  "en_addr": "",
-  "metro": "",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 124,
-  "name": "Hey Tea",
-  "category": "Кафе",
-  "details": "Сеть кофеен с большими смузи (~250₽)",
-  "address": "—",
-  "link": "https://www.instagram.com/p/DX2h0ffCIhx/",
-  "note": "Совпадает с Heytea из гида yanchevskaya_anna",
-  "district": "уточнить на месте",
-  "price": "Платно, недорого",
-  "indoor": "В помещении",
-  "status": "актуально",
-  "note2": "Сеть, дубль записи 28",
-  "en": "",
-  "cn": "",
-  "cn_addr": "",
-  "en_addr": "",
-  "metro": "",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 125,
-  "name": "Qingzhi",
-  "category": "Шопинг/сувениры",
-  "details": "Бутик с кремами для рук с датой рождения — необычный сувенир",
-  "address": "—",
-  "link": "https://www.instagram.com/p/DX2h0ffCIhx/",
-  "note": "—",
-  "district": "уточнить на месте",
-  "price": "Платно",
-  "indoor": "В помещении",
-  "status": "актуально",
-  "note2": "Район не подтверждён",
-  "en": "",
-  "cn": "",
-  "cn_addr": "",
-  "en_addr": "",
-  "metro": "",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 126,
-  "name": "Yun He Ye Bo Hotel (Shanghai Wuning Road Global Harbor)",
-  "category": "Отель",
-  "details": "Отель с удобным расположением (5 мин до метро, рядом Старбакс/7-Eleven/Family Mart), хорошие завтраки",
-  "address": "Wuning Road, Global Harbor",
-  "link": "https://www.instagram.com/p/DYCQbe5Ev5O/",
-  "note": "—",
-  "district": "Путуо (не по пути)",
-  "price": "Платно (отель)",
-  "indoor": "В помещении",
-  "status": "справочно",
-  "note2": "Другой отель — не ваш, для справки",
-  "en": "",
-  "cn": "",
-  "cn_addr": "",
-  "en_addr": "",
-  "metro": "",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 127,
-  "name": "Lujiazui Central Green",
-  "category": "Смотровые/наблюдения",
-  "details": "Парк рядом с ТЦ на стороне Восточной жемчужины",
-  "address": "Lujiazui",
-  "link": "https://www.instagram.com/p/DYCQbe5Ev5O/",
-  "note": "—",
-  "district": "Пудун — Луцзяцзуй",
-  "price": "Бесплатно",
-  "indoor": "Улица",
-  "status": "актуально",
-  "note2": "",
-  "en": "",
-  "cn": "",
-  "cn_addr": "",
-  "en_addr": "",
-  "metro": "",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 128,
-  "name": "The Bund — 'Музыкальные ворота'",
-  "category": "Смотровые/наблюдения",
-  "details": "Доп. достопримечательность на набережной Вайтань",
-  "address": "The Bund",
-  "link": "https://www.instagram.com/p/DYCQbe5Ev5O/",
-  "note": "Дополняет запись о Вайтане",
-  "district": "Хуанпу (Народная площадь / Бунд / Юйюань)",
-  "price": "Бесплатно",
-  "indoor": "Улица",
-  "status": "актуально",
-  "note2": "Доп. точка на Бунде",
-  "en": "The Bund",
-  "cn": "外滩",
-  "cn_addr": "上海市黄浦区中山东一路",
-  "en_addr": "",
-  "metro": "南京东路 Nanjing East Rd",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 129,
-  "name": "Шанхайский ботанический сад",
-  "category": "Смотровые/наблюдения",
-  "details": "Находится в Экспо-парке, 3 павильона, очень живописный; рядом Шанхайский оперный театр",
-  "address": "Expo Park (Shibo)",
-  "link": "https://www.instagram.com/p/DYCQbe5Ev5O/",
-  "note": "Возможно, связан с Greenhouse Garden (тот же парк) — уточнить, разные ли это объекты",
-  "district": "Пудун (Экспо-парк / China Art Museum)",
-  "price": "Уточнить",
-  "indoor": "В помещении/улица",
-  "status": "актуально",
-  "note2": "Возможно тот же комплекс, что Greenhouse Garden — уточнить на месте",
-  "en": "",
-  "cn": "",
-  "cn_addr": "",
-  "en_addr": "",
-  "metro": "",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 130,
-  "name": "People's Square (Park)",
-  "category": "Смотровые/наблюдения",
-  "details": "Уютный парк для отдыха от прогулок по городу",
-  "address": "—",
-  "link": "https://www.instagram.com/p/DYCQbe5Ev5O/",
-  "note": "—",
-  "district": "Хуанпу (Народная площадь / Бунд / Юйюань)",
-  "price": "Бесплатно",
-  "indoor": "Улица",
-  "status": "актуально",
-  "note2": "В 5 минутах от отеля Movenpick!",
-  "en": "People's Square",
-  "cn": "人民广场",
-  "cn_addr": "上海市黄浦区人民大道",
-  "en_addr": "",
-  "metro": "人民广场 People's Square",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 131,
-  "name": "Yan Gege / Spiceman / Wagas / Amam Bakery / Baoyiqie / Dumpling Xi",
-  "category": "Еда",
-  "details": "Веган-ресторан Yan Gege; джелато Spiceman (вкус мангостин); сеть Wagas; кондитерская Amam Bakery; пирожки Baoyiqie (дёшево, разные начинки); пельмени Dumpling Xi",
-  "address": "—",
-  "link": "https://www.instagram.com/p/DYCQbe5Ev5O/",
-  "note": "Список из одного поста, места по разным районам города",
-  "district": "уточнить на месте",
-  "price": "Платно, недорого",
-  "indoor": "В помещении",
-  "status": "актуально",
-  "note2": "Адреса уточнить по каждому месту отдельно",
-  "en": "",
-  "cn": "",
-  "cn_addr": "",
-  "en_addr": "",
-  "metro": "",
-  "hours": "",
-  "closed_day": ""
- },
- {
-  "id": 132,
-  "name": "Sinan Books (思南书局, основная точка на Fuxing Zhong Lu)",
-  "category": "Библиотека / книжный",
-  "details": "Атмосферный книжный в старинном французском особняке с платанами во дворе; литература/история/философия/искусство, есть кафе и читальные залы. Второй филиал — Poetry Store в здании бывшей православной церкви на Gaolan Rd",
-  "address": "Fuxing Zhong Lu (осн. точка), доп. точка — Gaolan Rd (Poetry Store), Французская концессия",
-  "link": "https://www.smartshanghai.com/venue/15360/sinan_books_fuxing_zhong_lu",
-  "note": "Замена Duoyun Bookstore — рядом с Tianzifang и Xintiandi, вписывается в маршрут 16.07",
-  "district": "Французская концессия",
-  "price": "Бесплатно (покупки платно)",
-  "indoor": "В помещении, кондиционер",
-  "status": "актуально",
-  "note2": "Рядом с Sinan Mansions/Xintiandi — легко объединить с Tianzifang",
-  "en": "Sinan Books",
-  "cn": "思南书局",
-  "cn_addr": "上海市黄浦区复兴中路517号",
-  "en_addr": "",
-  "metro": "陕西南路 Shaanxi South Rd",
-  "hours": "",
-  "closed_day": ""
- }
-];
+/* CSV парсинг и загрузка из гугл-таблицы */
+function parseCSVLine(line){
+  const result = [];
+  let current = "";
+  let inQuotes = false;
+  for(let i = 0; i < line.length; i++){
+    const ch = line[i];
+    const next = line[i+1];
+    if(ch === '"'){
+      if(inQuotes && next === '"'){
+        current += '"';
+        i++;
+      } else {
+        inQuotes = !inQuotes;
+      }
+    } else if(ch === ',' && !inQuotes){
+      result.push(current.trim());
+      current = "";
+    } else {
+      current += ch;
+    }
+  }
+  result.push(current.trim());
+  return result;
+}
+
+function normalizePlace(row){
+  // маппинг колонок из таблицы на внутренний формат
+  return {
+    id: row["№"] || row["id"] || "",
+    name: row["Место / локация"] || "",
+    en: "", // можно доб. позже
+    category: row["Категория"] || "",
+    details: row["Детали"] || "",
+    address: row["Адрес / ориентиры"] || "",
+    link: row["Ссылка на пост"] || "",
+    note: row["Примечание"] || "",
+    district: row["Район / кластер"] || "",
+    price: row["Платно / бесплатно"] || "",
+    indoor: row["Помещение / улица"] || "",
+    status: row["Статус для поездки"] || "",
+    note2: row["Доп. заметка"] || "",
+    metro: "", // заполнять вручную или через edit
+    cn: "",
+    cn_addr: "",
+    hours: "",
+    closed_day: "",
+    en_addr: "",
+    author: row["Автор поста"] || "",
+    custom: false
+  };
+}
+
+async function loadPlacesFromGoogleSheets(){
+  const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRN_PWK55vpAo-dSayPrIEzA365hcFCzUGSU6TXVadLY6xWcQlR4aQXLsVDHUsi7lBQHRjhWE7VgkdZ/pub?gid=985201296&single=true&output=csv";
+  try {
+    const response = await fetch(csvUrl);
+    const csv = await response.text();
+    const lines = csv.trim().split('\n');
+    if(lines.length < 2) return [];
+
+    const headers = parseCSVLine(lines[0]);
+    const places = [];
+
+    for(let i = 1; i < lines.length; i++){
+      const values = parseCSVLine(lines[i]);
+      const row = {};
+      headers.forEach((h, idx) => {
+        row[h] = values[idx] || "";
+      });
+      if(row["№"] || row["Место / локация"]){
+        const normalized = normalizePlace(row);
+        if(normalized.name || normalized.id) places.push(normalized);
+      }
+    }
+    return places;
+  } catch(e){
+    console.error("Failed to load from Google Sheets", e);
+    return [];
+  }
+}
+
+let BASE_PLACES = [];
 
 const DAYS = [
   {key:"14-07", label:"14.07 (вт)", sub:"Прилёт", emoji:"✈️"},
@@ -3178,6 +474,35 @@ const DAYS = [
 ];
 const BLOCKS = ["Утро","День","Вечер"];
 const GRADIENTS = ["g0","g1","g2","g3","g4","g5"];
+
+const CATEGORY_STYLES = [
+  {test:/транспорт/, color:"#5b7fbd"},
+  {test:/кафе|кофе|чай|десерт/, color:"#c99248"},
+  {test:/музе/, color:"#9678c9"},
+  {test:/шопинг|магазин|бренд|сувенир/, color:"#d17a9c"},
+  {test:/парк|сад|природ|озеро|за городом/, color:"#6ba888"},
+  {test:/еда|ресторан|ужин/, color:"#d68a5c"},
+  {test:/книж|библиотек/, color:"#4a6b8a"},
+  {test:/храм|религ/, color:"#8a7cc9"},
+  {test:/арт|искусств|галере/, color:"#9678c9"},
+  {test:/животн|зоопарк/, color:"#6ba888"},
+  {test:/спа|отдых/, color:"#d17a9c"},
+  {test:/отел/, color:"#5b7fbd"},
+  {test:/ночн/, color:"#8a7cc9"},
+];
+
+function categoryColor(p){
+  const cat = (p.category || "").toLowerCase();
+  for(const style of CATEGORY_STYLES){
+    if(style.test.test(cat)) return style.color;
+  }
+  return "#8890a0";
+}
+
+function applyCatColor(el, p){
+  const color = categoryColor(p);
+  el.style.setProperty("--catcolor", color);
+}
 
 const STORAGE_KEY = "shanghai_trip_plan_v1";
 const FAV_KEY = "shanghai_trip_favs_v1";
@@ -3192,9 +517,6 @@ function saveJSON(key, val){ localStorage.setItem(key, JSON.stringify(val)); }
 
 let plan = loadJSON(STORAGE_KEY, null);
 if(!plan){ plan = {}; DAYS.forEach(d=>BLOCKS.forEach(b=>plan[d.key+"|"+b]=[])); }
-// Миграция: Firebase Realtime Database запрещает "." в ключах, а старые
-// ключи плана были вида "14.07|Утро" — из-за этого запись в Firebase
-// молча не проходила и локальные добавления откатывались после синка.
 (function migrateLegacyDotKeys(){
   const migrated = {};
   let changed = false;
@@ -3241,7 +563,6 @@ function rebuildPlaces(){
   });
   PLACES = base.concat(customPlaces);
 }
-rebuildPlaces();
 
 function isFree(p){ return /бесплат/i.test(p.price||""); }
 function isPaid(p){ return /платно/i.test(p.price||"") && !/бесплат/i.test(p.price||""); }
@@ -3312,7 +633,6 @@ function amapUrl(p){
   return "https://uri.amap.com/search?keyword=" + encodeURIComponent(kw) + "&city=" + encodeURIComponent("上海");
 }
 
-/* ---------- Shanghai time + open-now logic ---------- */
 function shanghaiNow(){
   return new Date(new Date().toLocaleString("en-US", {timeZone:"Asia/Shanghai"}));
 }
@@ -3440,17 +760,14 @@ function buildCard(p, assigned){
   const div = document.createElement("div");
   div.className = "card" + (isSkipped(p) ? " skip" : "") + (p.custom ? " iscustom" : "");
   div.dataset.id = p.id;
+  applyCatColor(div, p);
 
   const banner = document.createElement("div");
   banner.className = "card-banner " + gradientFor(p);
   const tagSpan = document.createElement("span");
   tagSpan.className = "banner-tag";
-  tagSpan.textContent = p.district || p.category || "Шанхай";
+  tagSpan.textContent = p.category || p.district || "Шанхай";
   banner.appendChild(tagSpan);
-  const icon = document.createElement("span");
-  icon.className = "banner-icon";
-  icon.textContent = p.custom ? "🆕" : categoryIcon(p.category);
-  banner.appendChild(icon);
 
   const editBtn = document.createElement("button");
   editBtn.className = "edit-btn";
@@ -3537,7 +854,7 @@ function buildCard(p, assigned){
     row.className = "cn-row";
     const chip = document.createElement("span");
     chip.className = "cn-chip";
-    chip.textContent = "🇨🇳 " + p.cn;
+    chip.innerHTML = '<span class="copy-ic">📋</span>' + escapeHtml(p.cn);
     chip.addEventListener("click", ()=>{ copyText(p.cn); });
     row.appendChild(chip);
     body.appendChild(row);
@@ -3547,7 +864,7 @@ function buildCard(p, assigned){
     row2.className = "cn-row";
     const chip2 = document.createElement("span");
     chip2.className = "cn-chip";
-    chip2.textContent = "📍中文 " + p.cn_addr;
+    chip2.innerHTML = '<span class="copy-ic">📍</span>' + escapeHtml(p.cn_addr);
     chip2.addEventListener("click", ()=>{ copyText(p.cn_addr); });
     row2.appendChild(chip2);
     body.appendChild(row2);
@@ -3606,6 +923,7 @@ function escapeHtml(s){
 function buildChipCard(p, slotKey){
   const wrap = document.createElement("div");
   wrap.className = "chip-card";
+  applyCatColor(wrap, p);
 
   const header = document.createElement("div");
   header.className = "chip-header";
@@ -3662,7 +980,7 @@ function buildChipCard(p, slotKey){
     row.className = "cn-row";
     const chip = document.createElement("span");
     chip.className = "cn-chip";
-    chip.textContent = "🇨🇳 " + p.cn;
+    chip.innerHTML = '<span class="copy-ic">📋</span>' + escapeHtml(p.cn);
     chip.addEventListener("click", (e)=>{ e.stopPropagation(); copyText(p.cn); });
     row.appendChild(chip);
     body.appendChild(row);
@@ -3672,7 +990,7 @@ function buildChipCard(p, slotKey){
     row2.className = "cn-row";
     const chip2 = document.createElement("span");
     chip2.className = "cn-chip";
-    chip2.textContent = "📍中文 " + p.cn_addr;
+    chip2.innerHTML = '<span class="copy-ic">📍</span>' + escapeHtml(p.cn_addr);
     chip2.addEventListener("click", (e)=>{ e.stopPropagation(); copyText(p.cn_addr); });
     row2.appendChild(chip2);
     body.appendChild(row2);
@@ -3865,7 +1183,6 @@ function closeModal(){ document.getElementById("modalBg").classList.remove("show
 document.getElementById("modalClose").addEventListener("click", closeModal);
 document.getElementById("modalBg").addEventListener("click", (e)=>{ if(e.target.id==="modalBg") closeModal(); });
 
-/* ---------- Edit / Create place ---------- */
 let editingId = null;
 let editingIsNew = false;
 
@@ -3992,7 +1309,6 @@ document.getElementById("deleteCustomBtn").addEventListener("click", ()=>{
 
 document.getElementById("addPlaceBtn").addEventListener("click", openCreateModal);
 
-/* ---------- Export / reset ---------- */
 document.getElementById("exportBtn").addEventListener("click", ()=>{
   let out = "МАРШРУТ ПО ШАНХАЮ (14-19 июля)\n\n";
   DAYS.forEach(d=>{
@@ -4030,7 +1346,6 @@ document.getElementById("onlyFavBtn").addEventListener("click", ()=>{
 
 document.getElementById("metroSelect").addEventListener("change", renderMetroResult);
 
-/* ---------- Bottom nav ---------- */
 document.querySelectorAll(".nav-btn").forEach(btn=>{
   btn.addEventListener("click", ()=>{
     document.querySelectorAll(".nav-btn").forEach(b=>b.classList.remove("active"));
@@ -4050,7 +1365,6 @@ document.querySelectorAll(".nav-btn").forEach(btn=>{
   });
 });
 
-/* ---------- Pinned Hotel + Allergy cards ---------- */
 function renderPinnedCards(){
   const hotelBox = document.getElementById("hotelCard");
   hotelBox.innerHTML = "";
@@ -4058,7 +1372,7 @@ function renderPinnedCards(){
   hotelDiv.className = "card";
   const hb = document.createElement("div");
   hb.className = "card-banner ghotel";
-  hb.innerHTML = '<span class="banner-tag">Отель, 14-19 июля</span><span class="banner-icon">🏨</span>';
+  hb.innerHTML = '<span class="banner-tag">Отель, 14-19 июля</span>';
   hotelDiv.appendChild(hb);
   const hbody = document.createElement("div");
   hbody.className = "card-body";
@@ -4075,7 +1389,7 @@ function renderPinnedCards(){
   cnRow.className = "cn-row";
   const cnChip = document.createElement("span");
   cnChip.className = "cn-chip";
-  cnChip.textContent = "🇨🇳 上海人民广场雅高瑞享酒店";
+  cnChip.innerHTML = '<span class="copy-ic">📋</span>上海人民广场雅高瑞享酒店';
   cnChip.addEventListener("click", ()=>copyText("上海人民广场雅高瑞享酒店"));
   cnRow.appendChild(cnChip);
   hbody.appendChild(cnRow);
@@ -4083,7 +1397,7 @@ function renderPinnedCards(){
   cnAddrRow.className = "cn-row";
   const cnAddrChip = document.createElement("span");
   cnAddrChip.className = "cn-chip";
-  cnAddrChip.textContent = "📍中文 上海市黄浦区南京西路128号（绿地广场）";
+  cnAddrChip.innerHTML = '<span class="copy-ic">📍</span>上海市黄浦区南京西路128号（绿地广场）';
   cnAddrChip.addEventListener("click", ()=>copyText("上海市黄浦区南京西路128号（绿地广场）"));
   cnAddrRow.appendChild(cnAddrChip);
   hbody.appendChild(cnAddrRow);
@@ -4105,7 +1419,7 @@ function renderPinnedCards(){
   sosDiv.className = "card sos-card";
   const sb = document.createElement("div");
   sb.className = "card-banner gsos";
-  sb.innerHTML = '<span class="banner-tag">Важно — аллергия у Матвея</span><span class="banner-icon">⚠️</span>';
+  sb.innerHTML = '<span class="banner-tag">Важно — аллергия у Матвея</span>';
   sosDiv.appendChild(sb);
   const sbody = document.createElement("div");
   sbody.className = "card-body";
@@ -4127,12 +1441,14 @@ function renderPinnedCards(){
   sosBox.appendChild(sosDiv);
 }
 
-refreshFilterOptions();
-renderCards();
-renderBoard();
-renderMetroResult();
-renderPinnedCards();
-renderToday();
-</script>
-</body>
-</html>
+async function initApp(){
+  BASE_PLACES = await loadPlacesFromGoogleSheets();
+  if(BASE_PLACES.length === 0){
+    console.warn("No places loaded from Google Sheets");
+  }
+  rebuildPlaces();
+  refreshFilterOptions();
+  renderCards();
+  renderBoard();
+  renderMetroResult();
+  renderPinne
