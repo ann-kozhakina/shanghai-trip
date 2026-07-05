@@ -21,7 +21,7 @@
     --bg:#f4f6fb; --bg-deep:#eef1f8;
     --cream:#ffffff; --panel:#ffffff;
     --dark:#1c2233; --dark2:#12172a;
-    --ink:#1c2233; --muted:#8890a0;
+    --ink:#1c2233; --muted:#5a6470;
     --line:#e9ecf3;
     --free:#2f9e6e; --paid:#e08a2f; --skip:#a9a4a0;
     --yellow:#ffb020; --red:#e0472f; --blue:#2f6fe0;
@@ -79,9 +79,9 @@
   .card.skip{opacity:.55;}
   .card.iscustom{outline:2px dashed var(--line);outline-offset:-2px;}
 
-  .card-banner{position:relative;height:92px;padding:0;background:#fafafa;}
-  .card-banner .banner-tag{position:absolute;left:14px;bottom:10px;background:var(--catsoft,#eaf0f9);color:var(--catcolor,#5b7fbd);font-size:10.5px;font-weight:700;padding:4px 10px;border-radius:999px;max-width:60%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-  .card-banner .banner-icon{position:absolute;top:14px;left:14px;font-size:22px;width:40px;height:40px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.22);border-radius:50%;}
+  .card-banner{position:relative;height:60px;padding:0;background:#fafafa;}
+  .card-banner .banner-tag{position:absolute;left:12px;bottom:10px;background:var(--catcolor-soft,rgba(255,255,255,.3));color:var(--catcolor,#2f6fe0);font-size:10px;font-weight:700;padding:4px 10px;border-radius:999px;max-width:70%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .card-banner .banner-icon{display:none;}
   .fav-star,.edit-btn{background:rgba(255,255,255,.9);border:none;border-radius:50%;width:32px;height:32px;font-size:14px;cursor:pointer;position:absolute;top:12px;display:flex;align-items:center;justify-content:center;z-index:2;}
   .fav-star{right:12px;}
   .edit-btn{right:50px;}
@@ -90,7 +90,7 @@
 
   .g0,.g1,.g2,.g3,.g4,.g5,.gcustom,.ghotel,.gsos{background:transparent;}
 
-  .card-body{padding:14px 16px 16px;}
+  .card-body{padding:12px 14px 14px;}
   .card-toprow{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;}
   .card-name{font-weight:700;font-size:15.5px;line-height:1.3;}
   .card-name .en{display:block;font-weight:400;color:var(--muted);font-size:12px;margin-top:1px;}
@@ -3272,25 +3272,25 @@ function gradientFor(p){ return p.custom ? "gcustom" : GRADIENTS[Math.abs(hashId
 function hashId(id){ if(typeof id === "number") return id; let h=0; const s=String(id); for(let i=0;i<s.length;i++){ h=(h*31+s.charCodeAt(i))|0; } return h; }
 
 const CATEGORY_STYLES = [
-  {test:/кафе|кофе|чай|десерт/, bg:"#c99248", soft:"#f7eee0"},
-  {test:/музе/, bg:"#9678c9", soft:"#f1ecf9"},
-  {test:/шопинг|магазин|бренд|сувенир/, bg:"#d17a9c", soft:"#f9edf1"},
-  {test:/парк|сад|природ|озеро|за городом/, bg:"#6ba888", soft:"#eaf3ee"},
-  {test:/транспорт/, bg:"#5b7fbd", soft:"#eaf0f9"},
-  {test:/книж|библиотек/, bg:"#a89968", soft:"#f5f1e3"},
-  {test:/храм|религ/, bg:"#b8826f", soft:"#f3ebe6"},
-  {test:/арт|искусств|галере/, bg:"#a889b8", soft:"#f3ecf9"},
-  {test:/еда|ресторан|ужин/, bg:"#d68a5c", soft:"#f8eee3"},
-  {test:/животн|зоопарк/, bg:"#6fa891", soft:"#ecf2ed"},
-  {test:/спа|отдых/, bg:"#c894b0", soft:"#f7eef4"},
-  {test:/отел/, bg:"#7a91c9", soft:"#ecf0f9"},
-  {test:/ночн/, bg:"#8b7fb8", soft:"#f0ecf8"},
+  {test:/кафе|кофе|чай|десерт/, bg:"#c1852f"},
+  {test:/музе/, bg:"#7a4fe0"},
+  {test:/шопинг|магазин|бренд|сувенир/, bg:"#e04f8a"},
+  {test:/парк|сад|природ|озеро|за городом/, bg:"#2f9e6e"},
+  {test:/транспорт/, bg:"#2f6fe0"},
+  {test:/книж|библиотек/, bg:"#8a6d2f"},
+  {test:/храм|религ/, bg:"#a0522d"},
+  {test:/арт|искусств|галере/, bg:"#9e2fbd"},
+  {test:/еда|ресторан|ужин/, bg:"#e0602f"},
+  {test:/животн|зоопарк/, bg:"#2f9e8e"},
+  {test:/спа|отдых/, bg:"#c15fa0"},
+  {test:/отел/, bg:"#1c3e6e"},
+  {test:/ночн/, bg:"#4a2fbd"},
 ];
 function categoryColor(p){
-  if(p.custom) return {bg:"#8890a0", soft:"#d9dce2"};
+  if(p.custom) return "#8890a0";
   const c = (p.category||"").toLowerCase();
-  for(const s of CATEGORY_STYLES){ if(s.test.test(c)) return {bg:s.bg, soft:s.soft}; }
-  return {bg:"#5a6072", soft:"#e0e2e8"};
+  for(const s of CATEGORY_STYLES){ if(s.test.test(c)) return s.bg; }
+  return "#5a6072";
 }
 function darkenHex(hex, amount){
   const h = hex.replace("#","");
@@ -3300,11 +3300,19 @@ function darkenHex(hex, amount){
   b = Math.max(0, Math.round(b*(1-amount)));
   return "#" + [r,g,b].map(v=>v.toString(16).padStart(2,"0")).join("");
 }
+function lightenHex(hex, amount){
+  const h = hex.replace("#","");
+  let r = parseInt(h.substring(0,2),16), g = parseInt(h.substring(2,4),16), b = parseInt(h.substring(4,6),16);
+  r = Math.min(255, Math.round(r + (255-r)*amount));
+  g = Math.min(255, Math.round(g + (255-g)*amount));
+  b = Math.min(255, Math.round(b + (255-b)*amount));
+  return "#" + [r,g,b].map(v=>v.toString(16).padStart(2,"0")).join("");
+}
 function applyCatColor(el, p){
-  const colors = categoryColor(p);
-  el.style.setProperty("--catcolor", colors.bg);
-  el.style.setProperty("--catsoft", colors.soft);
-  el.style.setProperty("--catcolor-dark", darkenHex(colors.bg, .45));
+  const c = categoryColor(p);
+  el.style.setProperty("--catcolor", c);
+  el.style.setProperty("--catcolor-dark", darkenHex(c, .45));
+  el.style.setProperty("--catcolor-soft", lightenHex(c, .85));
 }
 const SLOT_COLORS = { "Утро":"#2f6fe0", "День":"#e08a2f", "Вечер":"#7a4fe0" };
 
@@ -3538,7 +3546,8 @@ function buildCard(p, assigned){
   if(p.metro){
     const mi = document.createElement("div");
     mi.className = "meta-item";
-    mi.innerHTML = '<span class="mi">🚇</span>' + escapeHtml(p.metro.split(" ").slice(0,2).join(" "));
+    const metroText = p.metro.split(" ").slice(0,2).join(" ");
+    mi.innerHTML = '<span class="mi">🚇</span>' + escapeHtml(metroText) + ' <span style="cursor:pointer;color:var(--blue);font-weight:600;" onclick="copyText(\'' + metroText.replace(/'/g, "\\'") + '\')">📋</span>';
     metaRow.appendChild(mi);
   }
   if(p.hours){
@@ -4216,4 +4225,19 @@ function renderPinnedCards(){
   const copyBtn = document.createElement("button");
   copyBtn.className = "add-btn";
   copyBtn.textContent = "Скопировать китайский текст";
-  copyBtn.addEventListener("click", ()=>copyText("重要提示:这个孩子对鱼类过敏,曾出现过过敏性休克(危及生命)。请确保菜品中不含任何鱼类成分,包括鱼露、鱼汤、鱼胶、鱼干等�
+  copyBtn.addEventListener("click", ()=>copyText("重要提示:这个孩子对鱼类过敏,曾出现过过敏性休克(危及生命)。请确保菜品中不含任何鱼类成分,包括鱼露、鱼汤、鱼胶、鱼干等调味料。万分感谢您的理解与帮助!"));
+  copyRow.appendChild(copyBtn);
+  sbody.appendChild(copyRow);
+  sosDiv.appendChild(sbody);
+  sosBox.appendChild(sosDiv);
+}
+
+refreshFilterOptions();
+renderCards();
+renderBoard();
+renderMetroResult();
+renderPinnedCards();
+renderToday();
+</script>
+</body>
+</html>
