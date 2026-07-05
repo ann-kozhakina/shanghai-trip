@@ -3489,7 +3489,7 @@ const CATEGORY_COLORS = {
   'Еда': {color: '#d68a5c', soft: '#f8eee3'},
   'Ресторан': {color: '#d68a5c', soft: '#f8eee3'}
 };
-function categoryColor(cat){
+function getCategoryColors(cat){
   cat = (cat||"").toLowerCase();
   for(const key in CATEGORY_COLORS){
     if(cat.includes(key.toLowerCase())){
@@ -3503,7 +3503,7 @@ function buildCard(p, assigned){
   const div = document.createElement("div");
   div.className = "card" + (isSkipped(p) ? " skip" : "") + (p.custom ? " iscustom" : "");
   div.dataset.id = p.id;
-  const colors = categoryColor(p.category);
+  const colors = getCategoryColors(p.category);
   div.style.setProperty('--cat-color', colors.color);
   div.style.setProperty('--cat-soft', colors.soft);
   applyCatColor(div, p);
